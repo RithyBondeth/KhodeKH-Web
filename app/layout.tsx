@@ -1,17 +1,41 @@
-import { Geist, Geist_Mono, Inter } from "next/font/google"
+import { Geist_Mono, Inter, Noto_Sans_Khmer } from "next/font/google"
+import type { Metadata } from "next"
 
 import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
-import { cn } from "@/lib/utils";
+import { ThemeProvider } from "@/components/utils/themes/theme-provider"
+import { cn } from "@/lib/utils"
 
-const geistMonoHeading = Geist_Mono({subsets:['latin'],variable:'--font-heading'});
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+})
 
-const inter = Inter({subsets:['latin'],variable:'--font-sans'})
+const notoSansKhmer = Noto_Sans_Khmer({
+  subsets: ["khmer"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  variable: "--font-khmer",
+  display: "swap",
+})
 
-const fontMono = Geist_Mono({
+const geistMono = Geist_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
+  display: "swap",
 })
+
+const geistMonoHeading = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-heading",
+  display: "swap",
+})
+
+export const metadata: Metadata = {
+  title: "Apsara AI — Learn to Code in Khmer",
+  description:
+    "The first AI-powered coding platform built for Cambodian students. Learn Python, JavaScript, and more with your personal AI mentor Apsara.",
+  keywords: ["coding", "Cambodia", "Khmer", "AI", "programming", "learn"],
+}
 
 export default function RootLayout({
   children,
@@ -20,12 +44,19 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="km"
       suppressHydrationWarning
-      className={cn("antialiased", fontMono.variable, "font-sans", inter.variable, geistMonoHeading.variable)}
+      className={cn(
+        "antialiased",
+        inter.variable,
+        notoSansKhmer.variable,
+        geistMono.variable,
+        geistMonoHeading.variable,
+        "font-sans"
+      )}
     >
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider defaultTheme="dark">{children}</ThemeProvider>
       </body>
     </html>
   )
