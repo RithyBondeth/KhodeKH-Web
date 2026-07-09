@@ -81,6 +81,13 @@ export const HOW_IT_WORKS = [
   { step: "03", icon: Trophy,   color: "amber"  as TColorKey, key: "earnGrow"   },
 ]
 
-/* ── Nav link keys ───────────────────────────────────────────────────── */
+/* ── Nav links ──────────────────────────────────────────────────────────── */
 
-export const NAV_LINK_KEYS = ["courses", "features", "pricing"] as const
+export const NAV_LINKS = [
+  { key: "courses",      href: "/#courses"      },
+  { key: "features",     href: "/#features"     },
+  { key: "howItWorks",   href: "/#how-it-works" },
+  { key: "testimonials", href: "/#testimonials"  },
+] as const
+
+export const NAV_LINK_KEYS = NAV_LINKS.map((l) => l.key)

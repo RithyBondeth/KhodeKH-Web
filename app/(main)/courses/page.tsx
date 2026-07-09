@@ -177,7 +177,7 @@ export default function CoursesPage() {
                   <Link href="/learn" className="mt-auto">
                     <button className={`w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-semibold transition-all ${
                       enrolled
-                        ? "gradient-bg-primary text-white hover:opacity-90 glow-purple"
+                        ? "gradient-bg-primary text-white hover:opacity-90"
                         : "border border-border text-muted-foreground hover:text-foreground hover:border-violet-300 dark:hover:border-violet-500/40 hover:bg-muted/60"
                     }`}>
                       {enrolled ? (

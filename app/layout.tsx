@@ -5,6 +5,7 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/utils/themes/theme-provider"
 import { LanguageProvider } from "@/components/utils/languages/language-provider"
 import { cn } from "@/lib/utils"
+import { DotPattern } from "@/components/utils/mesh-gradient"
 
 const robotoSlab = Roboto_Slab({
   subsets: ["latin"],
@@ -58,6 +59,7 @@ export default function RootLayout({
     >
       <body>
         <ThemeProvider defaultTheme="dark">
+          <DotPattern />
           <LanguageProvider>{children}</LanguageProvider>
         </ThemeProvider>
       </body>

@@ -49,7 +49,7 @@ export function AppShell({ children }: IWithChildren) {
       `}>
         {/* Logo */}
         <div className="flex items-center gap-2.5 px-5 h-16 border-b border-border shrink-0">
-          <div className="size-8 rounded-xl gradient-bg-primary flex items-center justify-center glow-purple">
+          <div className="size-8 rounded-xl gradient-bg-primary flex items-center justify-center">
             <Sparkles className="size-4 text-white" />
           </div>
           <span className="font-bold text-base tracking-tight">
@@ -159,7 +159,7 @@ export function AppShell({ children }: IWithChildren) {
               <Bell className="size-4.5" />
               <div className="absolute top-1.5 right-1.5 size-2 rounded-full bg-violet-500" />
             </button>
-            <div className="size-9 rounded-xl gradient-bg-primary flex items-center justify-center font-bold text-sm text-white cursor-pointer glow-purple">
+            <div className="size-9 rounded-xl gradient-bg-primary flex items-center justify-center font-bold text-sm text-white cursor-pointer">
               {studentData.avatar}
             </div>
           </div>

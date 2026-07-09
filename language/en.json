@@ -9,7 +9,9 @@
     "dashboard": "Dashboard",
     "playground": "Playground",
     "aiMentor": "AI Mentor",
-    "community": "Community"
+    "community": "Community",
+    "howItWorks": "How It Works",
+    "testimonials": "Testimonials"
   },
   "hero": {
     "badge": "Introducing KodeKH v2.0 — Now with GPT-4 powered mentoring",

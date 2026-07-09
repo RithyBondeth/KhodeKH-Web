@@ -49,7 +49,7 @@ export default function RegisterPage() {
       <div className="flex flex-1 flex-col items-center justify-center px-8 py-12 bg-background overflow-y-auto">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 mb-8">
-          <div className="size-9 rounded-xl gradient-bg-primary flex items-center justify-center glow-purple">
+          <div className="size-9 rounded-xl gradient-bg-primary flex items-center justify-center">
             <Sparkles className="size-4 text-white" />
           </div>
           <span className="font-bold text-xl tracking-tight">

@@ -585,7 +585,7 @@ export default function LearnPage() {
                       <AnimateIn animation="fade-up" delay={0.45}>
                         <button
                           onClick={() => setActiveTab("practice")}
-                          className="gradient-bg-primary glow-purple w-full rounded-xl py-3 text-sm font-semibold text-white hover:opacity-90 transition-all"
+                          className="gradient-bg-primary w-full rounded-xl py-3 text-sm font-semibold text-white hover:opacity-90 transition-all"
                         >
                           Start Challenge →
                         </button>

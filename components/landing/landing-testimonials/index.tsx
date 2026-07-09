@@ -13,7 +13,7 @@ export function LandingTestimonials() {
   const t = useTranslations("testimonials")
 
   return (
-    <section className="py-28 px-6 bg-muted/20">
+    <section id="testimonials" className="py-28 px-6 bg-muted/20 scroll-mt-20">
       <div className="max-w-6xl mx-auto">
         <AnimateIn animation="fade-up" className="text-center mb-16">
           <TypographyH2 className="text-4xl font-bold tracking-tight mb-4 text-foreground border-0 pb-0">

@@ -25,7 +25,7 @@ export default function LoginPage() {
       <div className="flex flex-1 flex-col items-center justify-center bg-background px-8 py-12">
         {/* Logo */}
         <Link href="/" className="mb-10 flex items-center gap-2.5">
-          <div className="gradient-bg-primary glow-purple flex size-9 items-center justify-center rounded-xl">
+          <div className="gradient-bg-primary flex size-9 items-center justify-center rounded-xl">
             <Sparkles className="size-4 text-white" />
           </div>
           <span className="text-xl font-bold tracking-tight">

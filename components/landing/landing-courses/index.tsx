@@ -12,7 +12,7 @@ export function LandingCourses() {
   const t = useTranslations("courses")
 
   return (
-    <section className="py-28 px-6 bg-muted/20">
+    <section id="courses" className="py-28 px-6 bg-muted/20 scroll-mt-20">
       <div className="max-w-7xl mx-auto">
         <AnimateIn animation="fade-up" className="mb-12">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">

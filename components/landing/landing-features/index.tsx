@@ -13,7 +13,7 @@ export function LandingFeatures() {
   const t = useTranslations("features")
 
   return (
-    <section className="px-6 py-28">
+    <section id="features" className="px-6 py-28 scroll-mt-20">
       <div className="mx-auto max-w-7xl">
         <AnimateIn animation="fade-up" className="mb-16 text-center">
           <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-violet-200 bg-violet-100 px-3 py-1.5 text-xs font-medium text-violet-700 dark:border-violet-500/25 dark:bg-violet-500/15 dark:text-violet-300">

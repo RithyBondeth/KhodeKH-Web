@@ -48,7 +48,7 @@ export function LandingHero() {
       <AnimateIn animation="fade-up" delay={0.4}>
         <div className="flex flex-col sm:flex-row items-center gap-4 mb-16">
           <Link href="/dashboard">
-            <button className="group flex items-center gap-2.5 px-8 py-4 text-base font-semibold rounded-2xl gradient-bg-primary hover:opacity-90 transition-all glow-purple text-white shadow-xl">
+            <button className="group flex items-center gap-2.5 px-8 py-4 text-base font-semibold rounded-2xl gradient-bg-primary hover:opacity-90 transition-all text-white shadow-xl">
               <GraduationCap className="size-5" />
               {t("startLearning")}
               <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform" />

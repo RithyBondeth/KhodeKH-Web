@@ -12,7 +12,7 @@ export function LandingHowItWorks() {
   const t = useTranslations("howItWorks")
 
   return (
-    <section className="py-28 px-6">
+    <section id="how-it-works" className="py-28 px-6 scroll-mt-20">
       <div className="max-w-5xl mx-auto">
         <AnimateIn animation="fade-up" className="text-center mb-16">
           <TypographyH2 className="text-4xl font-bold tracking-tight mb-4 text-foreground border-0 pb-0">

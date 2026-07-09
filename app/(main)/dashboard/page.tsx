@@ -26,7 +26,6 @@ export default function DashboardPage() {
         {/* Welcome banner */}
         <AnimateIn animation="flip-up" delay={0.05}>
           <div className="relative rounded-2xl overflow-hidden p-6 card-surface border border-violet-200 dark:border-violet-500/20">
-            <div className="absolute inset-0 gradient-bg-subtle opacity-50" />
             <div className="absolute -right-16 -top-16 size-56 rounded-full bg-violet-300/20 dark:bg-violet-600/15 blur-3xl" />
             <div className="relative flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
@@ -37,7 +36,7 @@ export default function DashboardPage() {
                 <TypographyMuted className="text-sm">{t("keepLearning")}</TypographyMuted>
               </div>
               <Link href="/learn">
-                <button className="shrink-0 flex items-center gap-2 px-5 py-3 rounded-xl gradient-bg-primary hover:opacity-90 transition-all text-sm font-semibold text-white glow-purple shadow-lg">
+                <button className="shrink-0 flex items-center gap-2 px-5 py-3 rounded-xl gradient-bg-primary hover:opacity-90 transition-all text-sm font-semibold text-white shadow-lg">
                   <Play className="size-4 fill-white" />
                   {t("continueLearning")}
                 </button>
