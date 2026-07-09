@@ -13,7 +13,10 @@ export const useLanguageStore = create<ILanguageState>()(
   persist(
     (set) => ({
       language: "en",
-      setLanguage: (language) => set({ language }),
+      setLanguage: (language) => {
+        document.cookie = `kodekh-lang=${language};path=/;max-age=31536000;SameSite=Lax`
+        set({ language })
+      },
     }),
     { name: "kodekh-language" }
   )

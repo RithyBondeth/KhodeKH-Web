@@ -2,7 +2,7 @@
 
 import { NextIntlClientProvider } from "next-intl"
 import { useLanguageStore } from "@/stores/languages/language-store"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import type { IWithChildren } from "@/utils/interfaces"
 import type { TLanguage } from "@/utils/types/app"
 import enMessages from "@/language/en.json"
@@ -13,18 +13,33 @@ const messages: Record<TLanguage, typeof enMessages> = {
   km: kmMessages,
 }
 
-export function LanguageProviderClient({ children }: IWithChildren) {
+interface IProps extends IWithChildren {
+  initialLang: TLanguage
+}
+
+export function LanguageProviderClient({ children, initialLang }: IProps) {
   const storedLanguage = useLanguageStore((s) => s.language)
-  // "en" on first render matches SSR output — no hydration mismatch.
-  // After mount, sync to whatever is in the Zustand store (could be "km").
-  const [language, setLanguage] = useState<TLanguage>("en")
+  const [language, setLanguage] = useState<TLanguage>(initialLang)
+  const synced = useRef(false)
 
   useEffect(() => {
-    setLanguage(storedLanguage)
-  }, [storedLanguage])
+    if (!synced.current) {
+      // First hydration: keep server-rendered language unless user
+      // previously saved a non-default preference in localStorage
+      if (storedLanguage !== language && storedLanguage !== "en") {
+        setLanguage(storedLanguage)
+        document.documentElement.lang = storedLanguage
+      }
+      synced.current = true
+    } else if (storedLanguage !== language) {
+      // User toggled language — update immediately
+      setLanguage(storedLanguage)
+      document.documentElement.lang = storedLanguage
+    }
+  }, [storedLanguage, language])
 
   return (
-    <NextIntlClientProvider locale={language} messages={messages[language]} timeZone="Asia/Phnom_Penh">
+    <NextIntlClientProvider key={language} locale={language} messages={messages[language]} timeZone="Asia/Phnom_Penh">
       {children}
     </NextIntlClientProvider>
   )

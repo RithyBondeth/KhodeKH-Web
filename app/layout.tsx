@@ -1,9 +1,10 @@
 import { Geist_Mono, Roboto_Slab, Koh_Santepheap } from "next/font/google"
 import type { Metadata } from "next"
+import { cookies } from "next/headers"
 
 import "./globals.css"
 import { ThemeProvider } from "@/components/utils/themes/theme-provider"
-import { LanguageProvider } from "@/components/utils/languages/language-provider"
+import { LanguageProviderClient } from "@/components/utils/languages/language-provider-client"
 import { cn } from "@/lib/utils"
 import { DotPattern } from "@/components/utils/mesh-gradient"
 
@@ -39,14 +40,17 @@ export const metadata: Metadata = {
   keywords: ["coding", "Cambodia", "Khmer", "AI", "programming", "learn"],
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const cookieStore = await cookies()
+  const initialLang = (cookieStore.get("kodekh-lang")?.value as "en" | "km") || "en"
+
   return (
     <html
-      lang="km"
+      lang={initialLang}
       suppressHydrationWarning
       className={cn(
         "antialiased",
@@ -60,7 +64,9 @@ export default function RootLayout({
       <body>
         <ThemeProvider defaultTheme="dark">
           <DotPattern />
-          <LanguageProvider>{children}</LanguageProvider>
+          <LanguageProviderClient initialLang={initialLang}>
+            {children}
+          </LanguageProviderClient>
         </ThemeProvider>
       </body>
     </html>
