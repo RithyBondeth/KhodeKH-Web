@@ -1,4 +1,4 @@
-import { Geist_Mono, Roboto_Slab, Koh_Santepheap } from "next/font/google"
+import { JetBrains_Mono, Roboto_Slab, Koh_Santepheap } from "next/font/google"
 import type { Metadata } from "next"
 import { cookies } from "next/headers"
 
@@ -21,13 +21,13 @@ const kohSantepheap = Koh_Santepheap({
   display: "swap",
 })
 
-const geistMono = Geist_Mono({
+const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
   display: "swap",
 })
 
-const geistMonoHeading = Geist_Mono({
+const geistMonoHeading = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-heading",
   display: "swap",
@@ -56,7 +56,7 @@ export default async function RootLayout({
         "antialiased",
         robotoSlab.variable,
         kohSantepheap.variable,
-        geistMono.variable,
+        jetbrainsMono.variable,
         geistMonoHeading.variable,
         "font-sans"
       )}
