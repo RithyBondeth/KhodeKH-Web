@@ -1,17 +1,17 @@
 /** Shared component prop interfaces */
 
-export interface WithClassName {
+export interface IWithClassName {
   className?: string
 }
 
-export interface WithChildren {
+export interface IWithChildren {
   children: React.ReactNode
 }
 
-export interface WithChildrenAndClassName extends WithClassName, WithChildren {}
+export interface IWithChildrenAndClassName extends IWithClassName, IWithChildren {}
 
 /** Generic paginated API response shape */
-export interface PaginatedResponse<T> {
+export interface IPaginatedResponse<T> {
   data: T[]
   total: number
   page: number
@@ -20,7 +20,7 @@ export interface PaginatedResponse<T> {
 }
 
 /** Base entity fields present on all DB records */
-export interface BaseEntity {
+export interface IBaseEntity {
   id: string
   createdAt: string
   updatedAt: string

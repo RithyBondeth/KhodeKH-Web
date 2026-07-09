@@ -1,18 +1,20 @@
 "use client"
 
+import { useTranslations } from "next-intl"
 import { AnimateIn } from "@/components/utils/animations/animate-in"
 import { CountUp } from "@/components/utils/animations/count-up"
 import { STATS } from "@/utils/constants/landing.constant"
 import { TypographySmall } from "@/components/utils/typography/typography-small"
-import { TypographyMuted } from "@/components/utils/typography/typography-muted"
 
 export function LandingStats() {
+  const t = useTranslations("stats")
+
   return (
     <section className="border-y border-border bg-muted/30 py-10">
       <div className="mx-auto grid max-w-4xl grid-cols-2 gap-8 px-6 md:grid-cols-4">
         {STATS.map((stat, i) => (
           <AnimateIn
-            key={stat.label}
+            key={stat.key}
             animation="bounce-in"
             delay={i * 0.1}
             className="text-center"
@@ -29,11 +31,8 @@ export function LandingStats() {
               />
             </div>
             <TypographySmall className="font-medium text-foreground block">
-              {stat.label}
+              {t(stat.key as Parameters<typeof t>[0])}
             </TypographySmall>
-            <TypographyMuted className="mt-0.5 text-xs">
-              {stat.labelKh}
-            </TypographyMuted>
           </AnimateIn>
         ))}
       </div>

@@ -1,0 +1,205 @@
+{
+  "nav": {
+    "courses": "Courses",
+    "features": "Features",
+    "leaderboard": "Leaderboard",
+    "pricing": "Pricing",
+    "signIn": "Sign in",
+    "startFree": "Start Free",
+    "dashboard": "Dashboard",
+    "playground": "Playground",
+    "aiMentor": "AI Mentor",
+    "community": "Community"
+  },
+  "hero": {
+    "badge": "Introducing Apsara AI v2.0 — Now with GPT-4 powered mentoring",
+    "titleKh": "រៀនសរសេរកូដ",
+    "titleWith": "with",
+    "subtitle": "The first AI-powered coding platform built for Cambodian students. Learn Python, JavaScript, and more with <mentor>Apsara</mentor> — your personal AI coding mentor that speaks Khmer.",
+    "startLearning": "Start Learning Free",
+    "watchDemo": "Watch Demo",
+    "studentsCount": "12,000+ students learning today"
+  },
+  "stats": {
+    "students": "Students",
+    "courses": "Courses",
+    "completion": "Completion",
+    "inCambodia": "In Cambodia"
+  },
+  "features": {
+    "badge": "Everything you need",
+    "headingPart1": "Built for",
+    "headingHighlight": "Cambodian",
+    "headingPart2": "Developers",
+    "subheading": "Powerful tools, Khmer-first content, and AI assistance — all in one platform.",
+    "aiMentor": {
+      "title": "AI Mentor Apsara",
+      "desc": "Real-time code explanations, debugging help, and personalised learning paths powered by advanced AI."
+    },
+    "codePlayground": {
+      "title": "Live Code Playground",
+      "desc": "Write, run, and test code directly in your browser. Supports Python, JavaScript, HTML/CSS and more."
+    },
+    "khmerFirst": {
+      "title": "Khmer-First Learning",
+      "desc": "Every lesson, explanation, and mentor response available in Khmer. Learn coding in your native language."
+    },
+    "certificates": {
+      "title": "Industry Certificates",
+      "desc": "Earn recognised certificates upon course completion. Showcase your skills to employers across Cambodia."
+    }
+  },
+  "courses": {
+    "badge": "Featured Courses",
+    "headingPart1": "Start Your",
+    "headingHighlight": "Journey",
+    "headingPart2": "",
+    "viewAll": "View all courses",
+    "startCourse": "Start Course →",
+    "lessons": "{count} lessons",
+    "pageTitle": "All Courses",
+    "pageSubtitle": "Browse our curriculum and learn at your own pace.",
+    "filterAll": "All",
+    "filterBeginner": "Beginner",
+    "filterIntermediate": "Intermediate",
+    "filterAdvanced": "Advanced",
+    "enroll": "Start Course",
+    "continueCourse": "Continue",
+    "xpReward": "{xp} XP",
+    "python": {
+      "title": "Python Fundamentals",
+      "titleKh": "មូលដ្ឋានគ្រឹះ Python",
+      "tag": "Most Popular",
+      "desc": "Learn Python from scratch — variables, loops, functions, and object-oriented programming."
+    },
+    "react": {
+      "title": "Web Dev with React",
+      "titleKh": "បង្កើតគេហទំព័រ React",
+      "tag": "New",
+      "desc": "Build modern web applications with React components, hooks, and state management."
+    },
+    "algorithms": {
+      "title": "Algorithms & DSA",
+      "titleKh": "ក្បួនដោះស្រាយ & DSA",
+      "tag": "Career Boost",
+      "desc": "Master data structures and algorithms — arrays, trees, sorting, and dynamic programming."
+    }
+  },
+  "howItWorks": {
+    "headingPart1": "How",
+    "headingHighlight": "Apsara AI",
+    "headingPart2": "Works",
+    "subheading": "Three simple steps to start your coding journey",
+    "choosePath": {
+      "title": "Choose Your Path",
+      "desc": "Pick a course from our Khmer-first curriculum. From beginner Python to advanced algorithms."
+    },
+    "codeLearn": {
+      "title": "Code & Learn",
+      "desc": "Write code in our live playground. Apsara AI explains every concept in Khmer as you go."
+    },
+    "earnGrow": {
+      "title": "Track & Certify",
+      "desc": "Follow your personal progress, earn recognised certificates, and showcase your skills to employers."
+    }
+  },
+  "testimonials": {
+    "headingPart1": "Loved by",
+    "headingHighlight": "Cambodian",
+    "headingPart2": "Developers",
+    "sokha": {
+      "name": "Sokha Phan",
+      "role": "Junior Dev @ PiCom",
+      "text": "Apsara AI helped me land my first tech job. The Khmer explanations made complex algorithms click instantly."
+    },
+    "dara": {
+      "name": "Dara Chheng",
+      "role": "CS Student, RUPP",
+      "text": "Finally a platform that teaches coding in Khmer! The AI mentor answers my questions better than any textbook."
+    },
+    "bopha": {
+      "name": "Bopha Meas",
+      "role": "Freelance Developer",
+      "text": "The gamification kept me motivated. I earned 3 certificates in 2 months and doubled my freelance income."
+    }
+  },
+  "cta": {
+    "headingPart1": "Ready to Start",
+    "headingHighlight": "Coding",
+    "headingPart2": "?",
+    "subheading": "Join 12,000+ Cambodian students building the future with code.",
+    "free": "Free forever for students.",
+    "createAccount": "Create Free Account",
+    "finePrint": "No credit card required • Always free for students"
+  },
+  "footer": {
+    "brand": "Cambodia's first AI-powered coding education platform. Empowering the next generation of Khmer developers.",
+    "platformCol": "Platform",
+    "companyCol": "Company",
+    "supportCol": "Support",
+    "courses": "Courses",
+    "playground": "Playground",
+    "aiMentor": "AI Mentor",
+    "leaderboard": "Leaderboard",
+    "about": "About",
+    "blog": "Blog",
+    "careers": "Careers",
+    "press": "Press",
+    "helpCenter": "Help Center",
+    "community": "Community",
+    "contact": "Contact",
+    "status": "Status",
+    "copyright": "© 2025 Apsara AI. Built with ❤️ in Phnom Penh, Cambodia 🇰🇭",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "cookies": "Cookies"
+  },
+  "dashboard": {
+    "greeting": "Good morning 👋",
+    "welcomeBack": "Welcome back,",
+    "keepLearning": "Keep up your learning momentum — every lesson counts.",
+    "continueLearning": "Continue Learning",
+    "lessonsCompleted": "Lessons Done",
+    "coursesActive": "Courses Active",
+    "myCourses": "My Courses",
+    "viewAll": "View all",
+    "lessonProgress": "{done} / {total} lessons",
+    "continue": "Continue",
+    "settings": "Settings",
+    "signOut": "Sign Out",
+    "search": "Search courses, lessons…"
+  },
+  "learn": {
+    "theory": "Theory",
+    "practice": "Practice",
+    "challenge": "Challenge",
+    "runCode": "Run Code",
+    "reset": "Reset",
+    "output": "Output",
+    "aiMentor": "AI Mentor",
+    "online": "Online",
+    "askApsara": "Ask Apsara...",
+    "send": "Send",
+    "locked": "Locked",
+    "courseOutline": "Course Outline",
+    "backToDashboard": "Dashboard",
+    "copy": "Copy",
+    "fullscreen": "Fullscreen",
+    "lesson": "Lesson"
+  },
+  "auth": {
+    "loginTitle": "Login to Your Account",
+    "emailPlaceholder": "Enter your email...",
+    "passwordPlaceholder": "Enter your password...",
+    "loginButton": "Login",
+    "noAccount": "Don't have an account?",
+    "signUp": "Sign up",
+    "registerTitle": "Create Your Account",
+    "registerSubtitle": "Join 12,000+ Cambodian students learning to code.",
+    "namePlaceholder": "Enter your full name...",
+    "confirmPasswordPlaceholder": "Confirm your password...",
+    "registerButton": "Create Account",
+    "alreadyHaveAccount": "Already have an account?",
+    "signIn": "Sign in"
+  }
+}

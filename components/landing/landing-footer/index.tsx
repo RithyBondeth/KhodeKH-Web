@@ -2,18 +2,45 @@
 
 import Link from "next/link"
 import { Sparkles } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { AnimateIn } from "@/components/utils/animations/animate-in"
 import { TypographyP } from "@/components/utils/typography/typography-p"
 import { TypographySmall } from "@/components/utils/typography/typography-small"
 import { TypographyMuted } from "@/components/utils/typography/typography-muted"
 
-const FOOTER_COLS = [
-  { heading: "Platform", links: ["Courses", "Playground", "AI Mentor", "Leaderboard"] },
-  { heading: "Company",  links: ["About", "Blog", "Careers", "Press"] },
-  { heading: "Support",  links: ["Help Center", "Community", "Contact", "Status"] },
-]
-
 export function LandingFooter() {
+  const t = useTranslations("footer")
+
+  const FOOTER_COLS = [
+    {
+      headingKey: "platformCol" as const,
+      links: [
+        { key: "courses" as const,    href: "/dashboard" },
+        { key: "playground" as const, href: "/learn" },
+        { key: "aiMentor" as const,   href: "/learn" },
+        { key: "leaderboard" as const,href: "#" },
+      ],
+    },
+    {
+      headingKey: "companyCol" as const,
+      links: [
+        { key: "about" as const,    href: "#" },
+        { key: "blog" as const,     href: "#" },
+        { key: "careers" as const,  href: "#" },
+        { key: "press" as const,    href: "#" },
+      ],
+    },
+    {
+      headingKey: "supportCol" as const,
+      links: [
+        { key: "helpCenter" as const, href: "#" },
+        { key: "community" as const,  href: "#" },
+        { key: "contact" as const,    href: "#" },
+        { key: "status" as const,     href: "#" },
+      ],
+    },
+  ]
+
   return (
     <footer className="border-t border-border py-12 px-6 bg-muted/20">
       <div className="max-w-7xl mx-auto">
@@ -29,21 +56,21 @@ export function LandingFooter() {
               </span>
             </Link>
             <TypographyP className="text-sm text-muted-foreground leading-relaxed">
-              Cambodia's first AI-powered coding education platform. Empowering the next generation of Khmer developers.
+              {t("brand")}
             </TypographyP>
           </AnimateIn>
 
           <AnimateIn animation="fade-left">
             <div className="grid grid-cols-3 gap-8">
               {FOOTER_COLS.map((col) => (
-                <div key={col.heading}>
+                <div key={col.headingKey}>
                   <TypographySmall className="font-semibold text-muted-foreground uppercase tracking-wider block mb-4">
-                    {col.heading}
+                    {t(col.headingKey)}
                   </TypographySmall>
                   {col.links.map((link) => (
-                    <Link key={link} href="#" className="block py-1 transition-colors hover:text-foreground">
+                    <Link key={link.key} href={link.href} className="block py-1 transition-colors hover:text-foreground">
                       <TypographyMuted className="text-sm transition-colors hover:text-foreground">
-                        {link}
+                        {t(link.key)}
                       </TypographyMuted>
                     </Link>
                   ))}
@@ -55,13 +82,13 @@ export function LandingFooter() {
 
         <div className="border-t border-border pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <TypographyMuted className="text-xs">
-            © 2025 Apsara AI. Built with ❤️ in Phnom Penh, Cambodia 🇰🇭
+            {t("copyright")}
           </TypographyMuted>
           <div className="flex gap-4">
-            {["Privacy", "Terms", "Cookies"].map((l) => (
-              <Link key={l} href="#" className="transition-colors hover:text-foreground">
+            {(["privacy", "terms", "cookies"] as const).map((key) => (
+              <Link key={key} href="#" className="transition-colors hover:text-foreground">
                 <TypographySmall className="text-muted-foreground transition-colors hover:text-foreground">
-                  {l}
+                  {t(key)}
                 </TypographySmall>
               </Link>
             ))}

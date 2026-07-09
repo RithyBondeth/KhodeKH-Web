@@ -2,12 +2,15 @@
 
 import Link from "next/link"
 import { Sparkles, ArrowRight } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { AnimateIn } from "@/components/utils/animations/animate-in"
 import { TypographyH2 } from "@/components/utils/typography/typography-h2"
 import { TypographyLead } from "@/components/utils/typography/typography-lead"
 import { TypographySmall } from "@/components/utils/typography/typography-small"
 
 export function LandingCta() {
+  const t = useTranslations("cta")
+
   return (
     <section className="px-6 py-28">
       <AnimateIn animation="bounce-in" className="mx-auto max-w-3xl text-center">
@@ -17,22 +20,24 @@ export function LandingCta() {
           <div className="relative">
             <div className="mb-6 text-5xl">🇰🇭</div>
             <TypographyH2 className="text-4xl font-bold tracking-tight mb-4 text-foreground border-0 pb-0">
-              Ready to Start <span className="gradient-text">Coding</span>?
+              {t("headingPart1")}{" "}
+              <span className="gradient-text">{t("headingHighlight")}</span>
+              {t("headingPart2")}
             </TypographyH2>
             <TypographyLead className="mb-8">
-              Join 12,000+ Cambodian students building the future with code.
+              {t("subheading")}
               <br />
-              Free forever for students.
+              {t("free")}
             </TypographyLead>
-            <Link href="/dashboard">
+            <Link href="/register">
               <button className="gradient-bg-primary glow-purple inline-flex items-center gap-2 rounded-2xl px-8 py-4 text-base font-semibold text-white shadow-xl transition-all hover:opacity-90">
                 <Sparkles className="size-5" />
-                Create Free Account
+                {t("createAccount")}
                 <ArrowRight className="size-4" />
               </button>
             </Link>
             <TypographySmall className="mt-4 block text-muted-foreground">
-              No credit card required • Always free for students
+              {t("finePrint")}
             </TypographySmall>
           </div>
         </div>

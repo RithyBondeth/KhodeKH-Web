@@ -4,27 +4,30 @@ import Link from "next/link"
 import {
   Sparkles, ArrowRight, Play, Brain, Star, ChevronRight, GraduationCap,
 } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { AnimateIn } from "@/components/utils/animations/animate-in"
 import { TypographyH1 } from "@/components/utils/typography/typography-h1"
 import { TypographyLead } from "@/components/utils/typography/typography-lead"
 import { TypographyMuted } from "@/components/utils/typography/typography-muted"
 
 export function LandingHero() {
+  const t = useTranslations("hero")
+
   return (
     <section className="relative flex flex-col items-center justify-center px-6 pt-36 pb-24 text-center min-h-screen">
 
       <AnimateIn animation="fade" delay={0.05} className="mb-8">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass border border-violet-300/40 dark:border-violet-500/30 text-xs font-medium text-violet-700 dark:text-violet-300 shadow-sm">
           <Sparkles className="size-3.5 text-violet-500 dark:text-violet-400" />
-          Introducing Apsara AI v2.0 — Now with GPT-4 powered mentoring
+          {t("badge")}
           <ChevronRight className="size-3.5 opacity-60" />
         </div>
       </AnimateIn>
 
       <AnimateIn animation="blur-up" delay={0.15}>
         <TypographyH1 className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.1] max-w-4xl mb-6">
-          <span className="gradient-text block mb-1">រៀនសរសេរកូដ</span>
-          <span className="text-foreground block">ជាមួយ </span>
+          <span className="gradient-text block mb-1">{t("titleKh")}</span>
+          <span className="text-foreground block">{t("titleWith")} </span>
           <span className="relative inline-block">
             <span className="gradient-text">AI Mentor</span>
             <span className="absolute -top-3 -right-8 text-2xl select-none">✨</span>
@@ -34,10 +37,11 @@ export function LandingHero() {
 
       <AnimateIn animation="fade-up" delay={0.3}>
         <TypographyLead className="max-w-xl mb-10 leading-relaxed">
-          The first AI-powered coding platform built for Cambodian students.
-          Learn Python, JavaScript, and more with{" "}
-          <span className="text-violet-600 dark:text-violet-400 font-medium">Apsara</span> — your personal AI
-          coding mentor that speaks Khmer.
+          {t.rich("subtitle", {
+            mentor: (chunks) => (
+              <span className="text-violet-600 dark:text-violet-400 font-medium">{chunks}</span>
+            ),
+          })}
         </TypographyLead>
       </AnimateIn>
 
@@ -46,14 +50,14 @@ export function LandingHero() {
           <Link href="/dashboard">
             <button className="group flex items-center gap-2.5 px-8 py-4 text-base font-semibold rounded-2xl gradient-bg-primary hover:opacity-90 transition-all glow-purple text-white shadow-xl">
               <GraduationCap className="size-5" />
-              Start Learning Free
+              {t("startLearning")}
               <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform" />
             </button>
           </Link>
           <Link href="/learn">
             <button className="group flex items-center gap-2.5 px-8 py-4 text-base font-medium rounded-2xl glass border border-border hover:border-violet-300 dark:hover:border-violet-500/30 transition-all text-foreground/80 hover:text-foreground">
               <Play className="size-4 fill-current opacity-60" />
-              Watch Demo
+              {t("watchDemo")}
             </button>
           </Link>
         </div>
@@ -70,7 +74,7 @@ export function LandingHero() {
             ))}
           </div>
           <TypographyMuted className="text-sm">
-            <span className="text-foreground font-semibold">12,000+</span> students learning today
+            {t("studentsCount")}
           </TypographyMuted>
           <div className="flex gap-0.5">
             {[...Array(5)].map((_, i) => <Star key={i} className="size-3.5 fill-amber-400 text-amber-400" />)}
@@ -133,10 +137,10 @@ export function LandingHero() {
                 </div>
                 <div className="flex-1 p-4 font-mono text-xs leading-relaxed">
                   <div><span className="text-purple-400">def</span><span className="text-cyan-300"> greet</span><span className="text-white/70">(name):</span></div>
-                  <div className="pl-4"><span className="text-white/70">message = </span><span className="text-green-400">"សួស្ដី, "</span><span className="text-white/70"> + name</span></div>
+                  <div className="pl-4"><span className="text-white/70">message = </span><span className="text-green-400">&quot;សួស្ដី, &quot;</span><span className="text-white/70"> + name</span></div>
                   <div className="pl-4"><span className="text-purple-400">return</span><span className="text-white/70"> message</span></div>
                   <div className="mt-2"><span className="text-white/30"># Call the function</span></div>
-                  <div><span className="text-white/70">result = greet(</span><span className="text-green-400">"ដារ៉ា"</span><span className="text-white/70">)</span></div>
+                  <div><span className="text-white/70">result = greet(</span><span className="text-green-400">&quot;ដារ៉ា&quot;</span><span className="text-white/70">)</span></div>
                   <div><span className="text-cyan-400">print</span><span className="text-white/70">(result)</span></div>
                   <div className="mt-4 pt-3 border-t border-white/5">
                     <div className="text-[10px] text-white/30 mb-1">▸ Output</div>

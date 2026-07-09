@@ -1,19 +1,20 @@
-import { Geist_Mono, Inter, Noto_Sans_Khmer } from "next/font/google"
+import { Geist_Mono, Roboto_Slab, Koh_Santepheap } from "next/font/google"
 import type { Metadata } from "next"
 
 import "./globals.css"
 import { ThemeProvider } from "@/components/utils/themes/theme-provider"
+import { LanguageProvider } from "@/components/utils/languages/language-provider"
 import { cn } from "@/lib/utils"
 
-const inter = Inter({
+const robotoSlab = Roboto_Slab({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
 })
 
-const notoSansKhmer = Noto_Sans_Khmer({
-  subsets: ["khmer"],
-  weight: ["300", "400", "500", "600", "700", "800"],
+const kohSantepheap = Koh_Santepheap({
+  subsets: ["khmer", "latin"],
+  weight: ["100", "300", "400", "700", "900"],
   variable: "--font-khmer",
   display: "swap",
 })
@@ -48,15 +49,17 @@ export default function RootLayout({
       suppressHydrationWarning
       className={cn(
         "antialiased",
-        inter.variable,
-        notoSansKhmer.variable,
+        robotoSlab.variable,
+        kohSantepheap.variable,
         geistMono.variable,
         geistMonoHeading.variable,
         "font-sans"
       )}
     >
       <body>
-        <ThemeProvider defaultTheme="dark">{children}</ThemeProvider>
+        <ThemeProvider defaultTheme="dark">
+          <LanguageProvider>{children}</LanguageProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

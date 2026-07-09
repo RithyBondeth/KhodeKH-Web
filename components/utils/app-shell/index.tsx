@@ -1,0 +1,183 @@
+"use client"
+
+import { useState } from "react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import {
+  Sparkles, Settings, Bell, Search,
+  LogOut, Home, BookOpen, Code2, Brain,
+} from "lucide-react"
+import { useTranslations } from "next-intl"
+import { ThemeToggle } from "@/components/utils/themes/theme-toggle"
+import { LanguageSwitcher } from "@/components/utils/language-switcher"
+import { studentData, activeCourses } from "@/utils/constants/dashboard.constant"
+import type { IWithChildren } from "@/utils/interfaces"
+
+/* ── Nav items ────────────────────────────────────────────────────────── */
+
+const NAV_ITEMS = [
+  { icon: Home,     key: "dashboard", href: "/dashboard" },
+  { icon: BookOpen, key: "courses",   href: "/courses"   },
+  { icon: Code2,    key: "playground",href: "/learn"     },
+  { icon: Brain,    key: "aiMentor",  href: "/learn"     },
+] as const
+
+/* ── Component ────────────────────────────────────────────────────────── */
+
+export function AppShell({ children }: IWithChildren) {
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const pathname = usePathname()
+  const tNav  = useTranslations("nav")
+  const tDash = useTranslations("dashboard")
+
+  const xpPct = (studentData.xp / studentData.xpToNext) * 100
+  const totalLessonsDone = activeCourses.reduce((s, c) => s + c.completedLessons, 0)
+
+  /* First matching nav key wins — prevents Playground + AI Mentor both lighting up on /learn */
+  const activeKey = NAV_ITEMS.find((item) => item.href === pathname)?.key
+
+  return (
+    <div className="flex h-screen bg-background text-foreground overflow-hidden">
+
+      {/* ── SIDEBAR ── */}
+      <aside className={`
+        fixed inset-y-0 left-0 z-50 w-64 flex flex-col
+        border-r border-border bg-sidebar text-sidebar-foreground
+        transition-transform duration-300
+        lg:relative lg:translate-x-0
+        ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
+      `}>
+        {/* Logo */}
+        <div className="flex items-center gap-2.5 px-5 h-16 border-b border-border shrink-0">
+          <div className="size-8 rounded-xl gradient-bg-primary flex items-center justify-center glow-purple">
+            <Sparkles className="size-4 text-white" />
+          </div>
+          <span className="font-bold text-base tracking-tight">
+            <span className="gradient-text">Apsara</span>
+            <span className="text-muted-foreground font-light">.ai</span>
+          </span>
+        </div>
+
+        {/* Student card */}
+        <div className="mx-3 mt-4 p-3.5 rounded-2xl card-surface border border-violet-200 dark:border-violet-500/20">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="size-10 rounded-xl gradient-bg-primary flex items-center justify-center font-bold text-sm text-white shrink-0">
+              {studentData.avatar}
+            </div>
+            <div className="min-w-0">
+              <div className="font-semibold text-sm text-foreground truncate">{studentData.name}</div>
+              <div className="text-[10px] text-muted-foreground truncate">{studentData.nameKh}</div>
+            </div>
+          </div>
+          <div className="flex items-center justify-between text-xs mb-1.5">
+            <span className="text-muted-foreground">Level {studentData.level}</span>
+            <span className="text-violet-600 dark:text-violet-400 font-semibold text-xs">
+              {totalLessonsDone} lessons
+            </span>
+          </div>
+          <div className="h-2 rounded-full bg-muted overflow-hidden">
+            <div
+              className="h-full rounded-full gradient-bg-primary transition-all"
+              style={{ width: `${xpPct}%` }}
+            />
+          </div>
+        </div>
+
+        {/* Nav */}
+        <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto">
+          {NAV_ITEMS.map((item) => {
+            const isActive = item.key === activeKey
+            return (
+              <Link
+                key={item.key}
+                href={item.href}
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all ${
+                  isActive
+                    ? "bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300 font-medium border border-violet-200 dark:border-violet-500/20"
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted/60"
+                }`}
+              >
+                <item.icon className="size-4 shrink-0" />
+                {tNav(item.key)}
+                {isActive && (
+                  <div className="ml-auto size-1.5 rounded-full bg-violet-500 dark:bg-violet-400" />
+                )}
+              </Link>
+            )
+          })}
+        </nav>
+
+        {/* Bottom actions */}
+        <div className="px-3 pb-4 border-t border-border pt-3 space-y-0.5">
+          <Link
+            href="#"
+            className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-all"
+          >
+            <Settings className="size-4" />
+            {tDash("settings")}
+          </Link>
+          <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-muted-foreground hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/5 transition-all">
+            <LogOut className="size-4" />
+            {tDash("signOut")}
+          </button>
+        </div>
+      </aside>
+
+      {/* ── MAIN COLUMN ── */}
+      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+
+        {/* Header */}
+        <header className="h-16 border-b border-border bg-background/90 backdrop-blur-xl flex items-center gap-4 px-6 shrink-0">
+          {/* Mobile hamburger */}
+          <button
+            className="lg:hidden p-2 rounded-xl hover:bg-muted text-muted-foreground hover:text-foreground transition-all"
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+          >
+            <div className="space-y-1.5 w-5">
+              <div className="h-0.5 bg-current rounded" />
+              <div className="h-0.5 bg-current rounded" />
+              <div className="h-0.5 w-3 bg-current rounded" />
+            </div>
+          </button>
+
+          {/* Search */}
+          <div className="flex-1 max-w-sm">
+            <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-muted/60 border border-border text-sm text-muted-foreground">
+              <Search className="size-4 shrink-0" />
+              <span>{tDash("search")}</span>
+              <kbd className="ml-auto text-[10px] px-1.5 py-0.5 rounded-md bg-background border border-border text-muted-foreground">
+                ⌘K
+              </kbd>
+            </div>
+          </div>
+
+          {/* Right actions */}
+          <div className="ml-auto flex items-center gap-2">
+            <LanguageSwitcher />
+            <ThemeToggle />
+            <button className="relative p-2 rounded-xl hover:bg-muted text-muted-foreground hover:text-foreground transition-all">
+              <Bell className="size-4.5" />
+              <div className="absolute top-1.5 right-1.5 size-2 rounded-full bg-violet-500" />
+            </button>
+            <div className="size-9 rounded-xl gradient-bg-primary flex items-center justify-center font-bold text-sm text-white cursor-pointer glow-purple">
+              {studentData.avatar}
+            </div>
+          </div>
+        </header>
+
+        {/* Page content */}
+        <main className="flex-1 overflow-y-auto p-6 bg-muted/20">
+          {children}
+        </main>
+      </div>
+
+      {/* Mobile overlay */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-foreground/20 backdrop-blur-sm lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+    </div>
+  )
+}

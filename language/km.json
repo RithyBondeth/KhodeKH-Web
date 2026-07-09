@@ -1,0 +1,205 @@
+{
+  "nav": {
+    "courses": "វគ្គសិក្សា",
+    "features": "លក្ខណៈពិសេស",
+    "leaderboard": "តារាងចំណាត់ថ្នាក់",
+    "pricing": "តម្លៃ",
+    "signIn": "ចូលគណនី",
+    "startFree": "ចាប់ផ្តើម",
+    "dashboard": "ផ្ទាំងគ្រប់គ្រង",
+    "playground": "Playground",
+    "aiMentor": "AI Mentor",
+    "community": "សហគមន៍"
+  },
+  "hero": {
+    "badge": "ណែនាំ Apsara AI v2.0 — ឥឡូវនេះដំណើរការជាមួយ GPT-4",
+    "titleKh": "រៀនសរសេរកូដ",
+    "titleWith": "ជាមួយ",
+    "subtitle": "វេទិកាសរសេរកូដដំបូងដំណើរការដោយ AI សម្រាប់និស្សិតខ្មែរ។ រៀន Python, JavaScript និងច្រើនទៀតជាមួយ <mentor>Apsara</mentor> — គ្រូ AI ផ្ទាល់ខ្លួនរបស់អ្នក។",
+    "startLearning": "ចាប់ផ្តើមរៀន",
+    "watchDemo": "មើលការបង្ហាញ",
+    "studentsCount": "12,000+ អ្នករៀនថ្ងៃនេះ"
+  },
+  "stats": {
+    "students": "សិស្ស",
+    "courses": "វគ្គសិក្សា",
+    "completion": "ការបញ្ចប់",
+    "inCambodia": "នៅកម្ពុជា"
+  },
+  "features": {
+    "badge": "អ្វីៗដែលអ្នកត្រូវការ",
+    "headingPart1": "សាងសង់សម្រាប់",
+    "headingHighlight": "អ្នកអភិវឌ្ឍខ្មែរ",
+    "headingPart2": "",
+    "subheading": "ឧបករណ៍ដ៏មានអានុភាព មាតិកាខ្មែរជាមូលដ្ឋាន និងជំនួយ AI — ក្នុងវេទិកាតែមួយ",
+    "aiMentor": {
+      "title": "គ្រូ AI អប្សរា",
+      "desc": "ការពន្យល់កូដក្នុងពេលជាក់ស្ដែង ជំនួយ debug និងផ្លូវរៀនផ្ទាល់ខ្លួន ដំណើរការដោយ AI ទំនើប"
+    },
+    "codePlayground": {
+      "title": "ក្ដារចុចកូដ",
+      "desc": "សរសេរ ដំណើរការ និងសាកល្បងកូដក្នុងកម្មវិធីរុករករបស់អ្នក។ គាំទ្រ Python, JavaScript, HTML/CSS និងច្រើនទៀត"
+    },
+    "khmerFirst": {
+      "title": "ខ្មែរជាមូលដ្ឋាន",
+      "desc": "គ្រប់មេរៀន ការពន្យល់ និងការឆ្លើយតបរបស់ AI មានជាភាសាខ្មែរ។ រៀនសរសេរកូដជាភាសាកំណើតរបស់អ្នក"
+    },
+    "certificates": {
+      "title": "វិញ្ញាបនបត្រ",
+      "desc": "ទទួលបានវិញ្ញាបនបត្រដែលទទួលស្គាល់នៅពេលបញ្ចប់វគ្គ។ បង្ហាញជំនាញរបស់អ្នកដល់និយោជក"
+    }
+  },
+  "courses": {
+    "badge": "វគ្គសិក្សាពិសេស",
+    "headingPart1": "ចាប់ផ្តើម",
+    "headingHighlight": "ការដើរតាមផ្លូវ",
+    "headingPart2": "របស់អ្នក",
+    "viewAll": "មើលវគ្គទាំងអស់",
+    "startCourse": "ចាប់ផ្តើមវគ្គ →",
+    "lessons": "{count} មេរៀន",
+    "pageTitle": "វគ្គសិក្សាទាំងអស់",
+    "pageSubtitle": "រុករកកម្មវិធីសិក្សារបស់យើង ហើយរៀនតាមល្បឿនផ្ទាល់ខ្លួន។",
+    "filterAll": "ទាំងអស់",
+    "filterBeginner": "ថ្នាក់ដំបូង",
+    "filterIntermediate": "ថ្នាក់កណ្ដាល",
+    "filterAdvanced": "ថ្នាក់ខ្ពស់",
+    "enroll": "ចាប់ផ្តើមវគ្គ",
+    "continueCourse": "បន្ត",
+    "xpReward": "{xp} XP",
+    "python": {
+      "title": "មូលដ្ឋានគ្រឹះ Python",
+      "titleKh": "មូលដ្ឋានគ្រឹះ Python",
+      "tag": "ពេញនិយមបំផុត",
+      "desc": "រៀន Python ពីដំបូង — អថេរ loop អនុគមន៍ និងការសរសេរកូដតម្រង់និយាយ។"
+    },
+    "react": {
+      "title": "បង្កើតគេហទំព័រ React",
+      "titleKh": "បង្កើតគេហទំព័រ React",
+      "tag": "ថ្មី",
+      "desc": "បង្កើតកម្មវិធីគេហទំព័រទំនើបជាមួយ React components, hooks និង state management។"
+    },
+    "algorithms": {
+      "title": "ក្បួនដោះស្រាយ & DSA",
+      "titleKh": "ក្បួនដោះស្រាយ & DSA",
+      "tag": "ជំនួយអាជីព",
+      "desc": "ស្ទាត់ជំនាញរចនាសម្ព័ន្ធទិន្នន័យ — arrays, trees, ការតម្រៀប និង dynamic programming។"
+    }
+  },
+  "howItWorks": {
+    "headingPart1": "របៀបដែល",
+    "headingHighlight": "Apsara AI",
+    "headingPart2": "ដំណើរការ",
+    "subheading": "បីជំហានសាមញ្ញដើម្បីចាប់ផ្តើមការរៀនសរសេរកូដ",
+    "choosePath": {
+      "title": "ជ្រើសរើសផ្លូវ",
+      "desc": "ជ្រើសរើសវគ្គពីកម្មវិធីសិក្សាខ្មែរ។ ពី Python ជំហ្នើ រហូតដល់ algorithm ខ្ពស់"
+    },
+    "codeLearn": {
+      "title": "សរសេរ និងរៀន",
+      "desc": "សរសេរកូដនៅក្នុង playground ។ Apsara AI ពន្យល់គ្រប់គំនិតជាភាសាខ្មែរ"
+    },
+    "earnGrow": {
+      "title": "តាមដាន និងបញ្ជាក់",
+      "desc": "តាមដានការរីកចម្រើនផ្ទាល់ខ្លួន ទទួលបានវិញ្ញាបនបត្រដែលទទួលស្គាល់ និងបង្ហាញជំនាញរបស់អ្នក"
+    }
+  },
+  "testimonials": {
+    "headingPart1": "ស្រឡាញ់ដោយ",
+    "headingHighlight": "អ្នកអភិវឌ្ឍខ្មែរ",
+    "headingPart2": "",
+    "sokha": {
+      "name": "សុខា ផន",
+      "role": "ជានីយ ডেভ @ PiCom",
+      "text": "Apsara AI ជួយខ្ញុំទទួលបានការងារ tech ដំបូង។ ការពន្យល់ជាខ្មែរធ្វើឱ្យ algorithm ស្មុគស្មាញយល់ភ្លាម"
+    },
+    "dara": {
+      "name": "ដារ៉ា ឈិន",
+      "role": "និស្សិត CS, RUPP",
+      "text": "ទីបំផុតវេទិកាបង្រៀនសរសេរកូដជាភាសាខ្មែរ! AI mentor ឆ្លើយសំណួររបស់ខ្ញុំប្រសើរជាងសៀវភៅណាមួយ"
+    },
+    "bopha": {
+      "name": "បុប្ផា មាស",
+      "role": "Freelance Developer",
+      "text": "ការ gamification ធ្វើឱ្យខ្ញុំមានការលើកទឹកចិត្ត។ ខ្ញុំរកបាន 3 certificate ក្នុង 2 ខែ ហើយប្រាក់ចំណូលកើនទ្វេដង"
+    }
+  },
+  "cta": {
+    "headingPart1": "ត្រៀមចាប់ផ្តើម",
+    "headingHighlight": "សរសេរកូដ",
+    "headingPart2": "?",
+    "subheading": "ចូលរួមជាមួយ 12,000+ និស្សិតខ្មែរ ដែលកំពុងបង្កើតអនាគតជាមួយកូដ",
+    "free": "ឥតគិតថ្លៃជានិច្ចសម្រាប់និស្សិត",
+    "createAccount": "បង្កើតគណនីឥតគិតថ្លៃ",
+    "finePrint": "មិនតម្រូវការ credit card • ឥតគិតថ្លៃជានិច្ចសម្រាប់និស្សិត"
+  },
+  "footer": {
+    "brand": "វេទិការៀនសរសេរកូដដំបូងដំណើរការដោយ AI នៅកម្ពុជា។ ផ្ដល់អំណាចដល់អ្នកអភិវឌ្ឍខ្មែររូបបន្ទាប់",
+    "platformCol": "វេទិកា",
+    "companyCol": "ក្រុមហ៊ុន",
+    "supportCol": "ជំនួយ",
+    "courses": "វគ្គសិក្សា",
+    "playground": "Playground",
+    "aiMentor": "AI Mentor",
+    "leaderboard": "Leaderboard",
+    "about": "អំពីយើង",
+    "blog": "Blog",
+    "careers": "ការងារ",
+    "press": "ប្រព័ន្ធផ្សព្វផ្សាយ",
+    "helpCenter": "មជ្ឈមណ្ឌលជំនួយ",
+    "community": "សហគមន៍",
+    "contact": "ទំនាក់ទំនង",
+    "status": "ស្ថានភាព",
+    "copyright": "© 2025 Apsara AI. សាងសង់ដោយ ❤️ នៅភ្នំពេញ, កម្ពុជា 🇰🇭",
+    "privacy": "ភាពឯកជន",
+    "terms": "លក្ខខណ្ឌ",
+    "cookies": "Cookies"
+  },
+  "dashboard": {
+    "greeting": "អរុណ​សួស្ដី 👋",
+    "welcomeBack": "សូមស្វាគមន៍ត្រឡប់មក,",
+    "keepLearning": "បន្តការរៀនរបស់អ្នក — គ្រប់មេរៀនមានតម្លៃ",
+    "continueLearning": "បន្តរៀន",
+    "lessonsCompleted": "មេរៀនបានរៀន",
+    "coursesActive": "វគ្គកំពុងរៀន",
+    "myCourses": "វគ្គសិក្សារបស់ខ្ញុំ",
+    "viewAll": "មើលទាំងអស់",
+    "lessonProgress": "{done} / {total} មេរៀន",
+    "continue": "បន្ត",
+    "settings": "ការកំណត់",
+    "signOut": "ចេញ",
+    "search": "ស្វែងរកវគ្គ មេរៀន…"
+  },
+  "learn": {
+    "theory": "ទ្រឹស្ដី",
+    "practice": "អនុវត្ត",
+    "challenge": "ការប្រឡង",
+    "runCode": "ដំណើរការ",
+    "reset": "កំណត់ឡើងវិញ",
+    "output": "លទ្ធផល",
+    "aiMentor": "AI Mentor",
+    "online": "អនឡាញ",
+    "askApsara": "សួរ Apsara...",
+    "send": "ផ្ញើ",
+    "locked": "ចាក់សោ",
+    "courseOutline": "មាតិកាវគ្គ",
+    "backToDashboard": "ផ្ទាំងគ្រប់គ្រង",
+    "copy": "ចម្លង",
+    "fullscreen": "ពេញអេក្រង់",
+    "lesson": "មេរៀន"
+  },
+  "auth": {
+    "loginTitle": "ចូលគណនីរបស់អ្នក",
+    "emailPlaceholder": "បញ្ចូលអ៊ីម៉ែលរបស់អ្នក...",
+    "passwordPlaceholder": "បញ្ចូលពាក្យសម្ងាត់...",
+    "loginButton": "ចូល",
+    "noAccount": "មិនទាន់មានគណនី?",
+    "signUp": "ចុះឈ្មោះ",
+    "registerTitle": "បង្កើតគណនីរបស់អ្នក",
+    "registerSubtitle": "ចូលរួមជាមួយ 12,000+ និស្សិតខ្មែរ ដែលកំពុងរៀនសរសេរកូដ។",
+    "namePlaceholder": "បញ្ចូលឈ្មោះពេញរបស់អ្នក...",
+    "confirmPasswordPlaceholder": "បញ្ជាក់ពាក្យសម្ងាត់...",
+    "registerButton": "បង្កើតគណនី",
+    "alreadyHaveAccount": "មានគណនីហើយ?",
+    "signIn": "ចូលគណនី"
+  }
+}
