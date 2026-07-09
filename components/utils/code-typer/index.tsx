@@ -3,13 +3,13 @@
 import { useState, useEffect, useCallback, useRef } from "react"
 
 const HIGHLIGHT_RULES: [RegExp, string][] = [
-  [/^("""[\s\S]*?"""|'''[\s\S]*?'''|f?"[^"]*"|f?'[^']*'|"[^"]*"|'[^']*')/, "text-green-400"],
-  [/^(def|return|for|in|class|if|elif|else|while|import|from|as|print|self)\b/, "text-purple-400"],
-  [/^#.*/, "text-white/30"],
-  [/^\d+(\.\d+)?/, "text-orange-400"],
-  [/^([a-zA-Z_]\w*)(?=\()/, "text-cyan-300"],
-  [/^__\w+__/, "text-cyan-400"],
-  [/^@\w+/, "text-yellow-400"],
+  [/^("""[\s\S]*?"""|'''[\s\S]*?'''|f?"[^"]*"|f?'[^']*'|"[^"]*"|'[^']*')/, "text-yellow-300"],
+  [/^(def|return|for|in|class|if|elif|else|while|import|from|as|print|self)\b/, "text-pink-400"],
+  [/^#.*/, "text-gray-500"],
+  [/^\d+(\.\d+)?/, "text-orange-300"],
+  [/^([a-zA-Z_]\w*)(?=\()/, "text-sky-300"],
+  [/^__\w+__/, "text-fuchsia-400"],
+  [/^@\w+/, "text-amber-400"],
 ]
 
 function splitTokens(text: string) {
@@ -34,9 +34,9 @@ function splitTokens(text: string) {
 
     if (!matched) {
       const char = remaining[0]
-      let className = "text-white/70"
-      if (/^[{}()\].,:;@]$/.test(char)) className = "text-white/60"
-      else if (/^[=+\-*/%<>!&|^~]$/.test(char)) className = "text-white/50"
+      let className = "text-gray-300"
+      if (/^[{}()\].,:;@]$/.test(char)) className = "text-gray-400"
+      else if (/^[=+\-*/%<>!&|^~]$/.test(char)) className = "text-gray-500"
       elements.push(
         <span key={key++} className={className}>{char}</span>
       )
@@ -50,7 +50,7 @@ function splitTokens(text: string) {
 function Cursor({ visible }: { visible: boolean }) {
   return (
     <span
-      className={`text-white/70 transition-opacity duration-100 ${
+      className={`text-gray-300 transition-opacity duration-100 ${
         visible ? "opacity-100" : "opacity-0"
       }`}
     >
@@ -67,6 +67,7 @@ interface CodeTyperProps {
   loop?: boolean
   loopDelay?: number
   className?: string
+  active?: boolean
 }
 
 export function CodeTyper({
@@ -77,11 +78,13 @@ export function CodeTyper({
   loop = true,
   loopDelay = 5000,
   className = "",
+  active = true,
 }: CodeTyperProps) {
   const [codeProgress, setCodeProgress] = useState(0)
   const [outputProgress, setOutputProgress] = useState(-1)
   const [cursorVisible, setCursorVisible] = useState(true)
   const [done, setDone] = useState(false)
+  const prevActive = useRef(active)
 
   useEffect(() => {
     const interval = setInterval(() => setCursorVisible((p) => !p), 530)
@@ -95,6 +98,13 @@ export function CodeTyper({
   }, [])
 
   useEffect(() => {
+    if (active && !prevActive.current) restart()
+    prevActive.current = active
+  }, [active, restart])
+
+  useEffect(() => {
+    if (!active) return
+
     if (codeProgress < code.length) {
       const timer = setTimeout(() => setCodeProgress((p) => p + 1), typingSpeed)
       return () => clearTimeout(timer)
@@ -119,15 +129,10 @@ export function CodeTyper({
       const timer = setTimeout(restart, loopDelay)
       return () => clearTimeout(timer)
     }
-  }, [codeProgress, outputProgress, code, output, typingSpeed, outputDelay, loop, loopDelay, done, restart])
+  }, [active, codeProgress, outputProgress, code, output, typingSpeed, outputDelay, loop, loopDelay, done, restart])
 
   const isTypingCode = codeProgress < code.length
   const isAfterCode = codeProgress >= code.length
-  const sentinelRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    sentinelRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" })
-  }, [codeProgress, outputProgress])
 
   return (
     <div className={`font-mono text-xs leading-relaxed ${className}`}>
@@ -149,10 +154,10 @@ export function CodeTyper({
           <div className={`mt-3 pt-2 border-t border-white/5 transition-opacity duration-500 ${
             outputProgress >= 0 ? "opacity-100" : "opacity-0"
           }`}>
-            <div className="text-[10px] text-white/30 mb-1">▸ Output</div>
+            <div className="text-[10px] text-gray-500 mb-1">▸ Output</div>
             {outputProgress >= 0 &&
               output.slice(0, outputProgress).map((line, i) => (
-                <div key={i} className="text-emerald-400 whitespace-pre">
+                <div key={i} className="text-emerald-300 whitespace-pre">
                   {line}
                   {i === outputProgress - 1 && outputProgress < output.length && (
                     <Cursor visible={cursorVisible} />
@@ -162,7 +167,6 @@ export function CodeTyper({
           </div>
         </>
       )}
-      <div ref={sentinelRef} />
     </div>
   )
 }

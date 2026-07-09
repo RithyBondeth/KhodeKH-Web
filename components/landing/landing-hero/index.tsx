@@ -29,8 +29,7 @@ const outputLines = [
 
 export function LandingHero() {
   const t = useTranslations("hero")
-  const [codeVersion, setCodeVersion] = useState(0)
-  const wasVisibleRef = useRef(false)
+  const [editorActive, setEditorActive] = useState(true)
   const editorRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -39,10 +38,7 @@ export function LandingHero() {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !wasVisibleRef.current) {
-          setCodeVersion((v) => v + 1)
-        }
-        wasVisibleRef.current = entry.isIntersecting
+        setEditorActive(entry.isIntersecting)
       },
       { threshold: 0.3 }
     )
@@ -163,10 +159,10 @@ export function LandingHero() {
                 </div>
               </div>
               {/* Editor */}
-              <div className="flex-1 flex flex-col bg-[#0d0d1a]">
+              <div className="flex-1 flex flex-col bg-[#0d1117]">
                 <div className="flex items-center gap-3 px-4 py-2 border-b border-white/5">
-                  <span className="text-xs text-white/40 font-mono">main.py</span>
-                  <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-violet-500/20 text-violet-300 border border-violet-500/30">Python 3.11</span>
+                  <span className="text-xs text-gray-400 font-mono">main.py</span>
+                  <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30">Python 3.11</span>
                   <div className="ml-auto flex items-center gap-2">
                     <div className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
                     <span className="text-[10px] text-emerald-400">Running</span>
@@ -174,7 +170,7 @@ export function LandingHero() {
                 </div>
                 <div ref={editorRef} className="flex-1 p-4 overflow-hidden">
                   <CodeTyper
-                    key={codeVersion}
+                    active={editorActive}
                     code={codeLines}
                     output={outputLines}
                     typingSpeed={70}
