@@ -1,5 +1,6 @@
 "use client"
 
+import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import {
   Sparkles, ArrowRight, Play, Brain, Star, ChevronRight, GraduationCap,
@@ -9,9 +10,45 @@ import { AnimateIn } from "@/components/utils/animations/animate-in"
 import { TypographyH1 } from "@/components/utils/typography/typography-h1"
 import { TypographyLead } from "@/components/utils/typography/typography-lead"
 import { TypographyMuted } from "@/components/utils/typography/typography-muted"
+import { CodeTyper } from "@/components/utils/code-typer"
+
+const codeLines = [
+  'def greet(name="\u1798\u17b6\u178f\u17d2\u178f"):',
+  '    return f"\u179f\u17bd\u179f\u17d2\u179f\u17ca\u17b8, {name}!"',
+  "",
+  'names = ["\u178a\u17b6\u179a\u17b7\u17b6", "\u179f\u17bb\u1797\u17b6", "\u1798\u17b6\u179b\u17b8"]',
+  "for n in names:",
+  "    print(greet(n))",
+]
+
+const outputLines = [
+  "\u179f\u17bd\u179f\u17d2\u179f\u17ca\u17b8, \u178a\u17b6\u179a\u17b7\u17b6!",
+  "\u179f\u17bd\u179f\u17d2\u179f\u17ca\u17b8, \u179f\u17bb\u1797\u17b6!",
+  "\u179f\u17bd\u179f\u17d2\u179f\u17ca\u17b8, \u1798\u17b6\u179b\u17b8!",
+]
 
 export function LandingHero() {
   const t = useTranslations("hero")
+  const [codeVersion, setCodeVersion] = useState(0)
+  const wasVisibleRef = useRef(false)
+  const editorRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const el = editorRef.current
+    if (!el) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !wasVisibleRef.current) {
+          setCodeVersion((v) => v + 1)
+        }
+        wasVisibleRef.current = entry.isIntersecting
+      },
+      { threshold: 0.3 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
 
   return (
     <section className="relative flex flex-col items-center justify-center px-6 pt-36 pb-24 text-center min-h-screen">
@@ -135,17 +172,15 @@ export function LandingHero() {
                     <span className="text-[10px] text-emerald-400">Running</span>
                   </div>
                 </div>
-                <div className="flex-1 p-4 font-mono text-xs leading-relaxed">
-                  <div><span className="text-purple-400">def</span><span className="text-cyan-300"> greet</span><span className="text-white/70">(name):</span></div>
-                  <div className="pl-4"><span className="text-white/70">message = </span><span className="text-green-400">&quot;សួស្ដី, &quot;</span><span className="text-white/70"> + name</span></div>
-                  <div className="pl-4"><span className="text-purple-400">return</span><span className="text-white/70"> message</span></div>
-                  <div className="mt-2"><span className="text-white/30"># Call the function</span></div>
-                  <div><span className="text-white/70">result = greet(</span><span className="text-green-400">&quot;ដារ៉ា&quot;</span><span className="text-white/70">)</span></div>
-                  <div><span className="text-cyan-400">print</span><span className="text-white/70">(result)</span></div>
-                  <div className="mt-4 pt-3 border-t border-white/5">
-                    <div className="text-[10px] text-white/30 mb-1">▸ Output</div>
-                    <div className="text-emerald-400">សួស្ដី, ដារ៉ា</div>
-                  </div>
+                <div ref={editorRef} className="flex-1 p-4 overflow-hidden">
+                  <CodeTyper
+                    key={codeVersion}
+                    code={codeLines}
+                    output={outputLines}
+                    typingSpeed={70}
+                    outputDelay={1500}
+                    loopDelay={6000}
+                  />
                 </div>
               </div>
               {/* AI Panel */}
@@ -159,10 +194,10 @@ export function LandingHero() {
                 </div>
                 <div className="space-y-2 flex-1">
                   <div className="bg-muted dark:bg-white/5 rounded-xl rounded-tl-none p-2.5 text-[10px] text-muted-foreground leading-relaxed border border-border">
-                    Great work! Your <span className="text-cyan-600 dark:text-cyan-400">greet()</span> function is correct. Try adding a default parameter!
+                    Nice! Your <span className="text-cyan-600 dark:text-cyan-400">greet()</span> function loops through Khmer names. Try adding default parameters next!
                   </div>
                   <div className="bg-violet-100 dark:bg-violet-500/20 rounded-xl rounded-tr-none ml-4 p-2.5 text-[10px] text-violet-700 dark:text-violet-200 leading-relaxed">
-                    How do I add a default value?
+                    How do I use a for loop?
                   </div>
                 </div>
                 <div className="mt-2 flex gap-1.5">
