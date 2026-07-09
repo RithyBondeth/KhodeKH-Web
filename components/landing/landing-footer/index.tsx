@@ -42,7 +42,7 @@ export function LandingFooter() {
   ]
 
   return (
-    <footer className="border-t border-border py-12 px-6 bg-muted/20">
+    <footer className="relative z-10 border-t border-border py-12 px-6 bg-background">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between gap-8 mb-10">
           <AnimateIn animation="fade-right" className="max-w-xs">
