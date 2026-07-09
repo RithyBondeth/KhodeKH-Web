@@ -23,8 +23,8 @@ export function LandingNavbar({ menuOpen, onMenuToggle }: LandingNavbarProps) {
             <Sparkles className="size-4 text-white" />
           </div>
           <span className="font-bold text-lg tracking-tight">
-            <span className="gradient-text">Apsara</span>
-            <span className="text-muted-foreground font-light">.ai</span>
+            <span className="gradient-text">Kode</span>
+            <span className="text-muted-foreground font-light">KH</span>
           </span>
         </Link>
 

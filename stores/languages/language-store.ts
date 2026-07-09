@@ -15,6 +15,6 @@ export const useLanguageStore = create<ILanguageState>()(
       language: "en",
       setLanguage: (language) => set({ language }),
     }),
-    { name: "apsara-language" }
+    { name: "kodekh-language" }
   )
 )

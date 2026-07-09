@@ -51,8 +51,8 @@ export function LandingFooter() {
                 <Sparkles className="size-4 text-white" />
               </div>
               <span className="font-bold text-lg">
-                <span className="gradient-text">Apsara</span>
-                <span className="text-muted-foreground">.ai</span>
+                <span className="gradient-text">Kode</span>
+                <span className="text-muted-foreground">KH</span>
               </span>
             </Link>
             <TypographyP className="text-sm text-muted-foreground leading-relaxed">

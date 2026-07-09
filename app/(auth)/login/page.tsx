@@ -29,8 +29,8 @@ export default function LoginPage() {
             <Sparkles className="size-4 text-white" />
           </div>
           <span className="text-xl font-bold tracking-tight">
-            <span className="gradient-text">Apsara</span>
-            <span className="font-light text-muted-foreground">.ai</span>
+            <span className="gradient-text">Kode</span>
+            <span className="font-light text-muted-foreground">KH</span>
           </span>
         </Link>
 
@@ -89,7 +89,7 @@ export default function LoginPage() {
           <div>
             <h2 className="mb-3 text-3xl font-bold">Welcome back!</h2>
             <p className="max-w-xs text-base leading-relaxed text-white/75">
-              Continue your coding journey with Apsara AI — Cambodia&apos;s
+              Continue your coding journey with KodeKH — Cambodia&apos;s
               first AI-powered coding platform.
             </p>
           </div>

@@ -37,7 +37,7 @@ export const PYTHON_MODULES: IModule[] = [
             ],
           },
         ],
-        aiWelcome: "សួស្ដី! ខ្ញុំជា Apsara AI 🎓\n\nWelcome to **Lesson 1: What is Python?** You're about to start Cambodia's most popular coding course. Python is the perfect first language!\n\nFeel free to ask me anything in Khmer or English. 🐍",
+        aiWelcome: "សួស្ដី! ខ្ញុំជា KodeKH AI 🎓\n\nWelcome to **Lesson 1: What is Python?** You're about to start Cambodia's most popular coding course. Python is the perfect first language!\n\nFeel free to ask me anything in Khmer or English. 🐍",
         aiSuggestions: [
           "Why is Python so popular?",
           "What can I build with Python?",
@@ -571,7 +571,7 @@ else:
             },
           },
         ],
-        aiWelcome: "សួស្ដី! ខ្ញុំជា Apsara AI — គ្រូបង្ហាត់ AI របស់អ្នក 🎓\n\nYou're on **Lesson 12: While Loops**. A `while` loop repeats as long as a condition is `True`.\n\nTry running the code to see the output! Ask me anything in Khmer or English. 🐍",
+        aiWelcome: "សួស្ដី! ខ្ញុំជា KodeKH AI — គ្រូបង្ហាត់ AI របស់អ្នក 🎓\n\nYou're on **Lesson 12: While Loops**. A `while` loop repeats as long as a condition is `True`.\n\nTry running the code to see the output! Ask me anything in Khmer or English. 🐍",
         aiSuggestions: [
           "What's the difference between for and while?",
           "How do I prevent an infinite loop?",
@@ -1304,7 +1304,7 @@ export const ALL_LESSONS = PYTHON_MODULES.flatMap((m) => m.lessons)
 
 export const DEFAULT_AI_WELCOME: IMessage = {
   role: "ai",
-  content: "សួស្ដី! ខ្ញុំជា Apsara AI — គ្រូបង្ហាត់ AI របស់អ្នក 🎓\n\nSelect a lesson from the sidebar to get started. Ask me anything in Khmer or English! 🐍",
+  content: "សួស្ដី! ខ្ញុំជា KodeKH AI — គ្រូបង្ហាត់ AI របស់អ្នក 🎓\n\nSelect a lesson from the sidebar to get started. Ask me anything in Khmer or English! 🐍",
   time: "Just now",
 }
 

@@ -33,7 +33,7 @@ export default function RegisterPage() {
             {[
               { icon: "✅", text: "Free forever for students" },
               { icon: "🇰🇭", text: "Lessons available in Khmer" },
-              { icon: "🤖", text: "Personal AI mentor — Apsara" },
+              { icon: "🤖", text: "Personal AI mentor — KodeKH" },
               { icon: "🏆", text: "Industry-recognised certificates" },
             ].map((item) => (
               <div key={item.text} className="flex items-center gap-3 text-sm text-left bg-white/10 rounded-xl px-4 py-2.5 backdrop-blur-sm">
@@ -53,8 +53,8 @@ export default function RegisterPage() {
             <Sparkles className="size-4 text-white" />
           </div>
           <span className="font-bold text-xl tracking-tight">
-            <span className="gradient-text">Apsara</span>
-            <span className="text-muted-foreground font-light">.ai</span>
+            <span className="gradient-text">Kode</span>
+            <span className="text-muted-foreground font-light">KH</span>
           </span>
         </Link>
 

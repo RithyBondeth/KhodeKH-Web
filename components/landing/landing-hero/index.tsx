@@ -96,7 +96,7 @@ export function LandingHero() {
               </div>
               <div className="flex-1 mx-4">
                 <div className="mx-auto max-w-xs h-5 rounded-md bg-muted flex items-center px-3 text-[10px] text-muted-foreground">
-                  apsara.ai/learn/python
+                  kodekh.com/learn/python
                 </div>
               </div>
             </div>
@@ -105,7 +105,7 @@ export function LandingHero() {
               <div className="w-52 border-r border-border bg-muted/20 p-3 hidden sm:block">
                 <div className="flex items-center gap-2 mb-4 px-2">
                   <Sparkles className="size-4 text-violet-500 dark:text-violet-400" />
-                  <span className="text-xs font-semibold text-foreground">Apsara AI</span>
+                  <span className="text-xs font-semibold text-foreground">KodeKH</span>
                 </div>
                 {["Dashboard","My Courses","Challenges","Leaderboard"].map((item, i) => (
                   <div key={item} className={`flex items-center gap-2 px-2.5 py-2 rounded-xl mb-1 text-xs ${
@@ -154,7 +154,7 @@ export function LandingHero() {
                   <div className="size-6 rounded-lg gradient-bg-primary flex items-center justify-center shrink-0">
                     <Brain className="size-3 text-white" />
                   </div>
-                  <span className="text-xs font-medium text-foreground">Apsara AI</span>
+                  <span className="text-xs font-medium text-foreground">KodeKH</span>
                   <div className="ml-auto size-1.5 rounded-full bg-emerald-500" />
                 </div>
                 <div className="space-y-2 flex-1">

@@ -12,10 +12,10 @@
     "community": "សហគមន៍"
   },
   "hero": {
-    "badge": "ណែនាំ Apsara AI v2.0 — ឥឡូវនេះដំណើរការជាមួយ GPT-4",
+    "badge": "ណែនាំ KodeKH v2.0 — ឥឡូវនេះដំណើរការជាមួយ GPT-4",
     "titleKh": "រៀនសរសេរកូដ",
     "titleWith": "ជាមួយ",
-    "subtitle": "វេទិកាសរសេរកូដដំបូងដំណើរការដោយ AI សម្រាប់និស្សិតខ្មែរ។ រៀន Python, JavaScript និងច្រើនទៀតជាមួយ <mentor>Apsara</mentor> — គ្រូ AI ផ្ទាល់ខ្លួនរបស់អ្នក។",
+    "subtitle": "វេទិកាសរសេរកូដដំបូងដំណើរការដោយ AI សម្រាប់និស្សិតខ្មែរ។ រៀន Python, JavaScript និងច្រើនទៀតជាមួយ <mentor>KodeKH</mentor> — គ្រូ AI ផ្ទាល់ខ្លួនរបស់អ្នក។",
     "startLearning": "ចាប់ផ្តើមរៀន",
     "watchDemo": "មើលការបង្ហាញ",
     "studentsCount": "12,000+ អ្នករៀនថ្ងៃនេះ"
@@ -33,7 +33,7 @@
     "headingPart2": "",
     "subheading": "ឧបករណ៍ដ៏មានអានុភាព មាតិកាខ្មែរជាមូលដ្ឋាន និងជំនួយ AI — ក្នុងវេទិកាតែមួយ",
     "aiMentor": {
-      "title": "គ្រូ AI អប្សរា",
+      "title": "គ្រូ AI KodeKH",
       "desc": "ការពន្យល់កូដក្នុងពេលជាក់ស្ដែង ជំនួយ debug និងផ្លូវរៀនផ្ទាល់ខ្លួន ដំណើរការដោយ AI ទំនើប"
     },
     "codePlayground": {
@@ -87,7 +87,7 @@
   },
   "howItWorks": {
     "headingPart1": "របៀបដែល",
-    "headingHighlight": "Apsara AI",
+    "headingHighlight": "KodeKH",
     "headingPart2": "ដំណើរការ",
     "subheading": "បីជំហានសាមញ្ញដើម្បីចាប់ផ្តើមការរៀនសរសេរកូដ",
     "choosePath": {
@@ -96,7 +96,7 @@
     },
     "codeLearn": {
       "title": "សរសេរ និងរៀន",
-      "desc": "សរសេរកូដនៅក្នុង playground ។ Apsara AI ពន្យល់គ្រប់គំនិតជាភាសាខ្មែរ"
+      "desc": "សរសេរកូដនៅក្នុង playground ។ KodeKH ពន្យល់គ្រប់គំនិតជាភាសាខ្មែរ"
     },
     "earnGrow": {
       "title": "តាមដាន និងបញ្ជាក់",
@@ -110,7 +110,7 @@
     "sokha": {
       "name": "សុខា ផន",
       "role": "ជានីយ ডেভ @ PiCom",
-      "text": "Apsara AI ជួយខ្ញុំទទួលបានការងារ tech ដំបូង។ ការពន្យល់ជាខ្មែរធ្វើឱ្យ algorithm ស្មុគស្មាញយល់ភ្លាម"
+      "text": "KodeKH ជួយខ្ញុំទទួលបានការងារ tech ដំបូង។ ការពន្យល់ជាខ្មែរធ្វើឱ្យ algorithm ស្មុគស្មាញយល់ភ្លាម"
     },
     "dara": {
       "name": "ដារ៉ា ឈិន",
@@ -149,7 +149,7 @@
     "community": "សហគមន៍",
     "contact": "ទំនាក់ទំនង",
     "status": "ស្ថានភាព",
-    "copyright": "© 2025 Apsara AI. សាងសង់ដោយ ❤️ នៅភ្នំពេញ, កម្ពុជា 🇰🇭",
+    "copyright": "© 2025 KodeKH. សាងសង់ដោយ ❤️ នៅភ្នំពេញ, កម្ពុជា 🇰🇭",
     "privacy": "ភាពឯកជន",
     "terms": "លក្ខខណ្ឌ",
     "cookies": "Cookies"
@@ -178,7 +178,7 @@
     "output": "លទ្ធផល",
     "aiMentor": "AI Mentor",
     "online": "អនឡាញ",
-    "askApsara": "សួរ Apsara...",
+    "askAI": "សួរ KodeKH...",
     "send": "ផ្ញើ",
     "locked": "ចាក់សោ",
     "courseOutline": "មាតិកាវគ្គ",
