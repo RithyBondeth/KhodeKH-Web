@@ -3,7 +3,7 @@
 import Link from "next/link"
 import {
   ChevronRight, BookOpen, Play, Clock,
-  ArrowRight, CheckCircle2,
+  ArrowRight, CheckCircle2, Terminal, Code2, Brain,
 } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { AppShell } from "@/components/utils/app-shell"
@@ -14,6 +14,12 @@ import { TypographyH3 } from "@/components/utils/typography/typography-h3"
 import { TypographyH4 } from "@/components/utils/typography/typography-h4"
 import { TypographyMuted } from "@/components/utils/typography/typography-muted"
 import { studentData, activeCourses } from "@/utils/constants/dashboard.constant"
+
+const COURSE_ICONS: Record<string, React.ElementType> = {
+  Terminal,
+  Code2,
+  Brain,
+}
 
 export default function DashboardPage() {
   const t = useTranslations("dashboard")
@@ -101,7 +107,12 @@ export default function DashboardPage() {
               <AnimateIn key={course.id} animation={i % 2 === 0 ? "fade-right" : "fade-left"} delay={0.2 + i * 0.1}>
                 <div className="card-surface rounded-2xl p-5 group hover:border-violet-200 dark:hover:border-violet-500/25 transition-all">
                   <div className="flex items-start gap-4">
-                    <div className="text-3xl shrink-0 leading-none mt-0.5">{course.icon}</div>
+                    <div className="size-11 rounded-xl bg-muted flex items-center justify-center shrink-0">
+                      {(() => {
+                        const Icon = COURSE_ICONS[course.icon]
+                        return Icon ? <Icon className="size-5" /> : null
+                      })()}
+                    </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between gap-2 mb-1">
                         <div>

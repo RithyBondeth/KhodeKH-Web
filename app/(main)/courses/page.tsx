@@ -202,8 +202,8 @@ export default function CoursesPage() {
           <AnimateIn animation="fade-left" delay={0.15 + visible.length * 0.07}>
             <div className="card-surface rounded-2xl p-5 flex flex-col gap-4 border border-dashed border-border opacity-60 select-none">
               <div className="flex items-start justify-between">
-                <div className="size-14 rounded-2xl bg-muted flex items-center justify-center text-3xl leading-none">
-                  🔒
+                <div className="size-14 rounded-2xl bg-muted flex items-center justify-center">
+                  <Lock className="size-6 text-muted-foreground" />
                 </div>
                 <Lock className="size-4 text-muted-foreground mt-1" />
               </div>

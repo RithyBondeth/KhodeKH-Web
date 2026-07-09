@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { useTranslations } from "next-intl"
-import { Sparkles, EyeIcon, EyeClosedIcon, LockIcon, MailIcon, UserIcon } from "lucide-react"
+import { Sparkles, EyeIcon, EyeClosedIcon, LockIcon, MailIcon, UserIcon, Rocket, Check, Globe, Bot, Trophy } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { TypographyH3 } from "@/components/utils/typography/typography-h3"
@@ -22,7 +22,9 @@ export default function RegisterPage() {
         <div className="absolute -top-32 -left-32 size-96 rounded-full bg-white/10 blur-3xl" />
         <div className="absolute -bottom-20 -right-20 size-72 rounded-full bg-white/10 blur-3xl" />
         <div className="relative flex flex-col items-center justify-center w-full px-12 text-white text-center gap-6">
-          <div className="text-6xl">🚀</div>
+          <div className="size-16 rounded-2xl bg-white/15 flex items-center justify-center">
+            <Rocket className="size-8 text-white" />
+          </div>
           <div>
             <h2 className="text-3xl font-bold mb-3">Start learning today</h2>
             <p className="text-white/75 text-base leading-relaxed max-w-xs">
@@ -31,13 +33,13 @@ export default function RegisterPage() {
           </div>
           <div className="flex flex-col gap-3 mt-2 w-full max-w-xs">
             {[
-              { icon: "✅", text: "Free forever for students" },
-              { icon: "🇰🇭", text: "Lessons available in Khmer" },
-              { icon: "🤖", text: "Personal AI mentor — KodeKH" },
-              { icon: "🏆", text: "Industry-recognised certificates" },
+              { icon: <Check className="size-4 shrink-0" />, text: "Free forever for students" },
+              { icon: <Globe className="size-4 shrink-0" />, text: "Lessons available in Khmer" },
+              { icon: <Bot className="size-4 shrink-0" />, text: "Personal AI mentor — KodeKH" },
+              { icon: <Trophy className="size-4 shrink-0" />, text: "Industry-recognised certificates" },
             ].map((item) => (
               <div key={item.text} className="flex items-center gap-3 text-sm text-left bg-white/10 rounded-xl px-4 py-2.5 backdrop-blur-sm">
-                <span>{item.icon}</span>
+                <span className="text-white">{item.icon}</span>
                 <span className="text-white/90">{item.text}</span>
               </div>
             ))}

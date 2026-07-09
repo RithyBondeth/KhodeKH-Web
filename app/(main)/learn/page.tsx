@@ -123,7 +123,7 @@ export default function LearnPage() {
     setTimeout(() => {
       const response =
         currentLesson.aiResponses?.[text] ??
-        "That's a great question! 🤔\n\nTry experimenting with the code editor — hands-on practice is the best teacher! 💪\n\nAsk me in Khmer if you prefer: ខ្ញុំចូលចិត្តការពន្យល់ជាភាសាខ្មែរ!"
+        "That's a great question!\n\nTry experimenting with the code editor — hands-on practice is the best teacher!\n\nAsk me in Khmer if you prefer: ខ្ញុំចូលចិត្តការពន្យល់ជាភាសាខ្មែរ!"
       setMessages((prev) => [...prev, { role: "ai", content: response, time: now() }])
       setAiTyping(false)
     }, 1600)
@@ -189,7 +189,10 @@ export default function LearnPage() {
           </Link>
           <div className="mx-0.5 h-4 w-px bg-border" />
           <div className="min-w-0 flex-1">
-            <div className="truncate text-xs font-semibold text-foreground">🐍 Python Fundamentals</div>
+            <div className="truncate text-xs font-semibold text-foreground flex items-center gap-1.5">
+              <Terminal className="size-3.5 text-violet-500" />
+              Python Fundamentals
+            </div>
             <div className="text-[10px] text-muted-foreground">
               {DONE_COUNT} of {TOTAL_LESSONS} lessons
             </div>

@@ -1,4 +1,4 @@
-import { Home, BookOpen, Code2, Brain } from "lucide-react"
+import { Home, BookOpen, Code2, Brain, Terminal } from "lucide-react"
 import type { IStudent, IActiveCourse, INavItem } from "@/utils/interfaces/dashboard"
 
 /* ── Student ─────────────────────────────────────────────────────────── */
@@ -19,7 +19,7 @@ export const activeCourses: IActiveCourse[] = [
     id: "python",
     title: "Python Fundamentals",
     titleKh: "មូលដ្ឋានគ្រឹះ Python",
-    icon: "🐍",
+    icon: "Terminal",
     progress: 65,
     currentLesson: "Lesson 8: Functions & Scope",
     completedLessons: 15,
@@ -30,7 +30,7 @@ export const activeCourses: IActiveCourse[] = [
     id: "react",
     title: "Web Dev with React",
     titleKh: "បង្កើតគេហទំព័រ React",
-    icon: "⚛️",
+    icon: "Code2",
     progress: 30,
     currentLesson: "Lesson 7: useState Hook",
     completedLessons: 9,

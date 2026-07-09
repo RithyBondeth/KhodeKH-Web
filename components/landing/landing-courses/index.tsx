@@ -1,7 +1,13 @@
 "use client"
 
 import Link from "next/link"
-import { BookOpen, ChevronRight } from "lucide-react"
+import { BookOpen, ChevronRight, Terminal, Code2, Brain } from "lucide-react"
+
+const ICON_MAP: Record<string, React.ElementType> = {
+  Terminal,
+  Code2,
+  Brain,
+}
 import { useTranslations } from "next-intl"
 import { AnimateIn } from "@/components/utils/animations/animate-in"
 import { COURSES, COLOR } from "@/utils/constants/landing.constant"
@@ -48,7 +54,12 @@ export function LandingCourses() {
                 <div className={`group card-surface rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300 cursor-pointer border ${c.border} h-full flex flex-col`}>
                   <div className="p-6 flex-1">
                     <div className="flex items-start justify-between mb-4">
-                      <div className="text-4xl">{course.icon}</div>
+                      <div className="size-14 rounded-2xl bg-muted flex items-center justify-center">
+                        {(() => {
+                          const Icon = ICON_MAP[course.icon]
+                          return Icon ? <Icon className="size-7" /> : null
+                        })()}
+                      </div>
                       <span className={`text-[10px] font-semibold px-2.5 py-1 rounded-full ${c.badge}`}>
                         {t(`${key}.tag` as Parameters<typeof t>[0])}
                       </span>

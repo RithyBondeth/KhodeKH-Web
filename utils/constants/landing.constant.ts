@@ -51,9 +51,9 @@ export const FEATURES = [
 /* ── Courses ─────────────────────────────────────────────────────────── */
 
 export const COURSES = [
-  { level: "Beginner",     lessons: 24, xp: 2400, color: "violet" as TColorKey, icon: "🐍", key: "python"     },
-  { level: "Intermediate", lessons: 32, xp: 3200, color: "cyan"   as TColorKey, icon: "⚛️", key: "react"      },
-  { level: "Advanced",     lessons: 40, xp: 4000, color: "amber"  as TColorKey, icon: "🧠", key: "algorithms" },
+  { level: "Beginner",     lessons: 24, xp: 2400, color: "violet" as TColorKey, icon: "Terminal", key: "python"     },
+  { level: "Intermediate", lessons: 32, xp: 3200, color: "cyan"   as TColorKey, icon: "Code2",    key: "react"      },
+  { level: "Advanced",     lessons: 40, xp: 4000, color: "amber"  as TColorKey, icon: "Brain",    key: "algorithms" },
 ]
 
 /* ── Stats ───────────────────────────────────────────────────────────── */

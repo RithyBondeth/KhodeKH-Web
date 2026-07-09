@@ -63,7 +63,9 @@ export function LandingHero() {
           <span className="text-foreground block">{t("titleWith")} </span>
           <span className="relative inline-block">
             <span className="gradient-text">AI Mentor</span>
-            <span className="absolute -top-3 -right-8 text-2xl select-none">✨</span>
+            <span className="absolute -top-3 -right-8 text-2xl select-none">
+              <Sparkles className="size-6 text-blue-400" />
+            </span>
           </span>
         </TypographyH1>
       </AnimateIn>

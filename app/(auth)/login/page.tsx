@@ -9,6 +9,7 @@ import {
   EyeClosedIcon,
   LockIcon,
   MailIcon,
+  Globe,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -85,7 +86,9 @@ export default function LoginPage() {
         <div className="absolute -top-32 -right-32 size-96 rounded-full bg-white/10 blur-3xl" />
         <div className="absolute -bottom-20 -left-20 size-72 rounded-full bg-white/10 blur-3xl" />
         <div className="relative flex w-full flex-col items-center justify-center gap-6 px-12 text-center text-white">
-          <div className="text-6xl">🇰🇭</div>
+          <div className="size-16 rounded-2xl bg-white/15 flex items-center justify-center">
+            <Globe className="size-8 text-white" />
+          </div>
           <div>
             <h2 className="mb-3 text-3xl font-bold">Welcome back!</h2>
             <p className="max-w-xs text-base leading-relaxed text-white/75">

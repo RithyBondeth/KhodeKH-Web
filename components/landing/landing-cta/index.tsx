@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { Sparkles, ArrowRight } from "lucide-react"
+import { Sparkles, ArrowRight, Globe } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { AnimateIn } from "@/components/utils/animations/animate-in"
 import { TypographyH2 } from "@/components/utils/typography/typography-h2"
@@ -16,7 +16,9 @@ export function LandingCta() {
       <AnimateIn animation="bounce-in" className="mx-auto max-w-3xl text-center">
         <div className="card-surface relative overflow-hidden rounded-3xl border border-violet-200 p-12 dark:border-violet-500/25">
           <div className="relative">
-            <div className="mb-6 text-5xl">🇰🇭</div>
+            <div className="mb-6">
+              <Globe className="size-12 mx-auto text-blue-500/60" />
+            </div>
             <TypographyH2 className="text-4xl font-bold tracking-tight mb-4 text-foreground border-0 pb-0">
               {t("headingPart1")}{" "}
               <span className="gradient-text">{t("headingHighlight")}</span>

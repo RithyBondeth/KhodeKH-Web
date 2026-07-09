@@ -14,7 +14,7 @@ export function LanguageSwitcher() {
     >
       <Globe className="size-4 shrink-0" />
       <span className="text-xs font-semibold">
-        {language === "en" ? "🇬🇧 EN" : "🇰🇭 KH"}
+        {language === "en" ? "EN" : "KH"}
       </span>
     </button>
   )
