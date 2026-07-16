@@ -35,7 +35,7 @@ export default function RegisterPage() {
             {[
               { icon: <Check className="size-4 shrink-0" />, text: "Free forever for students" },
               { icon: <Globe className="size-4 shrink-0" />, text: "Lessons available in Khmer" },
-              { icon: <Bot className="size-4 shrink-0" />, text: "Personal AI mentor — KodeKH" },
+              { icon: <Bot className="size-4 shrink-0" />, text: "Personal AI mentor — Apsara Elearning" },
               { icon: <Trophy className="size-4 shrink-0" />, text: "Industry-recognised certificates" },
             ].map((item) => (
               <div key={item.text} className="flex items-center gap-3 text-sm text-left bg-white/10 rounded-xl px-4 py-2.5 backdrop-blur-sm">

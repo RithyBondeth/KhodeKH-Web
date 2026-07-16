@@ -621,7 +621,7 @@ export default function LearnPage() {
                 <div className="absolute -right-0.5 -bottom-0.5 size-2.5 rounded-full border-2 border-card bg-emerald-500" />
               </div>
               <div className="flex-1">
-                <div className="text-sm font-semibold text-foreground">KodeKH AI</div>
+                <div className="text-sm font-semibold text-foreground">Apsara Elearning AI</div>
                 <div className="text-[10px] text-emerald-600 dark:text-emerald-400">{t("online")} · Khmer + English</div>
               </div>
               <div className="flex items-center gap-1">

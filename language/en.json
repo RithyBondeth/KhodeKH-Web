@@ -14,10 +14,10 @@
     "testimonials": "Testimonials"
   },
   "hero": {
-    "badge": "Introducing KodeKH v2.0 — Now with GPT-4 powered mentoring",
+    "badge": "Introducing Apsara Elearning v2.0 — Now with GPT-4 powered mentoring",
     "titleKh": "រៀនសរសេរកូដ",
     "titleWith": "with",
-    "subtitle": "The first AI-powered coding platform built for Cambodian students. Learn Python, JavaScript, and more with <mentor>KodeKH</mentor> — your personal AI coding mentor that speaks Khmer.",
+    "subtitle": "The first AI-powered coding platform built for Cambodian students. Learn Python, JavaScript, and more with <mentor>Apsara Elearning</mentor> — your personal AI coding mentor that speaks Khmer.",
     "startLearning": "Start Learning Free",
     "watchDemo": "Watch Demo",
     "studentsCount": "12,000+ students learning today"
@@ -35,7 +35,7 @@
     "headingPart2": "Developers",
     "subheading": "Powerful tools, Khmer-first content, and AI assistance — all in one platform.",
     "aiMentor": {
-      "title": "KodeKH AI Mentor",
+      "title": "Apsara Elearning AI Mentor",
       "desc": "Real-time code explanations, debugging help, and personalised learning paths powered by advanced AI."
     },
     "codePlayground": {
@@ -89,7 +89,7 @@
   },
   "howItWorks": {
     "headingPart1": "How",
-    "headingHighlight": "KodeKH",
+    "headingHighlight": "Apsara Elearning",
     "headingPart2": "Works",
     "subheading": "Three simple steps to start your coding journey",
     "choosePath": {
@@ -98,7 +98,7 @@
     },
     "codeLearn": {
       "title": "Code & Learn",
-      "desc": "Write code in our live playground. KodeKH explains every concept in Khmer as you go."
+      "desc": "Write code in our live playground. Apsara Elearning explains every concept in Khmer as you go."
     },
     "earnGrow": {
       "title": "Track & Certify",
@@ -112,7 +112,7 @@
     "sokha": {
       "name": "Sokha Phan",
       "role": "Junior Dev @ PiCom",
-      "text": "KodeKH helped me land my first tech job. The Khmer explanations made complex algorithms click instantly."
+      "text": "Apsara Elearning helped me land my first tech job. The Khmer explanations made complex algorithms click instantly."
     },
     "dara": {
       "name": "Dara Chheng",
@@ -151,7 +151,7 @@
     "community": "Community",
     "contact": "Contact",
     "status": "Status",
-    "copyright": "© 2025 KodeKH. Built with ❤️ in Phnom Penh, Cambodia 🇰🇭",
+    "copyright": "© 2025 Apsara Elearning. Built with ❤️ in Phnom Penh, Cambodia 🇰🇭",
     "privacy": "Privacy",
     "terms": "Terms",
     "cookies": "Cookies"
@@ -180,7 +180,7 @@
     "output": "Output",
     "aiMentor": "AI Mentor",
     "online": "Online",
-    "askAI": "Ask KodeKH...",
+    "askAI": "Ask Apsara Elearning...",
     "send": "Send",
     "locked": "Locked",
     "courseOutline": "Course Outline",

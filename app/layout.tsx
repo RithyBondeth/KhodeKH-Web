@@ -34,7 +34,7 @@ const geistMonoHeading = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "KodeKH — Learn to Code in Khmer",
+  title: "Apsara Elearning — Learn to Code in Khmer",
   description:
     "The first AI-powered coding platform built for Cambodian students. Learn Python, JavaScript, and more with your personal AI mentor.",
   keywords: ["coding", "Cambodia", "Khmer", "AI", "programming", "learn"],

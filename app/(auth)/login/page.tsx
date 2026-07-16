@@ -92,7 +92,7 @@ export default function LoginPage() {
           <div>
             <h2 className="mb-3 text-3xl font-bold">Welcome back!</h2>
             <p className="max-w-xs text-base leading-relaxed text-white/75">
-              Continue your coding journey with KodeKH — Cambodia&apos;s
+              Continue your coding journey with Apsara Elearning — Cambodia&apos;s
               first AI-powered coding platform.
             </p>
           </div>

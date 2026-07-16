@@ -31,13 +31,26 @@ export const PYTHON_MODULES: IModule[] = [
           {
             type: "terms",
             items: [
-              { term: "interpreter", termKh: "កម្មវិធីបកប្រែ", desc: "Runs your code line-by-line without compiling first" },
-              { term: "syntax", termKh: "វាក្យស័ព្ទ", desc: "The rules for how to write valid Python code" },
-              { term: "print()", termKh: "បង្ហាញ", desc: "Outputs text to the screen" },
+              {
+                term: "interpreter",
+                termKh: "កម្មវិធីបកប្រែ",
+                desc: "Runs your code line-by-line without compiling first",
+              },
+              {
+                term: "syntax",
+                termKh: "វាក្យស័ព្ទ",
+                desc: "The rules for how to write valid Python code",
+              },
+              {
+                term: "print()",
+                termKh: "បង្ហាញ",
+                desc: "Outputs text to the screen",
+              },
             ],
           },
         ],
-        aiWelcome: "សួស្ដី! ខ្ញុំជា KodeKH AI 🎓\n\nWelcome to **Lesson 1: What is Python?** You're about to start Cambodia's most popular coding course. Python is the perfect first language!\n\nFeel free to ask me anything in Khmer or English. 🐍",
+        aiWelcome:
+          "សួស្ដី! ខ្ញុំជា Apsara Elearning AI 🎓\n\nWelcome to **Lesson 1: What is Python?** You're about to start Cambodia's most popular coding course. Python is the perfect first language!\n\nFeel free to ask me anything in Khmer or English. 🐍",
         aiSuggestions: [
           "Why is Python so popular?",
           "What can I build with Python?",
@@ -81,10 +94,26 @@ export const PYTHON_MODULES: IModule[] = [
           {
             type: "terms",
             items: [
-              { term: "str", termKh: "អក្សរ", desc: "Text surrounded by quotes: \"hello\" or 'hello'" },
-              { term: "int", termKh: "ចំនួនគត់", desc: "Whole numbers: 0, 42, -7" },
-              { term: "float", termKh: "ចំនួនទសភាគ", desc: "Decimal numbers: 3.14, -0.5" },
-              { term: "bool", termKh: "តក្ក", desc: "True or False — used in conditions" },
+              {
+                term: "str",
+                termKh: "អក្សរ",
+                desc: "Text surrounded by quotes: \"hello\" or 'hello'",
+              },
+              {
+                term: "int",
+                termKh: "ចំនួនគត់",
+                desc: "Whole numbers: 0, 42, -7",
+              },
+              {
+                term: "float",
+                termKh: "ចំនួនទសភាគ",
+                desc: "Decimal numbers: 3.14, -0.5",
+              },
+              {
+                term: "bool",
+                termKh: "តក្ក",
+                desc: "True or False — used in conditions",
+              },
             ],
           },
           {
@@ -93,7 +122,8 @@ export const PYTHON_MODULES: IModule[] = [
             body: "Python is case-sensitive. `name` and `Name` are two different variables. Always use lowercase_with_underscores for variable names.",
           },
         ],
-        aiWelcome: "Lesson 2: Variables & Data Types 📦\n\nVariables are the building blocks of every program. Think of them as labelled boxes that hold information.\n\nAsk me anything — I explain in Khmer too! 🇰🇭",
+        aiWelcome:
+          "Lesson 2: Variables & Data Types 📦\n\nVariables are the building blocks of every program. Think of them as labelled boxes that hold information.\n\nAsk me anything — I explain in Khmer too! 🇰🇭",
         aiSuggestions: [
           "What is the difference between int and float?",
           "Can a variable name have spaces?",
@@ -104,9 +134,9 @@ export const PYTHON_MODULES: IModule[] = [
           "What is the difference between int and float?":
             "Great question! 🔢\n\n```python\nage    = 22     # int   — no decimal\nheight = 1.72   # float — has decimal\n```\n\nUse **int** for counting things (students, lessons).\nUse **float** for measuring things (price, weight, GPA).\n\nPython converts between them automatically when needed:\n```python\nprint(22 / 7)   # → 3.142857... (auto float)\nprint(22 // 7)  # → 3 (integer division)\n```",
           "Can a variable name have spaces?":
-            "No! ❌ Spaces are not allowed in variable names.\n\n```python\n# ❌ Wrong\nmy name = \"Dara\"\n\n# ✅ Use underscore instead\nmy_name = \"Dara\"\nfirst_name = \"Sok\"\nlast_name  = \"Dara\"\n```\n\nPython convention: `lower_case_with_underscores` (called snake_case 🐍).",
+            'No! ❌ Spaces are not allowed in variable names.\n\n```python\n# ❌ Wrong\nmy name = "Dara"\n\n# ✅ Use underscore instead\nmy_name = "Dara"\nfirst_name = "Sok"\nlast_name  = "Dara"\n```\n\nPython convention: `lower_case_with_underscores` (called snake_case 🐍).',
           "Explain bool in Khmer":
-            "bool មានន័យថា **តក្ករូបន័យ** — True ឬ False តែប៉ុណ្ណោះ!\n\n```python\nis_student = True   # ជាសិស្ស\nis_adult   = False  # មិនទាន់ធំ\n```\n\nBool ត្រូវបានប្រើនៅក្នុង if statements:\n```python\nif is_student:\n    print(\"Welcome to class!\")\n```\n\nចំណាំ: True/False ត្រូវចាប់ផ្ដើមដោយអក្សរធំ T/F!",
+            'bool មានន័យថា **តក្ករូបន័យ** — True ឬ False តែប៉ុណ្ណោះ!\n\n```python\nis_student = True   # ជាសិស្ស\nis_adult   = False  # មិនទាន់ធំ\n```\n\nBool ត្រូវបានប្រើនៅក្នុង if statements:\n```python\nif is_student:\n    print("Welcome to class!")\n```\n\nចំណាំ: True/False ត្រូវចាប់ផ្ដើមដោយអក្សរធំ T/F!',
           "How do I update a variable?":
             "Just assign a new value — Python overwrites it! 🔄\n\n```python\nscore = 80\nprint(score)  # 80\n\nscore = 95    # update\nprint(score)  # 95\n\nscore += 5    # shortcut: score = score + 5\nprint(score)  # 100\n```\n\nShortcuts: `+=`, `-=`, `*=`, `/=`",
         },
@@ -135,8 +165,11 @@ city = "Phnom Penh"
 gpa  = 3.8
 
 print(f"My name is {name}. I am {age} years old, from {city}. My GPA is {gpa}.")`,
-        outputLines: ["My name is Dara. I am 20 years old, from Phnom Penh. My GPA is 3.8."],
-        aiWelcome: "Lesson 3: Variables Practice 💪\n\nTime to write real code! Fill in your own name, age, city, and GPA — then run it.\n\nStuck? Ask me and I'll help step by step. 🐍",
+        outputLines: [
+          "My name is Dara. I am 20 years old, from Phnom Penh. My GPA is 3.8.",
+        ],
+        aiWelcome:
+          "Lesson 3: Variables Practice 💪\n\nTime to write real code! Fill in your own name, age, city, and GPA — then run it.\n\nStuck? Ask me and I'll help step by step. 🐍",
         aiSuggestions: [
           "What is an f-string?",
           "Why do strings need quotes?",
@@ -185,7 +218,8 @@ print(f"My name is {name}. I am {age} years old, from {city}. My GPA is {gpa}.")
             },
           },
         ],
-        aiWelcome: "Lesson 4: Type Conversion 🔄\n\nThis lesson saves you from one of the most common Python bugs — mixing types by accident!\n\nAsk me to explain anything.",
+        aiWelcome:
+          "Lesson 4: Type Conversion 🔄\n\nThis lesson saves you from one of the most common Python bugs — mixing types by accident!\n\nAsk me to explain anything.",
         aiSuggestions: [
           "What happens with int(3.9)?",
           "How do I convert a list to a string?",
@@ -232,7 +266,8 @@ print(f"My name is {name}. I am {age} years old, from {city}. My GPA is {gpa}.")
             code: 'word = "Cambodia"\n\nprint(word[0])      # "C"   — first character\nprint(word[-1])     # "a"   — last character\nprint(word[0:4])    # "Camb" — index 0 up to (not including) 4\nprint(word[::-1])   # "aibodmaC" — reversed!',
           },
         ],
-        aiWelcome: "Lesson 5: String Methods 🔤\n\nStrings are everywhere in real programs — names, messages, file paths. Master these methods and you'll handle text like a pro!\n\nAsk me anything 💬",
+        aiWelcome:
+          "Lesson 5: String Methods 🔤\n\nStrings are everywhere in real programs — names, messages, file paths. Master these methods and you'll handle text like a pro!\n\nAsk me anything 💬",
         aiSuggestions: [
           "How do I check if a string contains a word?",
           "What does split() return?",
@@ -241,11 +276,11 @@ print(f"My name is {name}. I am {age} years old, from {city}. My GPA is {gpa}.")
         ],
         aiResponses: {
           "How do I check if a string contains a word?":
-            "Use the `in` keyword — super readable! 🔍\n\n```python\nsentence = \"I love Python programming\"\n\nif \"Python\" in sentence:\n    print(\"Found it!\")\n\n# Also: .find() returns the index, or -1 if not found\nprint(sentence.find(\"Python\"))  # → 7\nprint(sentence.find(\"Java\"))    # → -1\n```",
+            'Use the `in` keyword — super readable! 🔍\n\n```python\nsentence = "I love Python programming"\n\nif "Python" in sentence:\n    print("Found it!")\n\n# Also: .find() returns the index, or -1 if not found\nprint(sentence.find("Python"))  # → 7\nprint(sentence.find("Java"))    # → -1\n```',
           "How do I reverse a string?":
-            "Use slicing with `[::-1]` — it means 'go backwards'! ⬅️\n\n```python\nword = \"Cambodia\"\nreversed_word = word[::-1]\nprint(reversed_word)  # \"aibodmaC\"\n```\n\n`[::-1]` means: start=end, stop=beginning, step=-1",
+            'Use slicing with `[::-1]` — it means \'go backwards\'! ⬅️\n\n```python\nword = "Cambodia"\nreversed_word = word[::-1]\nprint(reversed_word)  # "aibodmaC"\n```\n\n`[::-1]` means: start=end, stop=beginning, step=-1',
           "Explain slicing in Khmer":
-            "Slicing គឺការកាត់ string ដើម្បីទទួល substring! ✂️\n\n```python\nword = \"Python\"  # index: P=0, y=1, t=2, h=3, o=4, n=5\n\nword[0:3]   # \"Pyt\"  — ពី 0 រហូត 3 (មិនរាប់ 3)\nword[2:]    # \"thon\" — ពី 2 រហូតចប់\nword[:4]    # \"Pyth\" — ពីដំបូងរហូត 4\nword[-2:]   # \"on\"   — ២ character ចុងក្រោយ\n```\n\nFormat: `[start:stop:step]`",
+            'Slicing គឺការកាត់ string ដើម្បីទទួល substring! ✂️\n\n```python\nword = "Python"  # index: P=0, y=1, t=2, h=3, o=4, n=5\n\nword[0:3]   # "Pyt"  — ពី 0 រហូត 3 (មិនរាប់ 3)\nword[2:]    # "thon" — ពី 2 រហូតចប់\nword[:4]    # "Pyth" — ពីដំបូងរហូត 4\nword[-2:]   # "on"   — ២ character ចុងក្រោយ\n```\n\nFormat: `[start:stop:step]`',
         },
       },
       {
@@ -272,7 +307,8 @@ print(f"My name is {name}. I am {age} years old, from {city}. My GPA is {gpa}.")
             body: 'Always end your prompt with a space: input("Name: ") — otherwise the cursor appears right after the colon with no gap.',
           },
         ],
-        aiWelcome: "Lesson 6: User Input ⌨️\n\nNow your programs can talk to users! input() is how you make interactive programs.\n\nRemember: always convert numbers with int() or float()!",
+        aiWelcome:
+          "Lesson 6: User Input ⌨️\n\nNow your programs can talk to users! input() is how you make interactive programs.\n\nRemember: always convert numbers with int() or float()!",
         aiSuggestions: [
           "What if the user types a letter when I expect a number?",
           "How do I ask multiple questions?",
@@ -280,9 +316,9 @@ print(f"My name is {name}. I am {age} years old, from {city}. My GPA is {gpa}.")
         ],
         aiResponses: {
           "What if the user types a letter when I expect a number?":
-            "int() will crash with a ValueError! 💥 To handle it safely:\n\n```python\ntry:\n    age = int(input(\"Age: \"))\n    print(f\"You are {age} years old\")\nexcept ValueError:\n    print(\"Please enter a number!\")\n```\n\nWe'll cover try/except fully later in the course.",
+            'int() will crash with a ValueError! 💥 To handle it safely:\n\n```python\ntry:\n    age = int(input("Age: "))\n    print(f"You are {age} years old")\nexcept ValueError:\n    print("Please enter a number!")\n```\n\nWe\'ll cover try/except fully later in the course.',
           "How do I ask multiple questions?":
-            "Just call input() multiple times! 🔄\n\n```python\nfirst = input(\"First name: \")\nlast  = input(\"Last name:  \")\ncity  = input(\"City:       \")\n\nprint(f\"Hello, {first} {last} from {city}!\")\n```",
+            'Just call input() multiple times! 🔄\n\n```python\nfirst = input("First name: ")\nlast  = input("Last name:  ")\ncity  = input("City:       ")\n\nprint(f"Hello, {first} {last} from {city}!")\n```',
         },
       },
       {
@@ -332,7 +368,8 @@ print("╚═══════════════════════�
           "║  Subject: Python          ║",
           "╚══════════════════════════╝",
         ],
-        aiWelcome: "Lesson 7: String Formatting Practice 🎨\n\nYou're combining input() with f-strings. The `:<15` inside an f-string pads text to a fixed width — great for tables and cards!\n\nTry running the starter code first, then improve it. 💪",
+        aiWelcome:
+          "Lesson 7: String Formatting Practice 🎨\n\nYou're combining input() with f-strings. The `:<15` inside an f-string pads text to a fixed width — great for tables and cards!\n\nTry running the starter code first, then improve it. 💪",
         aiSuggestions: [
           "What does :<15 mean inside an f-string?",
           "How do I make text right-aligned?",
@@ -341,7 +378,7 @@ print("╚═══════════════════════�
         ],
         aiResponses: {
           "What does :<15 mean inside an f-string?":
-            "It's a format specifier for alignment! 📐\n\n```python\nname = \"Bo\"\nprint(f\"{name:<15}\")  # 'Bo             ' ← left-align, pad to 15 chars\nprint(f\"{name:>15}\")  # '             Bo' ← right-align\nprint(f\"{name:^15}\")  # '      Bo       ' ← center\n```\n\n`<` = left, `>` = right, `^` = center. The number is the total width.",
+            'It\'s a format specifier for alignment! 📐\n\n```python\nname = "Bo"\nprint(f"{name:<15}")  # \'Bo             \' ← left-align, pad to 15 chars\nprint(f"{name:>15}")  # \'             Bo\' ← right-align\nprint(f"{name:^15}")  # \'      Bo       \' ← center\n```\n\n`<` = left, `>` = right, `^` = center. The number is the total width.',
         },
       },
       {
@@ -356,14 +393,21 @@ print("╚═══════════════════════�
           title: "Palindrome Checker",
           titleKh: "ពិនិត្យ Palindrome",
           difficulty: "Easy",
-          description: 'A palindrome reads the same forwards and backwards (e.g. "racecar", "madam"). Write a program that asks the user for a word and tells them if it\'s a palindrome.',
+          description:
+            'A palindrome reads the same forwards and backwards (e.g. "racecar", "madam"). Write a program that asks the user for a word and tells them if it\'s a palindrome.',
           requirements: [
             "Use input() to get a word from the user",
             "Convert to lowercase before comparing",
             "Use string slicing to reverse the word",
             'Print "✅ Palindrome!" or "❌ Not a palindrome"',
           ],
-          expectedOutput: ["Enter a word: racecar", "✅ Palindrome!", "---", "Enter a word: python", "❌ Not a palindrome"],
+          expectedOutput: [
+            "Enter a word: racecar",
+            "✅ Palindrome!",
+            "---",
+            "Enter a word: python",
+            "❌ Not a palindrome",
+          ],
           xp: 200,
         },
         codeTemplate: `word = input("Enter a word: ").lower()
@@ -380,7 +424,8 @@ if word == reversed_word:
 else:
     print("❌ Not a palindrome")`,
         outputLines: ["Enter a word: racecar", "✅ Palindrome!"],
-        aiWelcome: "Lesson 8: Palindrome Challenge 🏆\n\nThis challenge tests your string skills — slicing, input, and comparison all at once.\n\nHint: reverse a string with `[::-1]`. You've got this! 💪",
+        aiWelcome:
+          "Lesson 8: Palindrome Challenge 🏆\n\nThis challenge tests your string skills — slicing, input, and comparison all at once.\n\nHint: reverse a string with `[::-1]`. You've got this! 💪",
         aiSuggestions: [
           "Give me a hint for the palindrome check",
           "How does [::-1] work again?",
@@ -388,7 +433,7 @@ else:
         ],
         aiResponses: {
           "Give me a hint for the palindrome check":
-            "Here's the logic step by step — no full solution! 🤫\n\n```python\nword = input(\"Word: \").lower()  # step 1: get + lowercase\nrev  = word[::-1]               # step 2: reverse\n\n# step 3: compare!\nif word == ___:                 # fill in the blank\n    print(\"✅ Palindrome!\")\nelse:\n    print(\"❌ Not a palindrome\")\n```\n\nWhat goes in the blank? 😊",
+            'Here\'s the logic step by step — no full solution! 🤫\n\n```python\nword = input("Word: ").lower()  # step 1: get + lowercase\nrev  = word[::-1]               # step 2: reverse\n\n# step 3: compare!\nif word == ___:                 # fill in the blank\n    print("✅ Palindrome!")\nelse:\n    print("❌ Not a palindrome")\n```\n\nWhat goes in the blank? 😊',
         },
       },
     ],
@@ -427,7 +472,8 @@ else:
             body: "= assigns a value. == compares two values. A very common beginner mistake!",
           },
         ],
-        aiWelcome: "Lesson 9: If/Else Statements 🔀\n\nConditionals are how programs make decisions — they're in every real app you've ever used!\n\nAsk me about any part. 🎓",
+        aiWelcome:
+          "Lesson 9: If/Else Statements 🔀\n\nConditionals are how programs make decisions — they're in every real app you've ever used!\n\nAsk me about any part. 🎓",
         aiSuggestions: [
           "What is the difference between = and ==?",
           "Can I have multiple elif?",
@@ -436,9 +482,9 @@ else:
         ],
         aiResponses: {
           "What is the difference between = and ==?":
-            "This trips up everyone at first! 🚨\n\n```python\n# = assigns (stores a value)\nname = \"Dara\"   # now name contains \"Dara\"\n\n# == compares (asks a question)\nname == \"Dara\"  # True\nname == \"Bopha\" # False\n```\n\nInside an `if`, always use `==`:\n```python\nif name == \"Dara\":   # ✅ comparison\n    print(\"Hi Dara!\")\n```",
+            'This trips up everyone at first! 🚨\n\n```python\n# = assigns (stores a value)\nname = "Dara"   # now name contains "Dara"\n\n# == compares (asks a question)\nname == "Dara"  # True\nname == "Bopha" # False\n```\n\nInside an `if`, always use `==`:\n```python\nif name == "Dara":   # ✅ comparison\n    print("Hi Dara!")\n```',
           "Explain if/else in Khmer":
-            "if/else គឺការធ្វើការសម្រេចចិត្ត! 🔀\n\n```python\nmark = 75\n\nif mark >= 80:         # បើ mark >= 80\n    print(\"ជាប់ A\")    # ធ្វើ\nelif mark >= 60:       # បើ mark >= 60 (មិនសំខាន់ if ទីមួយ)\n    print(\"ជាប់ B\")    # ធ្វើ\nelse:                  # បើមិនត្រូវ condition ណាមួយ\n    print(\"ធ្លាក់\")    # ធ្វើ\n```\n\nPython អានពីលើចុះក្រោម — condition ទីមួយដែល True នឹងដំណើរការ!",
+            'if/else គឺការធ្វើការសម្រេចចិត្ត! 🔀\n\n```python\nmark = 75\n\nif mark >= 80:         # បើ mark >= 80\n    print("ជាប់ A")    # ធ្វើ\nelif mark >= 60:       # បើ mark >= 60 (មិនសំខាន់ if ទីមួយ)\n    print("ជាប់ B")    # ធ្វើ\nelse:                  # បើមិនត្រូវ condition ណាមួយ\n    print("ធ្លាក់")    # ធ្វើ\n```\n\nPython អានពីលើចុះក្រោម — condition ទីមួយដែល True នឹងដំណើរការ!',
         },
       },
       {
@@ -472,8 +518,12 @@ elif temp >= 15:
     print("Cool. Bring a light jacket. 🧥")
 else:
     print("Cold! Wear a coat. 🧤")`,
-        outputLines: ["Temperature (°C): 32", "Warm day. A t-shirt is fine. 😊"],
-        aiWelcome: "Lesson 10: Conditionals Practice 🌡️\n\nYou're building a real decision-making program! Remember to use float() since temperatures can be decimal.\n\nTry different temperatures after you get it working. 🌤️",
+        outputLines: [
+          "Temperature (°C): 32",
+          "Warm day. A t-shirt is fine. 😊",
+        ],
+        aiWelcome:
+          "Lesson 10: Conditionals Practice 🌡️\n\nYou're building a real decision-making program! Remember to use float() since temperatures can be decimal.\n\nTry different temperatures after you get it working. 🌤️",
         aiSuggestions: [
           "Why float() instead of int()?",
           "How do I test negative temperatures?",
@@ -481,7 +531,7 @@ else:
         ],
         aiResponses: {
           "Why float() instead of int()?":
-            "Because temperatures can be decimal! 🌡️\n\n```python\ntemp = float(input(\"Temp: \"))\n# User can type: 32.5, -1.5, 100.0\n\n# int() would crash on \"32.5\"!\ntemp = int(input(\"Temp: \"))  # ❌ ValueError on \"32.5\"\n```\n\nRule: use `float()` for measurements, `int()` for counting.",
+            'Because temperatures can be decimal! 🌡️\n\n```python\ntemp = float(input("Temp: "))\n# User can type: 32.5, -1.5, 100.0\n\n# int() would crash on "32.5"!\ntemp = int(input("Temp: "))  # ❌ ValueError on "32.5"\n```\n\nRule: use `float()` for measurements, `int()` for counting.',
         },
       },
       {
@@ -514,7 +564,8 @@ else:
             body: 'for char in "Cambodia": — gives you C, a, m, b, o, d, i, a one by one.',
           },
         ],
-        aiWelcome: "Lesson 11: For Loops 🔁\n\nFor loops are one of the most powerful tools in Python. Once you master range() and list iteration, you can process any amount of data!\n\nI'm here to help 🐍",
+        aiWelcome:
+          "Lesson 11: For Loops 🔁\n\nFor loops are one of the most powerful tools in Python. Once you master range() and list iteration, you can process any amount of data!\n\nI'm here to help 🐍",
         aiSuggestions: [
           "What is the difference between range(5) and range(1,6)?",
           "How do I loop backwards?",
@@ -525,9 +576,9 @@ else:
           "What is the difference between range(5) and range(1,6)?":
             "Both give 5 numbers but starting from different points! 🔢\n\n```python\nrange(5)     # 0, 1, 2, 3, 4   (starts at 0)\nrange(1, 6)  # 1, 2, 3, 4, 5   (starts at 1, stops before 6)\nrange(2, 10, 2)  # 2, 4, 6, 8  (start, stop, step)\n```\n\nRemember: the **stop** value is **excluded**.",
           "How do I loop backwards?":
-            "Use range() with a negative step! ⬅️\n\n```python\nfor i in range(10, 0, -1):  # 10, 9, 8, ... 1\n    print(i)\n\n# Or reverse a list\nfruits = [\"mango\", \"durian\", \"rambutan\"]\nfor f in reversed(fruits):\n    print(f)\n```",
+            'Use range() with a negative step! ⬅️\n\n```python\nfor i in range(10, 0, -1):  # 10, 9, 8, ... 1\n    print(i)\n\n# Or reverse a list\nfruits = ["mango", "durian", "rambutan"]\nfor f in reversed(fruits):\n    print(f)\n```',
           "What is enumerate()?":
-            "enumerate() gives you both the index AND the value! 📊\n\n```python\ncourses = [\"Python\", \"React\", \"SQL\"]\n\n# Without enumerate — have to track i manually\ni = 0\nfor c in courses:\n    print(f\"{i}: {c}\")\n    i += 1\n\n# With enumerate — clean!\nfor i, c in enumerate(courses):\n    print(f\"{i}: {c}\")\n```",
+            'enumerate() gives you both the index AND the value! 📊\n\n```python\ncourses = ["Python", "React", "SQL"]\n\n# Without enumerate — have to track i manually\ni = 0\nfor c in courses:\n    print(f"{i}: {c}")\n    i += 1\n\n# With enumerate — clean!\nfor i, c in enumerate(courses):\n    print(f"{i}: {c}")\n```',
         },
       },
       {
@@ -571,7 +622,8 @@ else:
             },
           },
         ],
-        aiWelcome: "សួស្ដី! ខ្ញុំជា KodeKH AI — គ្រូបង្ហាត់ AI របស់អ្នក 🎓\n\nYou're on **Lesson 12: While Loops**. A `while` loop repeats as long as a condition is `True`.\n\nTry running the code to see the output! Ask me anything in Khmer or English. 🐍",
+        aiWelcome:
+          "សួស្ដី! ខ្ញុំជា Apsara Elearning AI — គ្រូបង្ហាត់ AI របស់អ្នក 🎓\n\nYou're on **Lesson 12: While Loops**. A `while` loop repeats as long as a condition is `True`.\n\nTry running the code to see the output! Ask me anything in Khmer or English. 🐍",
         aiSuggestions: [
           "What's the difference between for and while?",
           "How do I prevent an infinite loop?",
@@ -598,7 +650,14 @@ while count <= 5:
     count += 1
 
 print("Done! ✓")`,
-        outputLines: ["ចំនួន: 1", "ចំនួន: 2", "ចំនួន: 3", "ចំនួន: 4", "ចំនួន: 5", "Done! ✓"],
+        outputLines: [
+          "ចំនួន: 1",
+          "ចំនួន: 2",
+          "ចំនួន: 3",
+          "ចំនួន: 4",
+          "ចំនួន: 5",
+          "Done! ✓",
+        ],
       },
       {
         id: 13,
@@ -613,7 +672,8 @@ print("Done! ✓")`,
           title: "FizzBuzz",
           titleKh: "FizzBuzz",
           difficulty: "Medium",
-          description: "Print numbers 1 to 30. For multiples of 3 print \"Fizz\", for multiples of 5 print \"Buzz\", for multiples of both print \"FizzBuzz\".",
+          description:
+            'Print numbers 1 to 30. For multiples of 3 print "Fizz", for multiples of 5 print "Buzz", for multiples of both print "FizzBuzz".',
           requirements: [
             "Use a for loop with range(1, 31)",
             "Check multiples of 15 first (both 3 and 5)",
@@ -621,7 +681,24 @@ print("Done! ✓")`,
             "Then check multiples of 5",
             "Otherwise print the number",
           ],
-          expectedOutput: ["1", "2", "Fizz", "4", "Buzz", "Fizz", "7", "8", "Fizz", "Buzz", "11", "Fizz", "13", "14", "FizzBuzz", "..."],
+          expectedOutput: [
+            "1",
+            "2",
+            "Fizz",
+            "4",
+            "Buzz",
+            "Fizz",
+            "7",
+            "8",
+            "Fizz",
+            "Buzz",
+            "11",
+            "Fizz",
+            "13",
+            "14",
+            "FizzBuzz",
+            "...",
+          ],
           xp: 200,
         },
         codeTemplate: `for i in range(1, 31):
@@ -637,8 +714,25 @@ print("Done! ✓")`,
         print("Buzz")
     else:
         print(i)`,
-        outputLines: ["1", "2", "Fizz", "4", "Buzz", "Fizz", "7", "8", "Fizz", "Buzz", "11", "Fizz", "13", "14", "FizzBuzz"],
-        aiWelcome: "FizzBuzz Challenge! 🏆\n\nThis is a classic coding interview question. The key insight: check **both** (15) before checking **either** alone.\n\nYou've got this — ask for a hint if you need one! 💪",
+        outputLines: [
+          "1",
+          "2",
+          "Fizz",
+          "4",
+          "Buzz",
+          "Fizz",
+          "7",
+          "8",
+          "Fizz",
+          "Buzz",
+          "11",
+          "Fizz",
+          "13",
+          "14",
+          "FizzBuzz",
+        ],
+        aiWelcome:
+          "FizzBuzz Challenge! 🏆\n\nThis is a classic coding interview question. The key insight: check **both** (15) before checking **either** alone.\n\nYou've got this — ask for a hint if you need one! 💪",
         aiSuggestions: [
           "What does % (modulo) do?",
           "Why check 15 before 3 and 5?",
@@ -646,9 +740,9 @@ print("Done! ✓")`,
         ],
         aiResponses: {
           "What does % (modulo) do?":
-            "% gives you the **remainder** after division! 🔢\n\n```python\n10 % 3  # → 1  (10 ÷ 3 = 3 remainder 1)\n15 % 5  # → 0  (15 ÷ 5 = 3 remainder 0 — perfect division!)\n12 % 3  # → 0  (multiple of 3!)\n```\n\nSo `i % 3 == 0` means \"i is a multiple of 3\".",
+            '% gives you the **remainder** after division! 🔢\n\n```python\n10 % 3  # → 1  (10 ÷ 3 = 3 remainder 1)\n15 % 5  # → 0  (15 ÷ 5 = 3 remainder 0 — perfect division!)\n12 % 3  # → 0  (multiple of 3!)\n```\n\nSo `i % 3 == 0` means "i is a multiple of 3".',
           "Why check 15 before 3 and 5?":
-            "Because if you check 3 first, 15 prints \"Fizz\" — not \"FizzBuzz\"! ⚠️\n\n```python\n# ❌ Wrong order — 15 prints \"Fizz\"\nif i % 3 == 0:\n    print(\"Fizz\")     # 15 matches here first!\nelif i % 5 == 0:\n    print(\"Buzz\")\n\n# ✅ Correct — check most specific first\nif i % 15 == 0:       # 15 is multiple of BOTH\n    print(\"FizzBuzz\")\nelif i % 3 == 0:\n    print(\"Fizz\")\n```",
+            'Because if you check 3 first, 15 prints "Fizz" — not "FizzBuzz"! ⚠️\n\n```python\n# ❌ Wrong order — 15 prints "Fizz"\nif i % 3 == 0:\n    print("Fizz")     # 15 matches here first!\nelif i % 5 == 0:\n    print("Buzz")\n\n# ✅ Correct — check most specific first\nif i % 15 == 0:       # 15 is multiple of BOTH\n    print("FizzBuzz")\nelif i % 3 == 0:\n    print("Fizz")\n```',
         },
       },
     ],
@@ -684,14 +778,31 @@ print("Done! ✓")`,
           {
             type: "terms",
             items: [
-              { term: "def", termKh: "និយមន័យ", desc: "Keyword to define a function" },
-              { term: "parameter", termKh: "ប៉ារ៉ាម៉ែត្រ", desc: "Variable listed in the function definition" },
-              { term: "argument", termKh: "តម្លៃ", desc: "Actual value passed when calling the function" },
-              { term: "return", termKh: "ត្រឡប់", desc: "Sends a value back to the caller" },
+              {
+                term: "def",
+                termKh: "និយមន័យ",
+                desc: "Keyword to define a function",
+              },
+              {
+                term: "parameter",
+                termKh: "ប៉ារ៉ាម៉ែត្រ",
+                desc: "Variable listed in the function definition",
+              },
+              {
+                term: "argument",
+                termKh: "តម្លៃ",
+                desc: "Actual value passed when calling the function",
+              },
+              {
+                term: "return",
+                termKh: "ត្រឡប់",
+                desc: "Sends a value back to the caller",
+              },
             ],
           },
         ],
-        aiWelcome: "Lesson 14: Functions 🛠️\n\nFunctions are the foundation of good code. Every serious Python program is built from functions.\n\nDon't rush this lesson — it's worth taking notes! 📝",
+        aiWelcome:
+          "Lesson 14: Functions 🛠️\n\nFunctions are the foundation of good code. Every serious Python program is built from functions.\n\nDon't rush this lesson — it's worth taking notes! 📝",
         aiSuggestions: [
           "What happens if I don't use return?",
           "Can a function call another function?",
@@ -700,7 +811,7 @@ print("Done! ✓")`,
         ],
         aiResponses: {
           "What happens if I don't use return?":
-            "The function returns `None` — Python's way of saying 'nothing'! 🫥\n\n```python\ndef say_hi(name):\n    print(f\"Hi {name}\")  # no return\n\nresult = say_hi(\"Dara\")  # prints Hi Dara\nprint(result)             # prints None\n```\n\nUse `return` when you need the function to **produce a value** you can use later.",
+            'The function returns `None` — Python\'s way of saying \'nothing\'! 🫥\n\n```python\ndef say_hi(name):\n    print(f"Hi {name}")  # no return\n\nresult = say_hi("Dara")  # prints Hi Dara\nprint(result)             # prints None\n```\n\nUse `return` when you need the function to **produce a value** you can use later.',
           "Can a function call another function?":
             "Yes! This is called **function composition** — very powerful! 🔗\n\n```python\ndef square(n):\n    return n * n\n\ndef sum_of_squares(a, b):\n    return square(a) + square(b)  # calls square() twice!\n\nprint(sum_of_squares(3, 4))  # 9 + 16 = 25\n```",
         },
@@ -727,10 +838,11 @@ print("Done! ✓")`,
           {
             type: "code",
             title: "Lambda functions",
-            code: "# Normal function\ndef double(x):\n    return x * 2\n\n# Same as lambda\ndouble = lambda x: x * 2\nprint(double(5))   # 10\n\n# Useful with sorted()\nstudents = [(\"Dara\", 85), (\"Bopha\", 92), (\"Rin\", 78)]\nsorted_students = sorted(students, key=lambda s: s[1])\nprint(sorted_students)  # sorted by score",
+            code: '# Normal function\ndef double(x):\n    return x * 2\n\n# Same as lambda\ndouble = lambda x: x * 2\nprint(double(5))   # 10\n\n# Useful with sorted()\nstudents = [("Dara", 85), ("Bopha", 92), ("Rin", 78)]\nsorted_students = sorted(students, key=lambda s: s[1])\nprint(sorted_students)  # sorted by score',
           },
         ],
-        aiWelcome: "Lesson 15: Scope & Lambda ⚡\n\nScope bugs are sneaky. Lambda functions look strange at first but you'll love them once you see them in action.\n\nAsk me anything! 🐍",
+        aiWelcome:
+          "Lesson 15: Scope & Lambda ⚡\n\nScope bugs are sneaky. Lambda functions look strange at first but you'll love them once you see them in action.\n\nAsk me anything! 🐍",
         aiSuggestions: [
           "When should I use lambda?",
           "What is a global variable?",
@@ -791,8 +903,13 @@ def health_report(name, weight_kg, height_m):
     print(f"Category: {category}")
 
 health_report("Dara", 65, 1.72)`,
-        outputLines: ["=== Health Report: Dara ===", "BMI:      21.97", "Category: Normal"],
-        aiWelcome: "Lesson 16: Functions Practice 🏥\n\nThis exercise has three functions calling each other — real-world style! Break it down one function at a time.\n\nStart with calculate_bmi() first, test it, then move on. 💪",
+        outputLines: [
+          "=== Health Report: Dara ===",
+          "BMI:      21.97",
+          "Category: Normal",
+        ],
+        aiWelcome:
+          "Lesson 16: Functions Practice 🏥\n\nThis exercise has three functions calling each other — real-world style! Break it down one function at a time.\n\nStart with calculate_bmi() first, test it, then move on. 💪",
         aiSuggestions: [
           "What does ** mean in Python?",
           "How do I test one function at a time?",
@@ -816,7 +933,8 @@ health_report("Dara", 65, 1.72)`,
           title: "Factorial with Recursion",
           titleKh: "Factorial ដោយ Recursion",
           difficulty: "Medium",
-          description: "A recursive function calls itself. Write a function factorial(n) that returns n! using recursion. 5! = 5 × 4 × 3 × 2 × 1 = 120.",
+          description:
+            "A recursive function calls itself. Write a function factorial(n) that returns n! using recursion. 5! = 5 × 4 × 3 × 2 × 1 = 120.",
           requirements: [
             "Base case: factorial(0) or factorial(1) returns 1",
             "Recursive case: factorial(n) returns n * factorial(n-1)",
@@ -840,7 +958,8 @@ print(f"factorial(10) = {factorial(10)}")`,
 print(f"factorial(5)  = {factorial(5)}")
 print(f"factorial(10) = {factorial(10)}")`,
         outputLines: ["factorial(5)  = 120", "factorial(10) = 3628800"],
-        aiWelcome: "Recursion Challenge! 🌀\n\nRecursion is a mind-bending concept. A function that calls itself!\n\nKey: every recursive function needs a **base case** to stop. Without it → infinite recursion (like an infinite loop).",
+        aiWelcome:
+          "Recursion Challenge! 🌀\n\nRecursion is a mind-bending concept. A function that calls itself!\n\nKey: every recursive function needs a **base case** to stop. Without it → infinite recursion (like an infinite loop).",
         aiSuggestions: [
           "What is a base case?",
           "How does recursion unwind?",
@@ -874,7 +993,7 @@ print(f"factorial(10) = {factorial(10)}")`,
           {
             type: "code",
             title: "List basics",
-            code: 'grades = [85, 92, 78, 95, 88]\n\nprint(grades[0])    # 85 — first item\nprint(grades[-1])   # 88 — last item\nprint(len(grades))  # 5\n\ngrades.append(90)   # add to end\ngrades.remove(78)   # remove by value\ngrades.sort()       # sort in place\n\nprint(sum(grades))  # total\nprint(max(grades))  # highest\nprint(min(grades))  # lowest',
+            code: "grades = [85, 92, 78, 95, 88]\n\nprint(grades[0])    # 85 — first item\nprint(grades[-1])   # 88 — last item\nprint(len(grades))  # 5\n\ngrades.append(90)   # add to end\ngrades.remove(78)   # remove by value\ngrades.sort()       # sort in place\n\nprint(sum(grades))  # total\nprint(max(grades))  # highest\nprint(min(grades))  # lowest",
           },
           {
             type: "code",
@@ -882,7 +1001,8 @@ print(f"factorial(10) = {factorial(10)}")`,
             code: "numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\n\n# Old way\nevens = []\nfor n in numbers:\n    if n % 2 == 0:\n        evens.append(n)\n\n# List comprehension — one line!\nevens = [n for n in numbers if n % 2 == 0]\n# → [2, 4, 6, 8, 10]\n\nsquares = [n**2 for n in range(1, 6)]\n# → [1, 4, 9, 16, 25]",
           },
         ],
-        aiWelcome: "Lesson 18: Lists 📋\n\nLists are the most-used data structure in Python. Master them and you can work with any collection of data!\n\nList comprehension looks scary at first — ask me to break it down. 🐍",
+        aiWelcome:
+          "Lesson 18: Lists 📋\n\nLists are the most-used data structure in Python. Master them and you can work with any collection of data!\n\nList comprehension looks scary at first — ask me to break it down. 🐍",
         aiSuggestions: [
           "What is the difference between append and insert?",
           "How do I remove duplicates from a list?",
@@ -891,9 +1011,9 @@ print(f"factorial(10) = {factorial(10)}")`,
         ],
         aiResponses: {
           "Explain list comprehension in Khmer":
-            "List comprehension គឺវិធីខ្លីក្នុងការបង្កើត list ថ្មី! ✨\n\n```python\n# Format: [expression for item in list if condition]\n\nnumbers = [1, 2, 3, 4, 5, 6]\n\n# ចង់បាន list នៃ even numbers:\nevens = [n for n in numbers if n % 2 == 0]\n# → [2, 4, 6]\n\n# ចង់បាន squares:\nsquares = [n**2 for n in numbers]\n# → [1, 4, 9, 16, 25, 36]\n```\n\nគិតថា: \"ដាក់ n សម្រាប់ n ក្នុង numbers ប្រសិនបើ n % 2 == 0\"",
+            'List comprehension គឺវិធីខ្លីក្នុងការបង្កើត list ថ្មី! ✨\n\n```python\n# Format: [expression for item in list if condition]\n\nnumbers = [1, 2, 3, 4, 5, 6]\n\n# ចង់បាន list នៃ even numbers:\nevens = [n for n in numbers if n % 2 == 0]\n# → [2, 4, 6]\n\n# ចង់បាន squares:\nsquares = [n**2 for n in numbers]\n# → [1, 4, 9, 16, 25, 36]\n```\n\nគិតថា: "ដាក់ n សម្រាប់ n ក្នុង numbers ប្រសិនបើ n % 2 == 0"',
           "How do I find an item's index?":
-            "Use .index() method! 🔍\n\n```python\nfruits = [\"mango\", \"durian\", \"rambutan\"]\nprint(fruits.index(\"durian\"))  # 1\n\n# Check if item exists first to avoid ValueError\nif \"mango\" in fruits:\n    print(fruits.index(\"mango\"))  # 0\n```",
+            'Use .index() method! 🔍\n\n```python\nfruits = ["mango", "durian", "rambutan"]\nprint(fruits.index("durian"))  # 1\n\n# Check if item exists first to avoid ValueError\nif "mango" in fruits:\n    print(fruits.index("mango"))  # 0\n```',
         },
       },
       {
@@ -921,7 +1041,8 @@ print(f"factorial(10) = {factorial(10)}")`,
             body: 'student["phone"] raises KeyError if the key doesn\'t exist. student.get("phone", "N/A") returns "N/A" instead — much safer.',
           },
         ],
-        aiWelcome: "Lesson 19: Dictionaries 📖\n\nDictionaries are essential for storing structured data — user profiles, API responses, configuration. You'll use them every day as a developer!\n\nAsk me anything. 🐍",
+        aiWelcome:
+          "Lesson 19: Dictionaries 📖\n\nDictionaries are essential for storing structured data — user profiles, API responses, configuration. You'll use them every day as a developer!\n\nAsk me anything. 🐍",
         aiSuggestions: [
           "What is the difference between a list and a dictionary?",
           "How do I loop over a dictionary?",
@@ -930,9 +1051,9 @@ print(f"factorial(10) = {factorial(10)}")`,
         ],
         aiResponses: {
           "What is the difference between a list and a dictionary?":
-            "Great question — they're for different things! 📊\n\n| | List | Dictionary |\n|---|---|---|\n| Access by | Index (0,1,2) | Key (any string/int) |\n| Order | Yes (insertion order) | Yes (Python 3.7+) |\n| Use for | Sequences of items | Named data |\n| Example | [85, 92, 78] | {\"name\": \"Dara\"} |\n\nUse a **list** for ordered collections.\nUse a **dict** for labelled data.",
+            'Great question — they\'re for different things! 📊\n\n| | List | Dictionary |\n|---|---|---|\n| Access by | Index (0,1,2) | Key (any string/int) |\n| Order | Yes (insertion order) | Yes (Python 3.7+) |\n| Use for | Sequences of items | Named data |\n| Example | [85, 92, 78] | {"name": "Dara"} |\n\nUse a **list** for ordered collections.\nUse a **dict** for labelled data.',
           "Can a dictionary have a list as a value?":
-            "Yes! Dictionaries can hold any type as values — even other dicts! 🪆\n\n```python\nstudent = {\n    \"name\":   \"Dara\",\n    \"grades\": [85, 92, 78, 95],  # list as value!\n    \"address\": {                 # dict inside dict!\n        \"city\": \"Phnom Penh\",\n        \"district\": \"Daun Penh\"\n    }\n}\n\nprint(student[\"grades\"][0])        # 85\nprint(student[\"address\"][\"city\"])  # Phnom Penh\n```",
+            'Yes! Dictionaries can hold any type as values — even other dicts! 🪆\n\n```python\nstudent = {\n    "name":   "Dara",\n    "grades": [85, 92, 78, 95],  # list as value!\n    "address": {                 # dict inside dict!\n        "city": "Phnom Penh",\n        "district": "Daun Penh"\n    }\n}\n\nprint(student["grades"][0])        # 85\nprint(student["address"]["city"])  # Phnom Penh\n```',
         },
       },
       {
@@ -980,7 +1101,8 @@ print(f"Pass list: {passing}")`,
           "Passing:  4/5",
           "Pass list: [85, 62, 90, 78]",
         ],
-        aiWelcome: "Lesson 20: Lists Practice 📊\n\nYou're building a real data analysis tool! sum(), max(), min(), and list comprehension all come together here.\n\nTry solving step by step — one calculation at a time. 💪",
+        aiWelcome:
+          "Lesson 20: Lists Practice 📊\n\nYou're building a real data analysis tool! sum(), max(), min(), and list comprehension all come together here.\n\nTry solving step by step — one calculation at a time. 💪",
         aiSuggestions: [
           "How do I calculate an average?",
           "What is round() for?",
@@ -1004,7 +1126,8 @@ print(f"Pass list: {passing}")`,
           title: "Student Grade Manager",
           titleKh: "ការគ្រប់គ្រងពិន្ទុសិស្ស",
           difficulty: "Hard",
-          description: "Build a grade management system using a list of dictionaries. Each student has a name and a list of scores. Calculate each student's average and assign a letter grade.",
+          description:
+            "Build a grade management system using a list of dictionaries. Each student has a name and a list of scores. Calculate each student's average and assign a letter grade.",
           requirements: [
             "Store students as a list of dicts: {name, scores}",
             "Write get_average(scores) function",
@@ -1062,7 +1185,8 @@ for i, s in enumerate(ranked, 1):
           "2. Dara     — Avg: 84.0 — Grade: B",
           "3. Rin      — Avg: 67.3 — Grade: D",
         ],
-        aiWelcome: "Grade Manager Challenge! 🏆\n\nThis combines dictionaries, lists, functions, sorting, and comprehension — almost everything you've learned!\n\nBreak it down: write get_average() first, test it, then get_grade(), then the leaderboard.",
+        aiWelcome:
+          "Grade Manager Challenge! 🏆\n\nThis combines dictionaries, lists, functions, sorting, and comprehension — almost everything you've learned!\n\nBreak it down: write get_average() first, test it, then get_grade(), then the leaderboard.",
         aiSuggestions: [
           "How do I sort a list of dictionaries?",
           "How do I use enumerate with a start value?",
@@ -1070,7 +1194,7 @@ for i, s in enumerate(ranked, 1):
         ],
         aiResponses: {
           "How do I sort a list of dictionaries?":
-            "Use sorted() with a key function! 🔑\n\n```python\nstudents = [\n    {\"name\": \"Dara\",  \"avg\": 84},\n    {\"name\": \"Bopha\", \"avg\": 91},\n]\n\n# Sort by avg ascending\nsorted(students, key=lambda s: s[\"avg\"])\n\n# Sort by avg descending (highest first)\nsorted(students, key=lambda s: s[\"avg\"], reverse=True)\n```",
+            'Use sorted() with a key function! 🔑\n\n```python\nstudents = [\n    {"name": "Dara",  "avg": 84},\n    {"name": "Bopha", "avg": 91},\n]\n\n# Sort by avg ascending\nsorted(students, key=lambda s: s["avg"])\n\n# Sort by avg descending (highest first)\nsorted(students, key=lambda s: s["avg"], reverse=True)\n```',
         },
       },
     ],
@@ -1101,15 +1225,36 @@ for i, s in enumerate(ranked, 1):
           {
             type: "terms",
             items: [
-              { term: "class", termKh: "ថ្នាក់", desc: "Blueprint for creating objects" },
-              { term: "__init__", termKh: "អ្នកកសាង", desc: "Constructor — runs when object is created" },
-              { term: "self", termKh: "ខ្លួនឯង", desc: "Refers to the current instance" },
-              { term: "attribute", termKh: "គុណលក្ខណ៍", desc: "Data stored on an object (self.name)" },
-              { term: "method", termKh: "វិធីសាស្ត្រ", desc: "Function defined inside a class" },
+              {
+                term: "class",
+                termKh: "ថ្នាក់",
+                desc: "Blueprint for creating objects",
+              },
+              {
+                term: "__init__",
+                termKh: "អ្នកកសាង",
+                desc: "Constructor — runs when object is created",
+              },
+              {
+                term: "self",
+                termKh: "ខ្លួនឯង",
+                desc: "Refers to the current instance",
+              },
+              {
+                term: "attribute",
+                termKh: "គុណលក្ខណ៍",
+                desc: "Data stored on an object (self.name)",
+              },
+              {
+                term: "method",
+                termKh: "វិធីសាស្ត្រ",
+                desc: "Function defined inside a class",
+              },
             ],
           },
         ],
-        aiWelcome: "Lesson 22: Classes & Objects 🏗️\n\nOOP is how large software is built. Think of a class as a cookie cutter, and objects as the cookies — same shape, different ingredients!\n\nTake your time with __init__ and self. 🐍",
+        aiWelcome:
+          "Lesson 22: Classes & Objects 🏗️\n\nOOP is how large software is built. Think of a class as a cookie cutter, and objects as the cookies — same shape, different ingredients!\n\nTake your time with __init__ and self. 🐍",
         aiSuggestions: [
           "What is self?",
           "Why do we need __init__?",
@@ -1118,9 +1263,9 @@ for i, s in enumerate(ranked, 1):
         ],
         aiResponses: {
           "What is self?":
-            "self refers to **the specific object** calling the method! 🔍\n\n```python\nclass Dog:\n    def __init__(self, name):\n        self.name = name   # THIS dog's name\n\n    def bark(self):\n        print(f\"{self.name} says: Woof!\")  # uses THIS dog's name\n\nrex   = Dog(\"Rex\")\nbuddy = Dog(\"Buddy\")\n\nrex.bark()    # Rex says: Woof!\nbuddy.bark()  # Buddy says: Woof!\n```\n\nWhen you call rex.bark(), Python automatically passes rex as self.",
+            'self refers to **the specific object** calling the method! 🔍\n\n```python\nclass Dog:\n    def __init__(self, name):\n        self.name = name   # THIS dog\'s name\n\n    def bark(self):\n        print(f"{self.name} says: Woof!")  # uses THIS dog\'s name\n\nrex   = Dog("Rex")\nbuddy = Dog("Buddy")\n\nrex.bark()    # Rex says: Woof!\nbuddy.bark()  # Buddy says: Woof!\n```\n\nWhen you call rex.bark(), Python automatically passes rex as self.',
           "Explain OOP in Khmer":
-            "OOP ជា​ការ​សរ​សេរ​កូដ​ដែល​模仿​ពិភព​លោក​ជា​ក់​ស្ដែង! 🌍\n\n```\nClass  = ប្លង់ (blueprint)\nObject = វត្ថុ (instance)\n```\n\n```python\n# Class = ប្លង់រថយន្ត\nclass Car:\n    def __init__(self, brand, color):\n        self.brand = brand\n        self.color = color\n\n# Objects = រថយន្ត​ជា​ក់​ស្ដែង\ntoyota = Car(\"Toyota\", \"White\")\nhonda  = Car(\"Honda\", \"Red\")\n```\n\nrcar ម្នាក់ goal — បង្រួម data + behavior ជាមួយ!",
+            'OOP ជា​ការ​សរ​សេរ​កូដ​ដែល​模仿​ពិភព​លោក​ជា​ក់​ស្ដែង! 🌍\n\n```\nClass  = ប្លង់ (blueprint)\nObject = វត្ថុ (instance)\n```\n\n```python\n# Class = ប្លង់រថយន្ត\nclass Car:\n    def __init__(self, brand, color):\n        self.brand = brand\n        self.color = color\n\n# Objects = រថយន្ត​ជា​ក់​ស្ដែង\ntoyota = Car("Toyota", "White")\nhonda  = Car("Honda", "Red")\n```\n\nrcar ម្នាក់ goal — បង្រួម data + behavior ជាមួយ!',
         },
       },
       {
@@ -1148,7 +1293,8 @@ for i, s in enumerate(ranked, 1):
             body: "super().__init__() runs the parent class constructor. Always call it first in the child __init__ to set up inherited attributes.",
           },
         ],
-        aiWelcome: "Lesson 23: Inheritance 🧬\n\nInheritance is the 'I' in OOP — it lets you build on existing classes without copying code.\n\nThink: Student IS-A Person, so Student inherits everything from Person! 🐍",
+        aiWelcome:
+          "Lesson 23: Inheritance 🧬\n\nInheritance is the 'I' in OOP — it lets you build on existing classes without copying code.\n\nThink: Student IS-A Person, so Student inherits everything from Person! 🐍",
         aiSuggestions: [
           "What does super() do?",
           "Can a class inherit from multiple parents?",
@@ -1156,7 +1302,7 @@ for i, s in enumerate(ranked, 1):
         ],
         aiResponses: {
           "What is method overriding?":
-            "Override = redefine a parent method in the child class! 🔄\n\n```python\nclass Animal:\n    def speak(self):\n        return \"Some sound\"\n\nclass Dog(Animal):\n    def speak(self):       # overrides Animal.speak\n        return \"Woof!\"\n\nclass Cat(Animal):\n    def speak(self):       # overrides Animal.speak\n        return \"Meow!\"\n\ndog = Dog()\ncat = Cat()\nprint(dog.speak())  # Woof!\nprint(cat.speak())  # Meow!\n```",
+            'Override = redefine a parent method in the child class! 🔄\n\n```python\nclass Animal:\n    def speak(self):\n        return "Some sound"\n\nclass Dog(Animal):\n    def speak(self):       # overrides Animal.speak\n        return "Woof!"\n\nclass Cat(Animal):\n    def speak(self):       # overrides Animal.speak\n        return "Meow!"\n\ndog = Dog()\ncat = Cat()\nprint(dog.speak())  # Woof!\nprint(cat.speak())  # Meow!\n```',
         },
       },
       {
@@ -1172,7 +1318,8 @@ for i, s in enumerate(ranked, 1):
           title: "Student Management System",
           titleKh: "ប្រព័ន្ធគ្រប់គ្រងសិស្ស",
           difficulty: "Hard",
-          description: "Build a full Student Management System using OOP. The system should let you add students, record grades, and generate a class report — all using classes.",
+          description:
+            "Build a full Student Management System using OOP. The system should let you add students, record grades, and generate a class report — all using classes.",
           requirements: [
             "Class Student: name, id, grades list. Methods: add_grade(), get_average(), get_grade_letter()",
             "Class Classroom: list of students. Methods: add_student(), get_top_student(), print_report()",
@@ -1278,7 +1425,8 @@ class Classroom:
           "2. Dara     (KH001) — Avg: 84.0 — Grade: B",
           "3. Rin      (KH003) — Avg: 67.3 — Grade: D",
         ],
-        aiWelcome: "🎓 Final Project: Student Management System!\n\nThis is your capstone challenge — it uses EVERYTHING you've learned:\n✅ Classes & OOP\n✅ Lists & Dictionaries\n✅ Functions\n✅ Sorting & Comprehension\n\nTake your time. You've got this! 💪🇰🇭",
+        aiWelcome:
+          "🎓 Final Project: Student Management System!\n\nThis is your capstone challenge — it uses EVERYTHING you've learned:\n✅ Classes & OOP\n✅ Lists & Dictionaries\n✅ Functions\n✅ Sorting & Comprehension\n\nTake your time. You've got this! 💪🇰🇭",
         aiSuggestions: [
           "Where do I start?",
           "How does get_top_student work?",
@@ -1287,7 +1435,7 @@ class Classroom:
         ],
         aiResponses: {
           "Where do I start?":
-            "Start small — finish one method at a time! 🪜\n\n**Step 1:** Implement `Student.add_grade()` and `Student.get_average()`. Test:\n```python\ndara = Student(\"Dara\", \"KH001\")\ndara.add_grade(85)\ndara.add_grade(90)\nprint(dara.get_average())  # should be 87.5\n```\n\n**Step 2:** `get_grade_letter()` — just if/elif chain.\n\n**Step 3:** `Classroom.add_student()` — just append.\n\n**Step 4:** `get_top_student()` — use max() with key.\n\n**Step 5:** `print_report()` — sort + loop.",
+            'Start small — finish one method at a time! 🪜\n\n**Step 1:** Implement `Student.add_grade()` and `Student.get_average()`. Test:\n```python\ndara = Student("Dara", "KH001")\ndara.add_grade(85)\ndara.add_grade(90)\nprint(dara.get_average())  # should be 87.5\n```\n\n**Step 2:** `get_grade_letter()` — just if/elif chain.\n\n**Step 3:** `Classroom.add_student()` — just append.\n\n**Step 4:** `get_top_student()` — use max() with key.\n\n**Step 5:** `print_report()` — sort + loop.',
           "What does max() with a key do?":
             "max() finds the largest item, and `key` tells it how to measure! 🏆\n\n```python\nstudents = [dara, bopha, rin]\n\n# Without key — compares the objects directly (error!)\nmax(students)  # ❌\n\n# With key — compare by average\ntop = max(students, key=lambda s: s.get_average())\nprint(top.name)  # Bopha (highest avg)\n```\n\nSame pattern works with sorted()!",
         },
@@ -1304,7 +1452,8 @@ export const ALL_LESSONS = PYTHON_MODULES.flatMap((m) => m.lessons)
 
 export const DEFAULT_AI_WELCOME: IMessage = {
   role: "ai",
-  content: "សួស្ដី! ខ្ញុំជា KodeKH AI — គ្រូបង្ហាត់ AI របស់អ្នក 🎓\n\nSelect a lesson from the sidebar to get started. Ask me anything in Khmer or English! 🐍",
+  content:
+    "សួស្ដី! ខ្ញុំជា Apsara Elearning AI — គ្រូបង្ហាត់ AI របស់អ្នក 🎓\n\nSelect a lesson from the sidebar to get started. Ask me anything in Khmer or English! 🐍",
   time: "Just now",
 }
 
