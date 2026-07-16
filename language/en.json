@@ -14,10 +14,10 @@
     "testimonials": "Testimonials"
   },
   "hero": {
-    "badge": "Introducing Apsara Elearning v2.0 — Now with GPT-4 powered mentoring",
-    "titleKh": "រៀនសរសេរកូដ",
+    "badge": "Introducing Apsara Elearning — every subject, powered by AI",
+    "titleKh": "រៀនគ្រប់មុខវិជ្ជា",
     "titleWith": "with",
-    "subtitle": "The first AI-powered coding platform built for Cambodian students. Learn Python, JavaScript, and more with <mentor>Apsara Elearning</mentor> — your personal AI coding mentor that speaks Khmer.",
+    "subtitle": "The AI-powered learning platform for Cambodian students — from Grade 1 to university. Master Math, Physics, English and more with <mentor>Apsara Elearning</mentor> — your personal AI tutor that speaks Khmer.",
     "startLearning": "Start Learning Free",
     "watchDemo": "Watch Demo",
     "studentsCount": "12,000+ students learning today"
@@ -32,19 +32,23 @@
     "badge": "Everything you need",
     "headingPart1": "Built for",
     "headingHighlight": "Cambodian",
-    "headingPart2": "Developers",
-    "subheading": "Powerful tools, Khmer-first content, and AI assistance — all in one platform.",
+    "headingPart2": "Students",
+    "subheading": "K–12 curriculum, university programs, and a personal AI tutor — all in one platform.",
     "aiMentor": {
-      "title": "Apsara Elearning AI Mentor",
-      "desc": "Real-time code explanations, debugging help, and personalised learning paths powered by advanced AI."
+      "title": "Apsara AI Tutor",
+      "desc": "Step-by-step explanations, instant feedback on exercises, and a personalised study plan — powered by advanced AI."
     },
-    "codePlayground": {
-      "title": "Live Code Playground",
-      "desc": "Write, run, and test code directly in your browser. Supports Python, JavaScript, HTML/CSS and more."
+    "k12": {
+      "title": "Grade 1–12, Every Subject",
+      "desc": "Math, Physics, Chemistry, Khmer, English and more — aligned with the national curriculum, with auto-graded practice."
+    },
+    "university": {
+      "title": "University Programs",
+      "desc": "Courses organised by faculty and major, from computer science to business — study alongside your degree."
     },
     "khmerFirst": {
       "title": "Khmer-First Learning",
-      "desc": "Every lesson, explanation, and mentor response available in Khmer. Learn coding in your native language."
+      "desc": "Every lesson, explanation, and AI answer available in Khmer. Learn in the language you think in."
     },
     "certificates": {
       "title": "Industry Certificates",
@@ -68,6 +72,24 @@
     "enroll": "Start Course",
     "continueCourse": "Continue",
     "xpReward": "{xp} XP",
+    "math": {
+      "title": "Grade 12 Mathematics",
+      "titleKh": "គណិតវិទ្យា ថ្នាក់ទី១២",
+      "tag": "BacII Prep",
+      "desc": "Functions, calculus, and probability — fully aligned with the BacII national exam."
+    },
+    "physics": {
+      "title": "Grade 11 Physics",
+      "titleKh": "រូបវិទ្យា ថ្នាក់ទី១១",
+      "tag": "Popular",
+      "desc": "Forces, energy, electricity and waves — explained step by step with interactive exercises."
+    },
+    "english": {
+      "title": "General English",
+      "titleKh": "ភាសាអង់គ្លេសទូទៅ",
+      "tag": "All Levels",
+      "desc": "Build vocabulary, grammar, and conversation skills from beginner to advanced."
+    },
     "python": {
       "title": "Python Fundamentals",
       "titleKh": "មូលដ្ឋានគ្រឹះ Python",
@@ -91,57 +113,57 @@
     "headingPart1": "How",
     "headingHighlight": "Apsara Elearning",
     "headingPart2": "Works",
-    "subheading": "Three simple steps to start your coding journey",
+    "subheading": "Three simple steps to start learning",
     "choosePath": {
       "title": "Choose Your Path",
-      "desc": "Pick a course from our Khmer-first curriculum. From beginner Python to advanced algorithms."
+      "desc": "Pick your grade and subject — or your faculty and major at university level."
     },
-    "codeLearn": {
-      "title": "Code & Learn",
-      "desc": "Write code in our live playground. Apsara Elearning explains every concept in Khmer as you go."
+    "learnPractice": {
+      "title": "Learn & Practice",
+      "desc": "Watch lessons and solve auto-graded exercises while Apsara explains every concept in Khmer."
     },
     "earnGrow": {
-      "title": "Track & Certify",
-      "desc": "Follow your personal progress, earn recognised certificates, and showcase your skills to employers."
+      "title": "Track & Achieve",
+      "desc": "Follow your progress, earn certificates, and walk into national exams with confidence."
     }
   },
   "testimonials": {
     "headingPart1": "Loved by",
     "headingHighlight": "Cambodian",
-    "headingPart2": "Developers",
+    "headingPart2": "Students",
     "sokha": {
       "name": "Sokha Phan",
-      "role": "Junior Dev @ PiCom",
-      "text": "Apsara Elearning helped me land my first tech job. The Khmer explanations made complex algorithms click instantly."
+      "role": "Grade 12 Student, Phnom Penh",
+      "text": "Apsara Elearning helped me prepare for the BacII exam. The Khmer explanations finally made calculus click."
     },
     "dara": {
       "name": "Dara Chheng",
-      "role": "CS Student, RUPP",
-      "text": "Finally a platform that teaches coding in Khmer! The AI mentor answers my questions better than any textbook."
+      "role": "Medical Student, UHS",
+      "text": "Finally a platform that teaches in Khmer! The AI tutor answers my questions better than any textbook."
     },
     "bopha": {
       "name": "Bopha Meas",
-      "role": "Freelance Developer",
-      "text": "The gamification kept me motivated. I earned 3 certificates in 2 months and doubled my freelance income."
+      "role": "English Teacher, Siem Reap",
+      "text": "My students stay motivated with the XP system. Their exam results improved in just two months."
     }
   },
   "cta": {
     "headingPart1": "Ready to Start",
-    "headingHighlight": "Coding",
+    "headingHighlight": "Learning",
     "headingPart2": "?",
-    "subheading": "Join 12,000+ Cambodian students building the future with code.",
+    "subheading": "Join 12,000+ Cambodian students learning smarter — from primary school to university.",
     "free": "Free forever for students.",
     "createAccount": "Create Free Account",
     "finePrint": "No credit card required • Always free for students"
   },
   "footer": {
-    "brand": "Cambodia's first AI-powered coding education platform. Empowering the next generation of Khmer developers.",
+    "brand": "Cambodia's AI-powered learning platform — every subject from Grade 1 to university. Empowering the next generation of Khmer learners.",
     "platformCol": "Platform",
     "companyCol": "Company",
     "supportCol": "Support",
     "courses": "Courses",
-    "playground": "Playground",
-    "aiMentor": "AI Mentor",
+    "playground": "Exercises",
+    "aiMentor": "AI Tutor",
     "leaderboard": "Leaderboard",
     "about": "About",
     "blog": "Blog",
@@ -197,7 +219,7 @@
     "noAccount": "Don't have an account?",
     "signUp": "Sign up",
     "registerTitle": "Create Your Account",
-    "registerSubtitle": "Join 12,000+ Cambodian students learning to code.",
+    "registerSubtitle": "Join 12,000+ Cambodian students learning smarter.",
     "namePlaceholder": "Enter your full name...",
     "confirmPasswordPlaceholder": "Confirm your password...",
     "registerButton": "Create Account",

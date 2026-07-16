@@ -1,16 +1,17 @@
 "use client"
 
 import Link from "next/link"
-import { BookOpen, ChevronRight, Terminal, Code2, Brain } from "lucide-react"
+import { BookOpen, ChevronRight, Calculator, Atom, Languages, ArrowRight } from "lucide-react"
 
 const ICON_MAP: Record<string, React.ElementType> = {
-  Terminal,
-  Code2,
-  Brain,
+  Calculator,
+  Atom,
+  Languages,
 }
 import { useTranslations } from "next-intl"
 import { AnimateIn } from "@/components/utils/animations/animate-in"
-import { COURSES, COLOR } from "@/utils/constants/landing.constant"
+import { TiltCard } from "@/components/utils/animations/tilt-card"
+import { FEATURED_SUBJECTS, COLOR } from "@/utils/constants/landing.constant"
 import { TypographyH2 } from "@/components/utils/typography/typography-h2"
 import { TypographyH3 } from "@/components/utils/typography/typography-h3"
 
@@ -29,63 +30,66 @@ export function LandingCourses() {
               </div>
               <TypographyH2 className="text-4xl font-bold tracking-tight text-foreground border-0 pb-0">
                 {t("headingPart1")}{" "}
-                <span className="gradient-text">{t("headingHighlight")}</span>
+                <span className="gradient-text-animated">{t("headingHighlight")}</span>
                 {t("headingPart2") ? ` ${t("headingPart2")}` : ""}
               </TypographyH2>
             </div>
             <Link href="/dashboard">
-              <button className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
-                {t("viewAll")} <ChevronRight className="size-4" />
+              <button className="group flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
+                {t("viewAll")}
+                <ChevronRight className="size-4 transition-transform group-hover:translate-x-1" />
               </button>
             </Link>
           </div>
         </AnimateIn>
 
         <div className="grid md:grid-cols-3 gap-6">
-          {COURSES.map((course, i) => {
-            const c = COLOR[course.color]
-            const key = course.key as Parameters<typeof t>[0]
+          {FEATURED_SUBJECTS.map((subject, i) => {
+            const c = COLOR[subject.color]
+            const key = subject.key as Parameters<typeof t>[0]
             return (
               <AnimateIn
-                key={course.key}
+                key={subject.key}
                 animation={i === 0 ? "fade-right" : i === 1 ? "zoom" : "fade-left"}
                 delay={i * 0.12}
               >
-                <div className={`group card-surface rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300 cursor-pointer border ${c.border} h-full flex flex-col`}>
-                  <div className="p-6 flex-1">
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="size-14 rounded-2xl bg-muted flex items-center justify-center">
-                        {(() => {
-                          const Icon = ICON_MAP[course.icon]
-                          return Icon ? <Icon className="size-7" /> : null
-                        })()}
+                <TiltCard maxTilt={6} className="h-full">
+                  <div className={`group card-surface btn-shine rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer border ${c.border} h-full flex flex-col`}>
+                    {/* Animated top gradient bar */}
+                    <div className="animate-gradient h-1 w-full bg-gradient-to-r from-[#2383e2] via-[#7c5cff] to-[#22c9dd] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <div className="p-6 flex-1">
+                      <div className="flex items-start justify-between mb-4">
+                        <div className={`size-14 rounded-2xl ${c.bg} flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:rotate-6`}>
+                          {(() => {
+                            const Icon = ICON_MAP[subject.icon]
+                            return Icon ? <Icon className={`size-7 ${c.icon}`} /> : null
+                          })()}
+                        </div>
+                        <span className={`text-[10px] font-semibold px-2.5 py-1 rounded-full ${c.badge}`}>
+                          {t(`${key}.tag` as Parameters<typeof t>[0])}
+                        </span>
                       </div>
-                      <span className={`text-[10px] font-semibold px-2.5 py-1 rounded-full ${c.badge}`}>
-                        {t(`${key}.tag` as Parameters<typeof t>[0])}
-                      </span>
+                      <TypographyH3 className="text-foreground text-lg mb-3">
+                        {t(`${key}.title` as Parameters<typeof t>[0])}
+                      </TypographyH3>
+                      <div className="flex items-center gap-3 mb-5">
+                        <span className={`text-xs px-2 py-0.5 rounded-full ${subject.levelBadge}`}>
+                          {subject.level}
+                        </span>
+                        <span className="text-xs text-muted-foreground">
+                          {t("lessons", { count: subject.lessons })}
+                        </span>
+                        <span className={`text-xs font-semibold ${c.icon}`}>+{subject.xp} XP</span>
+                      </div>
                     </div>
-                    <TypographyH3 className="text-foreground text-lg mb-3">
-                      {t(`${key}.title` as Parameters<typeof t>[0])}
-                    </TypographyH3>
-                    <div className="flex items-center gap-3 mb-5">
-                      <span className={`text-xs px-2 py-0.5 rounded-full ${
-                        course.level === "Beginner"     ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400" :
-                        course.level === "Intermediate" ? "bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-400" :
-                                                          "bg-red-100 text-red-700 dark:bg-red-500/20 dark:text-red-400"
-                      }`}>{course.level}</span>
-                      <span className="text-xs text-muted-foreground">
-                        {t("lessons", { count: course.lessons })}
-                      </span>
-                      <span className={`text-xs font-semibold ${c.icon}`}>+{course.xp} XP</span>
+                    <div className="px-6 pb-6">
+                      <button className="group/btn flex w-full items-center justify-center gap-2 py-2.5 text-sm font-medium rounded-xl bg-muted hover:bg-muted/80 border border-border text-foreground/70 hover:text-foreground transition-all">
+                        {t("startCourse")}
+                        <ArrowRight className="size-3.5 -ml-1 opacity-0 -translate-x-2 transition-all duration-300 group-hover/btn:opacity-100 group-hover/btn:translate-x-0" />
+                      </button>
                     </div>
                   </div>
-                  <div className="px-6 pb-6">
-                    <button className="w-full py-2.5 text-sm font-medium rounded-xl bg-muted hover:bg-muted/80 border border-border text-foreground/70 hover:text-foreground transition-all">
-                      {t("startCourse")}
-                    </button>
-                  </div>
-                  <div className="h-0.5 w-full gradient-bg-primary opacity-0 group-hover:opacity-100 transition-opacity" />
-                </div>
+                </TiltCard>
               </AnimateIn>
             )
           })}

@@ -1,130 +1,170 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { useTranslations } from "next-intl"
-import { Sparkles, EyeIcon, EyeClosedIcon, LockIcon, MailIcon, UserIcon, Rocket, Check, Globe, Bot, Trophy } from "lucide-react"
+import gsap from "gsap"
+import {
+  EyeIcon, EyeClosedIcon, LockIcon, MailIcon, UserIcon, Rocket,
+  Check, Globe, Bot, Trophy,
+} from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { AuthShowcase } from "@/components/auth/auth-showcase"
+import { BrandLogo } from "@/components/utils/brand-logo"
 import { TypographyH3 } from "@/components/utils/typography/typography-h3"
 import { TypographyMuted } from "@/components/utils/typography/typography-muted"
 
+const BENEFITS = [
+  { icon: Check, text: "Free forever for students" },
+  { icon: Globe, text: "Every subject, from Grade 1 to university" },
+  { icon: Bot, text: "Personal AI tutor that speaks Khmer" },
+  { icon: Trophy, text: "Certificates and national exam prep" },
+]
+
 export default function RegisterPage() {
-  const [passwordVisible, setPasswordVisible]        = useState(false)
-  const [confirmVisible, setConfirmVisible]          = useState(false)
+  const [passwordVisible, setPasswordVisible] = useState(false)
+  const [confirmVisible, setConfirmVisible] = useState(false)
   const t = useTranslations("auth")
+  const formRef = useRef<HTMLDivElement>(null)
+
+  /* Entrance timeline — logo pops, then the form cascades up */
+  useEffect(() => {
+    const root = formRef.current
+    if (!root) return
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } })
+      tl.from("[data-auth-logo]", { opacity: 0, scale: 0.7, y: -24, duration: 0.7, ease: "back.out(1.8)" })
+        .from("[data-auth-field]", { opacity: 0, y: 28, duration: 0.6, stagger: 0.09 }, "-=0.25")
+    }, root)
+    return () => ctx.revert()
+  }, [])
 
   return (
     <div className="flex h-screen w-screen overflow-hidden">
-
       {/* ── Decorative panel (left on register, right on login) ── */}
-      <div className="hidden md:flex flex-1 relative overflow-hidden gradient-bg-primary">
-        <div className="absolute -top-32 -left-32 size-96 rounded-full bg-white/10 blur-3xl" />
-        <div className="absolute -bottom-20 -right-20 size-72 rounded-full bg-white/10 blur-3xl" />
-        <div className="relative flex flex-col items-center justify-center w-full px-12 text-white text-center gap-6">
-          <div className="size-16 rounded-2xl bg-white/15 flex items-center justify-center">
-            <Rocket className="size-8 text-white" />
-          </div>
-          <div>
-            <h2 className="text-3xl font-bold mb-3">Start learning today</h2>
-            <p className="text-white/75 text-base leading-relaxed max-w-xs">
-              Join 12,000+ Cambodian students building real skills with AI-powered lessons in Khmer.
-            </p>
-          </div>
-          <div className="flex flex-col gap-3 mt-2 w-full max-w-xs">
-            {[
-              { icon: <Check className="size-4 shrink-0" />, text: "Free forever for students" },
-              { icon: <Globe className="size-4 shrink-0" />, text: "Lessons available in Khmer" },
-              { icon: <Bot className="size-4 shrink-0" />, text: "Personal AI mentor — Apsara Elearning" },
-              { icon: <Trophy className="size-4 shrink-0" />, text: "Industry-recognised certificates" },
-            ].map((item) => (
-              <div key={item.text} className="flex items-center gap-3 text-sm text-left bg-white/10 rounded-xl px-4 py-2.5 backdrop-blur-sm">
-                <span className="text-white">{item.icon}</span>
-                <span className="text-white/90">{item.text}</span>
-              </div>
-            ))}
-          </div>
+      <AuthShowcase
+        side="left"
+        icon={<Rocket className="relative size-9 text-white" />}
+        title="Start learning today"
+        description="Join 12,000+ Cambodian students — from primary school to university — learning with AI-powered lessons in Khmer."
+      >
+        <div className="flex w-full flex-col gap-3">
+          {BENEFITS.map((item) => (
+            <div
+              key={item.text}
+              className="flex items-center gap-3 rounded-xl bg-white/10 px-4 py-2.5 text-left text-sm backdrop-blur-sm transition-all duration-300 hover:bg-white/20 hover:translate-x-1"
+            >
+              <item.icon className="size-4 shrink-0 text-white" />
+              <span className="text-white/90">{item.text}</span>
+            </div>
+          ))}
         </div>
-      </div>
+      </AuthShowcase>
 
       {/* ── Form panel ── */}
-      <div className="flex flex-1 flex-col items-center justify-center px-8 py-12 bg-background overflow-y-auto">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2.5 mb-8">
-          <div className="size-9 rounded-xl gradient-bg-primary flex items-center justify-center">
-            <Sparkles className="size-4 text-white" />
-          </div>
-          <span className="font-bold text-xl tracking-tight">
-            <span className="gradient-text">Kode</span>
-            <span className="text-muted-foreground font-light">KH</span>
-          </span>
-        </Link>
+      <div
+        ref={formRef}
+        className="relative flex flex-1 flex-col items-center justify-center overflow-y-auto bg-background px-8 py-12"
+      >
+        {/* Soft ambient background behind the form */}
+        <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="grid-pattern absolute inset-0 opacity-50 dark:opacity-30" />
+          <div className="aurora-orb aurora-violet size-80 -top-24 -right-24" />
+          <div className="aurora-orb aurora-cyan size-72 -bottom-24 -left-16" style={{ animationDelay: "-14s" }} />
+        </div>
 
-        <div className="w-full max-w-sm space-y-6">
-          <div className="text-center">
+        <div data-auth-logo className="relative mb-8">
+          <BrandLogo size="lg" />
+        </div>
+
+        <div className="relative w-full max-w-sm space-y-6">
+          <div data-auth-field className="text-center">
             <TypographyH3 className="text-2xl font-bold">{t("registerTitle")}</TypographyH3>
-            <TypographyMuted className="text-sm mt-1">{t("registerSubtitle")}</TypographyMuted>
+            <TypographyMuted className="mt-1 text-sm">{t("registerSubtitle")}</TypographyMuted>
           </div>
 
           <div className="space-y-3">
-            <Input
-              prefix={<UserIcon />}
-              placeholder={t("namePlaceholder")}
-              type="text"
-            />
-            <Input
-              prefix={<MailIcon />}
-              placeholder={t("emailPlaceholder")}
-              type="email"
-            />
-            <Input
-              prefix={<LockIcon />}
-              placeholder={t("passwordPlaceholder")}
-              type={passwordVisible ? "text" : "password"}
-              suffix={
-                passwordVisible ? (
-                  <EyeClosedIcon
-                    onClick={() => setPasswordVisible(false)}
-                    className="cursor-pointer"
-                  />
-                ) : (
-                  <EyeIcon
-                    onClick={() => setPasswordVisible(true)}
-                    className="cursor-pointer"
-                  />
-                )
-              }
-            />
-            <Input
-              prefix={<LockIcon />}
-              placeholder={t("confirmPasswordPlaceholder")}
-              type={confirmVisible ? "text" : "password"}
-              suffix={
-                confirmVisible ? (
-                  <EyeClosedIcon
-                    onClick={() => setConfirmVisible(false)}
-                    className="cursor-pointer"
-                  />
-                ) : (
-                  <EyeIcon
-                    onClick={() => setConfirmVisible(true)}
-                    className="cursor-pointer"
-                  />
-                )
-              }
-            />
-            <Button className="w-full">{t("registerButton")}</Button>
+            <div data-auth-field>
+              <Input
+                prefix={<UserIcon />}
+                placeholder={t("namePlaceholder")}
+                type="text"
+                className="bg-background/70 backdrop-blur-sm transition-shadow duration-300 focus-within:shadow-[0_0_24px_-8px_rgba(35,131,226,0.5)]"
+              />
+            </div>
+            <div data-auth-field>
+              <Input
+                prefix={<MailIcon />}
+                placeholder={t("emailPlaceholder")}
+                type="email"
+                className="bg-background/70 backdrop-blur-sm transition-shadow duration-300 focus-within:shadow-[0_0_24px_-8px_rgba(35,131,226,0.5)]"
+              />
+            </div>
+            <div data-auth-field>
+              <Input
+                prefix={<LockIcon />}
+                placeholder={t("passwordPlaceholder")}
+                type={passwordVisible ? "text" : "password"}
+                className="bg-background/70 backdrop-blur-sm transition-shadow duration-300 focus-within:shadow-[0_0_24px_-8px_rgba(35,131,226,0.5)]"
+                suffix={
+                  passwordVisible ? (
+                    <EyeClosedIcon
+                      onClick={() => setPasswordVisible(false)}
+                      className="cursor-pointer transition-transform hover:scale-110"
+                    />
+                  ) : (
+                    <EyeIcon
+                      onClick={() => setPasswordVisible(true)}
+                      className="cursor-pointer transition-transform hover:scale-110"
+                    />
+                  )
+                }
+              />
+            </div>
+            <div data-auth-field>
+              <Input
+                prefix={<LockIcon />}
+                placeholder={t("confirmPasswordPlaceholder")}
+                type={confirmVisible ? "text" : "password"}
+                className="bg-background/70 backdrop-blur-sm transition-shadow duration-300 focus-within:shadow-[0_0_24px_-8px_rgba(35,131,226,0.5)]"
+                suffix={
+                  confirmVisible ? (
+                    <EyeClosedIcon
+                      onClick={() => setConfirmVisible(false)}
+                      className="cursor-pointer transition-transform hover:scale-110"
+                    />
+                  ) : (
+                    <EyeIcon
+                      onClick={() => setConfirmVisible(true)}
+                      className="cursor-pointer transition-transform hover:scale-110"
+                    />
+                  )
+                }
+              />
+            </div>
+            <div data-auth-field>
+              <Button className="btn-shine w-full transition-all hover:shadow-[0_0_28px_-6px_rgba(35,131,226,0.6)] hover:-translate-y-0.5">
+                {t("registerButton")}
+              </Button>
+            </div>
           </div>
 
-          <TypographyMuted className="text-center text-sm">
-            {t("alreadyHaveAccount")}{" "}
-            <Link href="/login" className="text-violet-600 dark:text-violet-400 font-semibold hover:underline">
-              {t("signIn")}
-            </Link>
-          </TypographyMuted>
+          <div data-auth-field>
+            <TypographyMuted className="text-center text-sm">
+              {t("alreadyHaveAccount")}{" "}
+              <Link
+                href="/login"
+                className="font-semibold text-violet-600 hover:underline dark:text-violet-400"
+              >
+                {t("signIn")}
+              </Link>
+            </TypographyMuted>
+          </div>
         </div>
       </div>
-
     </div>
   )
 }

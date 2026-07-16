@@ -4,41 +4,128 @@ import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import {
   Sparkles, ArrowRight, Play, Brain, Star, ChevronRight, GraduationCap,
+  Flame, Trophy, BadgeCheck, ChevronDown, Calculator, Atom, FlaskConical,
+  Languages, BookOpen, Check,
 } from "lucide-react"
 import { useTranslations } from "next-intl"
+import gsap from "gsap"
 import { AnimateIn } from "@/components/utils/animations/animate-in"
+import { AuroraBackground } from "@/components/utils/animations/aurora-background"
+import { TextReveal } from "@/components/utils/animations/text-reveal"
+import { Magnetic } from "@/components/utils/animations/magnetic"
+import { TiltCard } from "@/components/utils/animations/tilt-card"
 import { TypographyH1 } from "@/components/utils/typography/typography-h1"
 import { TypographyLead } from "@/components/utils/typography/typography-lead"
 import { TypographyMuted } from "@/components/utils/typography/typography-muted"
-import { CodeTyper } from "@/components/utils/code-typer"
 
-const codeLines = [
-  'def greet(name="\u1798\u17b6\u178f\u17d2\u178f"):',
-  '    return f"\u179f\u17bd\u179f\u17d2\u179f\u17ca\u17b8, {name}!"',
-  "",
-  'names = ["\u178a\u17b6\u179a\u17b7\u17b6", "\u179f\u17bb\u1797\u17b6", "\u1798\u17b6\u179b\u17b8"]',
-  "for n in names:",
-  "    print(greet(n))",
+/** Floating subject symbols scattered around the hero, moved by mouse parallax */
+const GLYPHS = [
+  { char: "π", className: "top-[18%] left-[8%] text-blue-400/40 text-3xl", depth: 30 },
+  { char: "∑", className: "top-[30%] right-[10%] text-violet-400/40 text-3xl", depth: 50 },
+  { char: "√x", className: "top-[55%] left-[5%] text-cyan-400/40 text-2xl", depth: 40 },
+  { char: "H₂O", className: "top-[12%] right-[22%] text-emerald-400/30 text-xl", depth: 25 },
+  { char: "A+", className: "top-[62%] right-[6%] text-amber-400/30 text-2xl", depth: 60 },
 ]
 
-const outputLines = [
-  "\u179f\u17bd\u179f\u17d2\u179f\u17ca\u17b8, \u178a\u17b6\u179a\u17b7\u17b6!",
-  "\u179f\u17bd\u179f\u17d2\u179f\u17ca\u17b8, \u179f\u17bb\u1797\u17b6!",
-  "\u179f\u17bd\u179f\u17d2\u179f\u17ca\u17b8, \u1798\u17b6\u179b\u17b8!",
+const SIDEBAR_SUBJECTS = [
+  { name: "Mathematics", icon: Calculator },
+  { name: "Physics", icon: Atom },
+  { name: "Chemistry", icon: FlaskConical },
+  { name: "English", icon: Languages },
 ]
+
+const QUIZ_OPTIONS = ["−1", "1", "3", "−3"]
+const CORRECT_INDEX = 0
+
+/**
+ * Animated quiz demo: the "student" considers two options, picks the
+ * correct one, earns XP, then the loop restarts.
+ * Phases: 0 idle · 1 hover B · 2 hover A · 3 answered (+10 XP)
+ */
+function QuizDemo({ active }: { active: boolean }) {
+  const [phase, setPhase] = useState(0)
+
+  useEffect(() => {
+    if (!active) return
+    const DELAYS = [1400, 1000, 900, 3200]
+    const timer = setTimeout(() => setPhase((p) => (p + 1) % 4), DELAYS[phase])
+    return () => clearTimeout(timer)
+  }, [active, phase])
+
+  const answered = phase === 3
+  const hovered = phase === 1 ? 1 : phase === 2 ? 0 : -1
+
+  return (
+    <div className="flex h-full flex-col p-4 text-left">
+      <div className="mb-1 flex items-center justify-between">
+        <span className="text-[10px] font-semibold uppercase tracking-wider text-violet-600 dark:text-violet-400">
+          Lesson 12 · Quadratic Functions
+        </span>
+        <span
+          className={`flex items-center gap-1 rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-600 transition-all duration-300 dark:bg-emerald-500/20 dark:text-emerald-400 ${
+            answered ? "scale-100 opacity-100" : "scale-75 opacity-0"
+          }`}
+        >
+          <Sparkles className="size-2.5" /> +10 XP
+        </span>
+      </div>
+      <p className="mb-3 text-xs leading-relaxed text-foreground">
+        f(x) = x² − 4x + 3 — what is the <span className="font-semibold">minimum value</span> of f(x)?
+      </p>
+      <div className="space-y-1.5">
+        {QUIZ_OPTIONS.map((opt, i) => {
+          const isCorrect = answered && i === CORRECT_INDEX
+          const isHovered = hovered === i
+          return (
+            <div
+              key={opt}
+              className={`flex items-center gap-2 rounded-lg border px-3 py-1.5 text-xs transition-all duration-300 ${
+                isCorrect
+                  ? "border-emerald-400 bg-emerald-50 text-emerald-700 dark:border-emerald-500/50 dark:bg-emerald-500/15 dark:text-emerald-300"
+                  : isHovered
+                    ? "border-violet-300 bg-violet-50 dark:border-violet-500/40 dark:bg-violet-500/10"
+                    : "border-border bg-muted/40 text-muted-foreground"
+              }`}
+            >
+              <span
+                className={`flex size-4 items-center justify-center rounded-full border text-[9px] font-bold ${
+                  isCorrect
+                    ? "border-emerald-400 bg-emerald-400 text-white"
+                    : "border-border"
+                }`}
+              >
+                {isCorrect ? <Check className="size-2.5" /> : String.fromCharCode(65 + i)}
+              </span>
+              f(x) = {opt}
+            </div>
+          )
+        })}
+      </div>
+      <div
+        className={`mt-3 rounded-lg border border-border bg-muted/40 px-3 py-2 text-[10px] leading-relaxed text-muted-foreground transition-opacity duration-500 ${
+          answered ? "opacity-100" : "opacity-0"
+        }`}
+      >
+        ✓ Correct! Complete the square: f(x) = (x − 2)² − 1, so the minimum is −1 at x = 2.
+      </div>
+    </div>
+  )
+}
 
 export function LandingHero() {
   const t = useTranslations("hero")
-  const [editorActive, setEditorActive] = useState(true)
-  const editorRef = useRef<HTMLDivElement>(null)
+  const [quizActive, setQuizActive] = useState(true)
+  const quizRef = useRef<HTMLDivElement>(null)
+  const sectionRef = useRef<HTMLElement>(null)
+  const glyphsRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const el = editorRef.current
+    const el = quizRef.current
     if (!el) return
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setEditorActive(entry.isIntersecting)
+        setQuizActive(entry.isIntersecting)
       },
       { threshold: 0.3 }
     )
@@ -46,31 +133,78 @@ export function LandingHero() {
     return () => observer.disconnect()
   }, [])
 
-  return (
-    <section className="relative flex flex-col items-center justify-center px-6 pt-36 pb-24 text-center min-h-screen">
+  /* Mouse parallax — glyph layers drift opposite the cursor by depth */
+  useEffect(() => {
+    const section = sectionRef.current
+    const layer = glyphsRef.current
+    if (!section || !layer) return
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+    if (window.matchMedia("(hover: none)").matches) return
 
-      <AnimateIn animation="fade" delay={0.05} className="mb-8">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass border border-violet-300/40 dark:border-violet-500/30 text-xs font-medium text-violet-700 dark:text-violet-300 shadow-sm">
-          <Sparkles className="size-3.5 text-violet-500 dark:text-violet-400" />
+    const movers = Array.from(layer.children).map((child) => ({
+      depth: Number((child as HTMLElement).dataset.depth ?? 30),
+      xTo: gsap.quickTo(child, "x", { duration: 1.2, ease: "power3.out" }),
+      yTo: gsap.quickTo(child, "y", { duration: 1.2, ease: "power3.out" }),
+    }))
+
+    const onMove = (e: MouseEvent) => {
+      const { innerWidth, innerHeight } = window
+      const nx = e.clientX / innerWidth - 0.5
+      const ny = e.clientY / innerHeight - 0.5
+      movers.forEach(({ depth, xTo, yTo }) => {
+        xTo(-nx * depth)
+        yTo(-ny * depth)
+      })
+    }
+    section.addEventListener("mousemove", onMove)
+    return () => section.removeEventListener("mousemove", onMove)
+  }, [])
+
+  return (
+    <section
+      ref={sectionRef}
+      className="relative flex flex-col items-center justify-center px-6 pt-36 pb-24 text-center min-h-screen overflow-hidden"
+    >
+      <AuroraBackground />
+
+      {/* Floating subject symbols */}
+      <div ref={glyphsRef} aria-hidden className="pointer-events-none absolute inset-0 hidden md:block">
+        {GLYPHS.map((g, i) => (
+          <span
+            key={i}
+            data-depth={g.depth}
+            className={`absolute font-bold select-none animate-bob ${g.className}`}
+            style={{ animationDelay: `${i * 0.7}s` }}
+          >
+            {g.char}
+          </span>
+        ))}
+      </div>
+
+      <AnimateIn animation="fade-down" delay={0.05} className="relative mb-8">
+        <div className="btn-shine inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass border border-violet-300/40 dark:border-violet-500/30 text-xs font-medium text-violet-700 dark:text-violet-300 shadow-sm">
+          <Sparkles className="size-3.5 text-violet-500 dark:text-violet-400 animate-spin-slow" />
           {t("badge")}
           <ChevronRight className="size-3.5 opacity-60" />
         </div>
       </AnimateIn>
 
-      <AnimateIn animation="blur-up" delay={0.15}>
-        <TypographyH1 className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.1] max-w-4xl mb-6">
-          <span className="gradient-text block mb-1">{t("titleKh")}</span>
-          <span className="text-foreground block">{t("titleWith")} </span>
+      <TypographyH1 className="relative text-5xl md:text-7xl font-bold tracking-tight leading-[1.1] max-w-4xl mb-6">
+        <span className="block mb-1">
+          <TextReveal text={t("titleKh")} wordClassName="gradient-text-animated" delay={0.15} />
+        </span>
+        <span className="block text-foreground">
+          <TextReveal text={t("titleWith")} delay={0.35} />{" "}
           <span className="relative inline-block">
-            <span className="gradient-text">AI Mentor</span>
+            <TextReveal text="AI Mentor" wordClassName="gradient-text" delay={0.45} stagger={0.12} />
             <span className="absolute -top-3 -right-8 text-2xl select-none">
-              <Sparkles className="size-6 text-blue-400" />
+              <Sparkles className="size-6 text-blue-400 animate-breathe" />
             </span>
           </span>
-        </TypographyH1>
-      </AnimateIn>
+        </span>
+      </TypographyH1>
 
-      <AnimateIn animation="fade-up" delay={0.3}>
+      <AnimateIn animation="blur-up" delay={0.65} className="relative">
         <TypographyLead className="max-w-xl mb-10 leading-relaxed">
           {t.rich("subtitle", {
             mentor: (chunks) => (
@@ -80,30 +214,40 @@ export function LandingHero() {
         </TypographyLead>
       </AnimateIn>
 
-      <AnimateIn animation="fade-up" delay={0.4}>
+      <AnimateIn animation="fade-up" delay={0.8} className="relative">
         <div className="flex flex-col sm:flex-row items-center gap-4 mb-16">
-          <Link href="/dashboard">
-            <button className="group flex items-center gap-2.5 px-8 py-4 text-base font-semibold rounded-2xl gradient-bg-primary hover:opacity-90 transition-all text-white shadow-xl">
-              <GraduationCap className="size-5" />
-              {t("startLearning")}
-              <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform" />
-            </button>
-          </Link>
-          <Link href="/learn">
-            <button className="group flex items-center gap-2.5 px-8 py-4 text-base font-medium rounded-2xl glass border border-border hover:border-violet-300 dark:hover:border-violet-500/30 transition-all text-foreground/80 hover:text-foreground">
-              <Play className="size-4 fill-current opacity-60" />
-              {t("watchDemo")}
-            </button>
-          </Link>
+          <Magnetic>
+            <Link href="/dashboard">
+              <button className="btn-shine group flex items-center gap-2.5 px-8 py-4 text-base font-semibold rounded-2xl gradient-bg-primary transition-all text-white shadow-xl hover:shadow-[0_0_40px_-8px_rgba(35,131,226,0.7)]">
+                <GraduationCap className="size-5" />
+                {t("startLearning")}
+                <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform" />
+              </button>
+            </Link>
+          </Magnetic>
+          <Magnetic strength={0.25}>
+            <Link href="/learn">
+              <button className="group flex items-center gap-2.5 px-8 py-4 text-base font-medium rounded-2xl glass border border-border hover:border-violet-300 dark:hover:border-violet-500/30 transition-all text-foreground/80 hover:text-foreground">
+                <span className="relative flex items-center justify-center">
+                  <span className="absolute size-6 rounded-full bg-violet-400/20 animate-ping group-hover:bg-violet-400/30" />
+                  <Play className="size-4 fill-current opacity-60 relative" />
+                </span>
+                {t("watchDemo")}
+              </button>
+            </Link>
+          </Magnetic>
         </div>
       </AnimateIn>
 
-      <AnimateIn animation="fade" delay={0.5}>
+      <AnimateIn animation="fade" delay={1} className="relative">
         <div className="flex items-center gap-3 mb-20">
           <div className="flex -space-x-2">
             {["SP","DC","BM","RK","VL"].map((initials, i) => (
-              <div key={i} className="size-8 rounded-full border-2 border-background flex items-center justify-center text-[10px] font-bold text-white"
-                style={{ background: `hsl(${260 + i * 22}, 60%, 55%)` }}>
+              <div
+                key={i}
+                className="size-8 rounded-full border-2 border-background flex items-center justify-center text-[10px] font-bold text-white transition-transform duration-300 hover:-translate-y-1 hover:z-10"
+                style={{ background: `hsl(${260 + i * 22}, 60%, 55%)` }}
+              >
                 {initials}
               </div>
             ))}
@@ -117,98 +261,144 @@ export function LandingHero() {
         </div>
       </AnimateIn>
 
-      {/* App mockup */}
-      <AnimateIn animation="flip-up" delay={0.2} className="w-full max-w-5xl">
+      {/* App mockup with 3-D tilt + floating gamification cards */}
+      <AnimateIn animation="flip-up" delay={0.3} className="relative w-full max-w-5xl">
         <div className="relative">
-          <div className="absolute -inset-3 rounded-3xl gradient-bg-primary opacity-10 dark:opacity-20 blur-2xl" />
-          <div className="relative card-surface rounded-2xl overflow-hidden">
-            {/* Browser chrome */}
-            <div className="flex items-center gap-2 px-4 py-3 border-b border-border bg-muted/40">
-              <div className="flex gap-1.5">
-                <div className="size-3 rounded-full bg-red-400/70" />
-                <div className="size-3 rounded-full bg-yellow-400/70" />
-                <div className="size-3 rounded-full bg-green-400/70" />
+          {/* Floating cards around the mockup */}
+          <div aria-hidden className="pointer-events-none absolute inset-0 z-20 hidden lg:block">
+            <div
+              className="animate-bob absolute -left-16 top-10 glass rounded-2xl px-4 py-3 shadow-lg flex items-center gap-2.5"
+              style={{ "--bob-rotate": "-4deg" } as React.CSSProperties}
+            >
+              <div className="size-8 rounded-lg bg-amber-100 dark:bg-amber-500/20 flex items-center justify-center">
+                <Flame className="size-4 text-amber-500" />
               </div>
-              <div className="flex-1 mx-4">
-                <div className="mx-auto max-w-xs h-5 rounded-md bg-muted flex items-center px-3 text-[10px] text-muted-foreground">
-                  apsaraelearning.com/learn/python
-                </div>
+              <div className="text-left">
+                <div className="text-xs font-bold text-foreground">14-day streak</div>
+                <div className="text-[10px] text-muted-foreground">Keep it up!</div>
               </div>
             </div>
-            <div className="flex h-80 md:h-96 bg-card">
-              {/* Sidebar */}
-              <div className="w-52 border-r border-border bg-muted/20 p-3 hidden sm:block">
-                <div className="flex items-center gap-2 mb-4 px-2">
-                  <Sparkles className="size-4 text-violet-500 dark:text-violet-400" />
-                  <span className="text-xs font-semibold text-foreground">Apsara Elearning</span>
-                </div>
-                {["Dashboard","My Courses","Challenges","Leaderboard"].map((item, i) => (
-                  <div key={item} className={`flex items-center gap-2 px-2.5 py-2 rounded-xl mb-1 text-xs ${
-                    i === 1 ? "bg-violet-100 dark:bg-violet-500/20 text-violet-700 dark:text-violet-300 font-medium" : "text-muted-foreground"
-                  }`}>
-                    <div className={`size-1.5 rounded-full ${i === 1 ? "bg-violet-500" : "bg-border"}`} />
-                    {item}
-                  </div>
-                ))}
-                <div className="mt-4 pt-4 border-t border-border px-2">
-                  <div className="flex justify-between text-[10px] mb-1.5">
-                    <span className="text-muted-foreground">Level 8</span>
-                    <span className="text-violet-600 dark:text-violet-400 font-semibold">2,450 XP</span>
-                  </div>
-                  <div className="h-1.5 rounded-full bg-muted overflow-hidden">
-                    <div className="h-full w-3/5 rounded-full gradient-bg-primary" />
-                  </div>
-                </div>
+            <div
+              className="animate-bob absolute -right-14 top-28 glass rounded-2xl px-4 py-3 shadow-lg flex items-center gap-2.5"
+              style={{ "--bob-rotate": "3deg", animationDelay: "1.2s" } as React.CSSProperties}
+            >
+              <div className="size-8 rounded-lg bg-violet-100 dark:bg-violet-500/20 flex items-center justify-center">
+                <Trophy className="size-4 text-violet-500" />
               </div>
-              {/* Editor */}
-              <div className="flex-1 flex flex-col bg-[#0d1117]">
-                <div className="flex items-center gap-3 px-4 py-2 border-b border-white/5">
-                  <span className="text-xs text-gray-400 font-mono">main.py</span>
-                  <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30">Python 3.11</span>
-                  <div className="ml-auto flex items-center gap-2">
-                    <div className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                    <span className="text-[10px] text-emerald-400">Running</span>
-                  </div>
-                </div>
-                <div ref={editorRef} className="flex-1 p-4 overflow-hidden">
-                  <CodeTyper
-                    active={editorActive}
-                    code={codeLines}
-                    output={outputLines}
-                    typingSpeed={70}
-                    outputDelay={1500}
-                    loopDelay={6000}
-                  />
-                </div>
+              <div className="text-left">
+                <div className="text-xs font-bold text-foreground">+250 XP</div>
+                <div className="text-[10px] text-muted-foreground">Quiz champion</div>
               </div>
-              {/* AI Panel */}
-              <div className="w-56 border-l border-border bg-muted/20 p-3 hidden lg:flex flex-col">
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="size-6 rounded-lg gradient-bg-primary flex items-center justify-center shrink-0">
-                    <Brain className="size-3 text-white" />
-                  </div>
-                  <span className="text-xs font-medium text-foreground">Apsara Elearning</span>
-                  <div className="ml-auto size-1.5 rounded-full bg-emerald-500" />
-                </div>
-                <div className="space-y-2 flex-1">
-                  <div className="bg-muted dark:bg-white/5 rounded-xl rounded-tl-none p-2.5 text-[10px] text-muted-foreground leading-relaxed border border-border">
-                    Nice! Your <span className="text-cyan-600 dark:text-cyan-400">greet()</span> function loops through Khmer names. Try adding default parameters next!
-                  </div>
-                  <div className="bg-violet-100 dark:bg-violet-500/20 rounded-xl rounded-tr-none ml-4 p-2.5 text-[10px] text-violet-700 dark:text-violet-200 leading-relaxed">
-                    How do I use a for loop?
-                  </div>
-                </div>
-                <div className="mt-2 flex gap-1.5">
-                  <div className="flex-1 h-7 rounded-lg bg-muted border border-border" />
-                  <div className="size-7 rounded-lg gradient-bg-primary flex items-center justify-center">
-                    <ArrowRight className="size-3 text-white" />
-                  </div>
-                </div>
+            </div>
+            <div
+              className="animate-bob absolute -left-10 bottom-16 glass rounded-2xl px-4 py-3 shadow-lg flex items-center gap-2.5"
+              style={{ "--bob-rotate": "2deg", animationDelay: "2s" } as React.CSSProperties}
+            >
+              <div className="size-8 rounded-lg bg-emerald-100 dark:bg-emerald-500/20 flex items-center justify-center">
+                <BadgeCheck className="size-4 text-emerald-500" />
+              </div>
+              <div className="text-left">
+                <div className="text-xs font-bold text-foreground">Grade 12 Math</div>
+                <div className="text-[10px] text-muted-foreground">Certificate earned</div>
               </div>
             </div>
           </div>
+
+          <div className="absolute -inset-3 rounded-3xl gradient-bg-primary opacity-10 dark:opacity-20 blur-2xl animate-pulse-glow" />
+          <TiltCard maxTilt={5}>
+            <div className="relative card-surface rounded-2xl overflow-hidden">
+              {/* Browser chrome */}
+              <div className="flex items-center gap-2 px-4 py-3 border-b border-border bg-muted/40">
+                <div className="flex gap-1.5">
+                  <div className="size-3 rounded-full bg-red-400/70" />
+                  <div className="size-3 rounded-full bg-yellow-400/70" />
+                  <div className="size-3 rounded-full bg-green-400/70" />
+                </div>
+                <div className="flex-1 mx-4">
+                  <div className="mx-auto max-w-xs h-5 rounded-md bg-muted flex items-center px-3 text-[10px] text-muted-foreground">
+                    apsaraelearning.com/learn/math-grade-12
+                  </div>
+                </div>
+              </div>
+              <div className="flex h-80 md:h-96 bg-card">
+                {/* Sidebar */}
+                <div className="w-52 border-r border-border bg-muted/20 p-3 hidden sm:block">
+                  <div className="flex items-center gap-2 mb-1 px-2">
+                    <Sparkles className="size-4 text-violet-500 dark:text-violet-400" />
+                    <span className="text-xs font-semibold text-foreground">Apsara Elearning</span>
+                  </div>
+                  <div className="mb-3 px-2 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
+                    Grade 12
+                  </div>
+                  {SIDEBAR_SUBJECTS.map((subject, i) => (
+                    <div key={subject.name} className={`flex items-center gap-2 px-2.5 py-2 rounded-xl mb-1 text-xs ${
+                      i === 0 ? "bg-violet-100 dark:bg-violet-500/20 text-violet-700 dark:text-violet-300 font-medium" : "text-muted-foreground"
+                    }`}>
+                      <subject.icon className={`size-3.5 ${i === 0 ? "text-violet-500 dark:text-violet-400" : "opacity-60"}`} />
+                      {subject.name}
+                    </div>
+                  ))}
+                  <div className="mt-4 pt-4 border-t border-border px-2">
+                    <div className="flex justify-between text-[10px] mb-1.5">
+                      <span className="text-muted-foreground">Level 8</span>
+                      <span className="text-violet-600 dark:text-violet-400 font-semibold">2,450 XP</span>
+                    </div>
+                    <div className="h-1.5 rounded-full bg-muted overflow-hidden">
+                      <div className="h-full w-3/5 rounded-full gradient-bg-primary shimmer" />
+                    </div>
+                  </div>
+                </div>
+                {/* Lesson / quiz panel */}
+                <div ref={quizRef} className="flex-1 flex flex-col bg-background/60">
+                  <div className="flex items-center gap-3 px-4 py-2 border-b border-border">
+                    <BookOpen className="size-3.5 text-violet-500 dark:text-violet-400" />
+                    <span className="text-xs font-medium text-foreground">Mathematics · Functions</span>
+                    <div className="ml-auto flex items-center gap-2">
+                      <div className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                      <span className="text-[10px] text-emerald-500 dark:text-emerald-400">Practice mode</span>
+                    </div>
+                  </div>
+                  <div className="flex-1 overflow-hidden">
+                    <QuizDemo active={quizActive} />
+                  </div>
+                </div>
+                {/* AI Tutor panel */}
+                <div className="w-56 border-l border-border bg-muted/20 p-3 hidden lg:flex flex-col">
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="size-6 rounded-lg gradient-bg-primary flex items-center justify-center shrink-0">
+                      <Brain className="size-3 text-white" />
+                    </div>
+                    <span className="text-xs font-medium text-foreground">AI Tutor</span>
+                    <div className="ml-auto size-1.5 rounded-full bg-emerald-500" />
+                  </div>
+                  <div className="space-y-2 flex-1">
+                    <div className="bg-violet-100 dark:bg-violet-500/20 rounded-xl rounded-tr-none ml-4 p-2.5 text-[10px] text-violet-700 dark:text-violet-200 leading-relaxed">
+                      ហេតុអ្វីតម្លៃអប្បបរមានៅ x = 2?
+                    </div>
+                    <div className="bg-muted dark:bg-white/5 rounded-xl rounded-tl-none p-2.5 text-[10px] text-muted-foreground leading-relaxed border border-border">
+                      Complete the square: <span className="text-cyan-600 dark:text-cyan-400">f(x) = (x − 2)² − 1</span> — the vertex is at (2, −1), so the minimum is −1. 🎯
+                    </div>
+                  </div>
+                  <div className="mt-2 flex gap-1.5">
+                    <div className="flex-1 h-7 rounded-lg bg-muted border border-border" />
+                    <div className="size-7 rounded-lg gradient-bg-primary flex items-center justify-center">
+                      <ArrowRight className="size-3 text-white" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </TiltCard>
         </div>
       </AnimateIn>
+
+      {/* Scroll indicator */}
+      <div aria-hidden className="relative mt-14 flex flex-col items-center gap-1 text-muted-foreground">
+        <div className="h-9 w-5 rounded-full border border-border flex justify-center pt-1.5">
+          <div className="size-1 rounded-full bg-muted-foreground animate-scroll-hint" />
+        </div>
+        <ChevronDown className="size-3.5 opacity-50" />
+      </div>
     </section>
   )
 }

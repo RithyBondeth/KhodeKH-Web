@@ -1,5 +1,5 @@
 import {
-  Brain, Terminal, Globe, Shield, BookOpen, Code2, Trophy,
+  Brain, Globe, BookOpen, Trophy, School, GraduationCap, PencilLine,
 } from "lucide-react"
 
 /* ── Color map ───────────────────────────────────────────────────────── */
@@ -42,10 +42,10 @@ export type TColorKey = keyof typeof COLOR
 /* ── Features ────────────────────────────────────────────────────────── */
 
 export const FEATURES = [
-  { icon: Brain,    color: "violet"  as TColorKey, key: "aiMentor"       },
-  { icon: Terminal, color: "cyan"    as TColorKey, key: "codePlayground" },
-  { icon: Globe,    color: "emerald" as TColorKey, key: "khmerFirst"     },
-  { icon: Shield,   color: "indigo"  as TColorKey, key: "certificates"   },
+  { icon: Brain,         color: "violet"  as TColorKey, key: "aiMentor"   },
+  { icon: School,        color: "cyan"    as TColorKey, key: "k12"        },
+  { icon: GraduationCap, color: "amber"   as TColorKey, key: "university" },
+  { icon: Globe,         color: "emerald" as TColorKey, key: "khmerFirst" },
 ]
 
 /* ── Courses ─────────────────────────────────────────────────────────── */
@@ -54,6 +54,38 @@ export const COURSES = [
   { level: "Beginner",     lessons: 24, xp: 2400, color: "violet" as TColorKey, icon: "Terminal", key: "python"     },
   { level: "Intermediate", lessons: 32, xp: 3200, color: "cyan"   as TColorKey, icon: "Code2",    key: "react"      },
   { level: "Advanced",     lessons: 40, xp: 4000, color: "amber"  as TColorKey, icon: "Brain",    key: "algorithms" },
+]
+
+/* ── Featured subjects (landing showcase) ────────────────────────────── */
+
+export const FEATURED_SUBJECTS = [
+  {
+    key: "math",
+    icon: "Calculator",
+    color: "violet" as TColorKey,
+    level: "Grade 12",
+    levelBadge: "bg-violet-100 text-violet-700 dark:bg-violet-500/20 dark:text-violet-400",
+    lessons: 48,
+    xp: 4800,
+  },
+  {
+    key: "physics",
+    icon: "Atom",
+    color: "cyan" as TColorKey,
+    level: "Grade 11",
+    levelBadge: "bg-cyan-100 text-cyan-700 dark:bg-cyan-500/20 dark:text-cyan-400",
+    lessons: 36,
+    xp: 3600,
+  },
+  {
+    key: "english",
+    icon: "Languages",
+    color: "amber" as TColorKey,
+    level: "All Levels",
+    levelBadge: "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400",
+    lessons: 40,
+    xp: 4000,
+  },
 ]
 
 /* ── Stats ───────────────────────────────────────────────────────────── */
@@ -76,9 +108,9 @@ export const TESTIMONIALS = [
 /* ── How it works steps ──────────────────────────────────────────────── */
 
 export const HOW_IT_WORKS = [
-  { step: "01", icon: BookOpen, color: "violet" as TColorKey, key: "choosePath" },
-  { step: "02", icon: Code2,    color: "cyan"   as TColorKey, key: "codeLearn"  },
-  { step: "03", icon: Trophy,   color: "amber"  as TColorKey, key: "earnGrow"   },
+  { step: "01", icon: BookOpen,   color: "violet" as TColorKey, key: "choosePath"    },
+  { step: "02", icon: PencilLine, color: "cyan"   as TColorKey, key: "learnPractice" },
+  { step: "03", icon: Trophy,     color: "amber"  as TColorKey, key: "earnGrow"      },
 ]
 
 /* ── Nav links ──────────────────────────────────────────────────────────── */

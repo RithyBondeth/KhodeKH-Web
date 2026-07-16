@@ -1,9 +1,9 @@
 "use client"
 
 import Link from "next/link"
-import { Sparkles } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { AnimateIn } from "@/components/utils/animations/animate-in"
+import { BrandLogo } from "@/components/utils/brand-logo"
 import { TypographyP } from "@/components/utils/typography/typography-p"
 import { TypographySmall } from "@/components/utils/typography/typography-small"
 import { TypographyMuted } from "@/components/utils/typography/typography-muted"
@@ -42,19 +42,16 @@ export function LandingFooter() {
   ]
 
   return (
-    <footer className="relative z-10 border-t border-border py-12 px-6 bg-background">
+    <footer className="relative z-10 border-t border-border py-12 px-6 bg-background overflow-hidden">
+      {/* Gradient hairline along the top edge */}
+      <div
+        aria-hidden
+        className="animate-gradient absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#2383e2] to-transparent opacity-60"
+      />
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between gap-8 mb-10">
           <AnimateIn animation="fade-right" className="max-w-xs">
-            <Link href="/" className="flex items-center gap-2.5 mb-4">
-              <div className="size-8 rounded-xl gradient-bg-primary flex items-center justify-center shrink-0">
-                <Sparkles className="size-4 text-white" />
-              </div>
-              <span className="font-bold text-lg">
-                <span className="gradient-text">Kode</span>
-                <span className="text-muted-foreground">KH</span>
-              </span>
-            </Link>
+            <BrandLogo className="mb-4" />
             <TypographyP className="text-sm text-muted-foreground leading-relaxed">
               {t("brand")}
             </TypographyP>
@@ -68,7 +65,7 @@ export function LandingFooter() {
                     {t(col.headingKey)}
                   </TypographySmall>
                   {col.links.map((link) => (
-                    <Link key={link.key} href={link.href} className="block py-1 transition-colors hover:text-foreground">
+                    <Link key={link.key} href={link.href} className="block py-1 transition-transform hover:translate-x-1">
                       <TypographyMuted className="text-sm transition-colors hover:text-foreground">
                         {t(link.key)}
                       </TypographyMuted>

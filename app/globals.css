@@ -145,6 +145,16 @@ html {
         transform: none !important;
         filter: none !important;
     }
+    .aurora-orb,
+    .animate-marquee,
+    .animate-marquee-reverse,
+    .animate-bob,
+    .animate-orbit,
+    .animate-scroll-hint,
+    .border-beam::before,
+    .gradient-text-animated {
+        animation: none !important;
+    }
 }
 
 /* ── Keyframes ──────────────────────────────────────────────── */
@@ -186,6 +196,45 @@ html {
 @keyframes breathe {
     0%, 100% { opacity: 0.3; transform: scale(1); }
     50% { opacity: 0.6; transform: scale(1.08); }
+}
+@keyframes aurora {
+    0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+    25% { transform: translate(6%, -4%) scale(1.12) rotate(4deg); }
+    50% { transform: translate(-4%, 6%) scale(0.94) rotate(-3deg); }
+    75% { transform: translate(-7%, -5%) scale(1.06) rotate(2deg); }
+}
+@keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+@keyframes marquee-reverse {
+    from { transform: translateX(-50%); }
+    to { transform: translateX(0); }
+}
+@keyframes border-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+@keyframes pulse-glow {
+    0%, 100% { opacity: 0.35; }
+    50% { opacity: 0.8; }
+}
+@keyframes text-shimmer {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+}
+@keyframes bob {
+    0%, 100% { transform: translateY(0) rotate(var(--bob-rotate, 0deg)); }
+    50% { transform: translateY(-10px) rotate(var(--bob-rotate, 0deg)); }
+}
+@keyframes scroll-hint {
+    0% { opacity: 0; transform: translateY(-4px); }
+    40% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(8px); }
+}
+@keyframes orbit {
+    from { transform: rotate(0deg) translateX(var(--orbit-radius, 120px)) rotate(0deg); }
+    to { transform: rotate(360deg) translateX(var(--orbit-radius, 120px)) rotate(-360deg); }
 }
 
 /* ── Base ───────────────────────────────────────────────────── */
@@ -248,6 +297,15 @@ html {
         background-clip: text;
     }
 
+    .gradient-text-animated {
+        background: linear-gradient(90deg, #2383e2, #7c5cff, #22c9dd, #2383e2);
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: text-shimmer 4s linear infinite;
+    }
+
     .gradient-bg-primary {
         background: var(--primary);
     }
@@ -297,5 +355,128 @@ html {
         background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.06) 50%, transparent 100%);
         background-size: 200% 100%;
         animation: shimmer 2s infinite;
+    }
+
+    /* ── Aurora orbs — soft drifting gradient blobs ── */
+    .aurora-orb {
+        position: absolute;
+        border-radius: 9999px;
+        filter: blur(90px);
+        pointer-events: none;
+        animation: aurora 24s ease-in-out infinite;
+        will-change: transform;
+    }
+    .aurora-blue   { background: rgba(35, 131, 226, 0.16); }
+    .aurora-violet { background: rgba(124, 92, 255, 0.14); }
+    .aurora-cyan   { background: rgba(34, 201, 221, 0.12); }
+    .dark .aurora-blue   { background: rgba(74, 158, 255, 0.14); }
+    .dark .aurora-violet { background: rgba(139, 108, 255, 0.13); }
+    .dark .aurora-cyan   { background: rgba(45, 212, 231, 0.10); }
+
+    /* ── Grid pattern with radial mask ── */
+    .grid-pattern {
+        background-image:
+            linear-gradient(to right, var(--border) 1px, transparent 1px),
+            linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+        background-size: 56px 56px;
+        mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 20%, transparent 75%);
+        -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 20%, transparent 75%);
+    }
+
+    /* ── Infinite marquee ── */
+    .animate-marquee {
+        animation: marquee var(--marquee-duration, 40s) linear infinite;
+    }
+    .animate-marquee-reverse {
+        animation: marquee-reverse var(--marquee-duration, 40s) linear infinite;
+    }
+    .marquee-paused:hover .animate-marquee,
+    .marquee-paused:hover .animate-marquee-reverse {
+        animation-play-state: paused;
+    }
+    .marquee-mask {
+        mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    }
+
+    /* ── Rotating conic border beam ── */
+    .border-beam {
+        position: relative;
+        overflow: hidden;
+    }
+    .border-beam::before {
+        content: "";
+        position: absolute;
+        inset: -150%;
+        background: conic-gradient(from 0deg, transparent 0deg, transparent 300deg, #2383e2 330deg, #22c9dd 345deg, transparent 360deg);
+        animation: border-spin 6s linear infinite;
+    }
+    .border-beam-content {
+        position: relative;
+        background: var(--card);
+        border-radius: inherit;
+        margin: 1px;
+    }
+
+    /* ── Shine sweep on hover (buttons / cards) ── */
+    .btn-shine {
+        position: relative;
+        overflow: hidden;
+    }
+    .btn-shine::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -80%;
+        width: 50%;
+        height: 100%;
+        background: linear-gradient(105deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+        transform: skewX(-20deg);
+        transition: left 0.6s ease;
+        pointer-events: none;
+    }
+    .btn-shine:hover::after {
+        left: 130%;
+    }
+
+    /* ── Spotlight card — radial highlight follows the cursor ── */
+    .spotlight-card {
+        position: relative;
+        overflow: hidden;
+    }
+    .spotlight-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(320px circle at var(--spot-x, 50%) var(--spot-y, 50%), rgba(35, 131, 226, 0.08), transparent 65%);
+        opacity: 0;
+        transition: opacity 0.35s ease;
+        pointer-events: none;
+    }
+    .dark .spotlight-card::before {
+        background: radial-gradient(320px circle at var(--spot-x, 50%) var(--spot-y, 50%), rgba(74, 158, 255, 0.12), transparent 65%);
+    }
+    .spotlight-card:hover::before {
+        opacity: 1;
+    }
+
+    .animate-bob {
+        animation: bob 5s ease-in-out infinite;
+    }
+    .animate-pulse-glow {
+        animation: pulse-glow 4s ease-in-out infinite;
+    }
+    .animate-scroll-hint {
+        animation: scroll-hint 2s ease-in-out infinite;
+    }
+    .animate-orbit {
+        animation: orbit var(--orbit-duration, 18s) linear infinite;
+    }
+
+    .perspective-1200 {
+        perspective: 1200px;
+    }
+    .preserve-3d {
+        transform-style: preserve-3d;
     }
 }
