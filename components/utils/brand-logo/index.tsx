@@ -11,7 +11,7 @@ interface BrandLogoProps {
 }
 
 /** The Mokot — the tiered crown of the apsara dancer, rising from an open book. */
-function MokotMark({ className }: { className?: string }) {
+export function MokotMark({ className }: { className?: string }) {
   const gradientId = useId()
 
   return (

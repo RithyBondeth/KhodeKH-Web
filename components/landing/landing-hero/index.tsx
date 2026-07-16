@@ -10,6 +10,7 @@ import {
 import { useTranslations } from "next-intl"
 import gsap from "gsap"
 import { AnimateIn } from "@/components/utils/animations/animate-in"
+import { MokotMark } from "@/components/utils/brand-logo"
 import { AuroraBackground } from "@/components/utils/animations/aurora-background"
 import { TextReveal } from "@/components/utils/animations/text-reveal"
 import { Magnetic } from "@/components/utils/animations/magnetic"
@@ -27,22 +28,27 @@ const GLYPHS = [
   { char: "A+", className: "top-[62%] right-[6%] text-amber-400/30 text-2xl", depth: 60 },
 ]
 
-const SIDEBAR_SUBJECTS = [
-  { name: "Mathematics", icon: Calculator },
-  { name: "Physics", icon: Atom },
-  { name: "Chemistry", icon: FlaskConical },
-  { name: "English", icon: Languages },
-]
+/**
+ * Subjects shown in the demo sidebar. `correct`/`decoy` index into the
+ * translated options; the animated "student" hovers the decoy first,
+ * then picks the correct answer.
+ */
+const SUBJECTS = [
+  { key: "math", icon: Calculator, correct: 0, decoy: 1, url: "apsaraelearning.com/learn/math-grade-12" },
+  { key: "physics", icon: Atom, correct: 1, decoy: 3, url: "apsaraelearning.com/learn/physics-grade-12" },
+  { key: "chemistry", icon: FlaskConical, correct: 2, decoy: 1, url: "apsaraelearning.com/learn/chemistry-grade-12" },
+  { key: "english", icon: Languages, correct: 0, decoy: 2, url: "apsaraelearning.com/learn/english-grade-12" },
+] as const
 
-const QUIZ_OPTIONS = ["−1", "1", "3", "−3"]
-const CORRECT_INDEX = 0
+type Subject = (typeof SUBJECTS)[number]
 
 /**
  * Animated quiz demo: the "student" considers two options, picks the
  * correct one, earns XP, then the loop restarts.
- * Phases: 0 idle · 1 hover B · 2 hover A · 3 answered (+10 XP)
+ * Phases: 0 idle · 1 hover decoy · 2 hover correct · 3 answered (+10 XP)
  */
-function QuizDemo({ active }: { active: boolean }) {
+function QuizDemo({ active, subject }: { active: boolean; subject: Subject }) {
+  const t = useTranslations("hero.demo")
   const [phase, setPhase] = useState(0)
 
   useEffect(() => {
@@ -52,14 +58,15 @@ function QuizDemo({ active }: { active: boolean }) {
     return () => clearTimeout(timer)
   }, [active, phase])
 
+  const options = t.raw(`subjects.${subject.key}.options`) as string[]
   const answered = phase === 3
-  const hovered = phase === 1 ? 1 : phase === 2 ? 0 : -1
+  const hovered = phase === 1 ? subject.decoy : phase === 2 ? subject.correct : -1
 
   return (
     <div className="flex h-full flex-col p-4 text-left">
       <div className="mb-1 flex items-center justify-between">
         <span className="text-[10px] font-semibold uppercase tracking-wider text-violet-600 dark:text-violet-400">
-          Lesson 12 · Quadratic Functions
+          {t(`subjects.${subject.key}.lesson`)}
         </span>
         <span
           className={`flex items-center gap-1 rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-600 transition-all duration-300 dark:bg-emerald-500/20 dark:text-emerald-400 ${
@@ -70,11 +77,13 @@ function QuizDemo({ active }: { active: boolean }) {
         </span>
       </div>
       <p className="mb-3 text-xs leading-relaxed text-foreground">
-        f(x) = x² − 4x + 3 — what is the <span className="font-semibold">minimum value</span> of f(x)?
+        {t.rich(`subjects.${subject.key}.question`, {
+          b: (chunks) => <span className="font-semibold">{chunks}</span>,
+        })}
       </p>
       <div className="space-y-1.5">
-        {QUIZ_OPTIONS.map((opt, i) => {
-          const isCorrect = answered && i === CORRECT_INDEX
+        {options.map((opt, i) => {
+          const isCorrect = answered && i === subject.correct
           const isHovered = hovered === i
           return (
             <div
@@ -96,7 +105,7 @@ function QuizDemo({ active }: { active: boolean }) {
               >
                 {isCorrect ? <Check className="size-2.5" /> : String.fromCharCode(65 + i)}
               </span>
-              f(x) = {opt}
+              {opt}
             </div>
           )
         })}
@@ -106,7 +115,7 @@ function QuizDemo({ active }: { active: boolean }) {
           answered ? "opacity-100" : "opacity-0"
         }`}
       >
-        ✓ Correct! Complete the square: f(x) = (x − 2)² − 1, so the minimum is −1 at x = 2.
+        {t(`subjects.${subject.key}.explanation`)}
       </div>
     </div>
   )
@@ -115,6 +124,8 @@ function QuizDemo({ active }: { active: boolean }) {
 export function LandingHero() {
   const t = useTranslations("hero")
   const [quizActive, setQuizActive] = useState(true)
+  const [subjectIndex, setSubjectIndex] = useState(0)
+  const subject = SUBJECTS[subjectIndex]
   const quizRef = useRef<HTMLDivElement>(null)
   const sectionRef = useRef<HTMLElement>(null)
   const glyphsRef = useRef<HTMLDivElement>(null)
@@ -274,8 +285,8 @@ export function LandingHero() {
                 <Flame className="size-4 text-amber-500" />
               </div>
               <div className="text-left">
-                <div className="text-xs font-bold text-foreground">14-day streak</div>
-                <div className="text-[10px] text-muted-foreground">Keep it up!</div>
+                <div className="text-xs font-bold text-foreground">{t("demo.streakTitle")}</div>
+                <div className="text-[10px] text-muted-foreground">{t("demo.streakSub")}</div>
               </div>
             </div>
             <div
@@ -286,8 +297,8 @@ export function LandingHero() {
                 <Trophy className="size-4 text-violet-500" />
               </div>
               <div className="text-left">
-                <div className="text-xs font-bold text-foreground">+250 XP</div>
-                <div className="text-[10px] text-muted-foreground">Quiz champion</div>
+                <div className="text-xs font-bold text-foreground">{t("demo.trophyTitle")}</div>
+                <div className="text-[10px] text-muted-foreground">{t("demo.trophySub")}</div>
               </div>
             </div>
             <div
@@ -298,8 +309,8 @@ export function LandingHero() {
                 <BadgeCheck className="size-4 text-emerald-500" />
               </div>
               <div className="text-left">
-                <div className="text-xs font-bold text-foreground">Grade 12 Math</div>
-                <div className="text-[10px] text-muted-foreground">Certificate earned</div>
+                <div className="text-xs font-bold text-foreground">{t("demo.certTitle")}</div>
+                <div className="text-[10px] text-muted-foreground">{t("demo.certSub")}</div>
               </div>
             </div>
           </div>
@@ -316,7 +327,7 @@ export function LandingHero() {
                 </div>
                 <div className="flex-1 mx-4">
                   <div className="mx-auto max-w-xs h-5 rounded-md bg-muted flex items-center px-3 text-[10px] text-muted-foreground">
-                    apsaraelearning.com/learn/math-grade-12
+                    {subject.url}
                   </div>
                 </div>
               </div>
@@ -324,24 +335,31 @@ export function LandingHero() {
                 {/* Sidebar */}
                 <div className="w-52 border-r border-border bg-muted/20 p-3 hidden sm:block">
                   <div className="flex items-center gap-2 mb-1 px-2">
-                    <Sparkles className="size-4 text-violet-500 dark:text-violet-400" />
+                    <MokotMark className="size-4" />
                     <span className="text-xs font-semibold text-foreground">Apsara Elearning</span>
                   </div>
                   <div className="mb-3 px-2 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
-                    Grade 12
+                    {t("demo.grade")}
                   </div>
-                  {SIDEBAR_SUBJECTS.map((subject, i) => (
-                    <div key={subject.name} className={`flex items-center gap-2 px-2.5 py-2 rounded-xl mb-1 text-xs ${
-                      i === 0 ? "bg-violet-100 dark:bg-violet-500/20 text-violet-700 dark:text-violet-300 font-medium" : "text-muted-foreground"
-                    }`}>
-                      <subject.icon className={`size-3.5 ${i === 0 ? "text-violet-500 dark:text-violet-400" : "opacity-60"}`} />
-                      {subject.name}
-                    </div>
+                  {SUBJECTS.map((s, i) => (
+                    <button
+                      key={s.key}
+                      type="button"
+                      onClick={() => setSubjectIndex(i)}
+                      className={`flex w-full cursor-pointer items-center gap-2 px-2.5 py-2 rounded-xl mb-1 text-xs text-left transition-colors ${
+                        i === subjectIndex
+                          ? "bg-violet-100 dark:bg-violet-500/20 text-violet-700 dark:text-violet-300 font-medium"
+                          : "text-muted-foreground hover:bg-muted/60 hover:text-foreground"
+                      }`}
+                    >
+                      <s.icon className={`size-3.5 ${i === subjectIndex ? "text-violet-500 dark:text-violet-400" : "opacity-60"}`} />
+                      {t(`demo.subjects.${s.key}.name`)}
+                    </button>
                   ))}
                   <div className="mt-4 pt-4 border-t border-border px-2">
                     <div className="flex justify-between text-[10px] mb-1.5">
-                      <span className="text-muted-foreground">Level 8</span>
-                      <span className="text-violet-600 dark:text-violet-400 font-semibold">2,450 XP</span>
+                      <span className="text-muted-foreground">{t("demo.level")}</span>
+                      <span className="text-violet-600 dark:text-violet-400 font-semibold">{t("demo.xp")}</span>
                     </div>
                     <div className="h-1.5 rounded-full bg-muted overflow-hidden">
                       <div className="h-full w-3/5 rounded-full gradient-bg-primary shimmer" />
@@ -352,14 +370,14 @@ export function LandingHero() {
                 <div ref={quizRef} className="flex-1 flex flex-col bg-background/60">
                   <div className="flex items-center gap-3 px-4 py-2 border-b border-border">
                     <BookOpen className="size-3.5 text-violet-500 dark:text-violet-400" />
-                    <span className="text-xs font-medium text-foreground">Mathematics · Functions</span>
+                    <span className="text-xs font-medium text-foreground">{t(`demo.subjects.${subject.key}.breadcrumb`)}</span>
                     <div className="ml-auto flex items-center gap-2">
                       <div className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                      <span className="text-[10px] text-emerald-500 dark:text-emerald-400">Practice mode</span>
+                      <span className="text-[10px] text-emerald-500 dark:text-emerald-400">{t("demo.practiceMode")}</span>
                     </div>
                   </div>
                   <div className="flex-1 overflow-hidden">
-                    <QuizDemo active={quizActive} />
+                    <QuizDemo key={subject.key} active={quizActive} subject={subject} />
                   </div>
                 </div>
                 {/* AI Tutor panel */}
@@ -368,15 +386,17 @@ export function LandingHero() {
                     <div className="size-6 rounded-lg gradient-bg-primary flex items-center justify-center shrink-0">
                       <Brain className="size-3 text-white" />
                     </div>
-                    <span className="text-xs font-medium text-foreground">AI Tutor</span>
+                    <span className="text-xs font-medium text-foreground">{t("demo.aiTutor")}</span>
                     <div className="ml-auto size-1.5 rounded-full bg-emerald-500" />
                   </div>
                   <div className="space-y-2 flex-1">
                     <div className="bg-violet-100 dark:bg-violet-500/20 rounded-xl rounded-tr-none ml-4 p-2.5 text-[10px] text-violet-700 dark:text-violet-200 leading-relaxed">
-                      ហេតុអ្វីតម្លៃអប្បបរមានៅ x = 2?
+                      {t(`demo.subjects.${subject.key}.tutorQ`)}
                     </div>
                     <div className="bg-muted dark:bg-white/5 rounded-xl rounded-tl-none p-2.5 text-[10px] text-muted-foreground leading-relaxed border border-border">
-                      Complete the square: <span className="text-cyan-600 dark:text-cyan-400">f(x) = (x − 2)² − 1</span> — the vertex is at (2, −1), so the minimum is −1. 🎯
+                      {t.rich(`demo.subjects.${subject.key}.tutorA`, {
+                        m: (chunks) => <span className="text-cyan-600 dark:text-cyan-400">{chunks}</span>,
+                      })}
                     </div>
                   </div>
                   <div className="mt-2 flex gap-1.5">

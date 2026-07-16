@@ -20,7 +20,82 @@
     "subtitle": "The AI-powered learning platform for Cambodian students — from Grade 1 to university. Master Math, Physics, English and more with <mentor>Apsara Elearning</mentor> — your personal AI tutor that speaks Khmer.",
     "startLearning": "Start Learning Free",
     "watchDemo": "Watch Demo",
-    "studentsCount": "12,000+ students learning today"
+    "studentsCount": "12,000+ students learning today",
+    "demo": {
+      "grade": "Grade 12",
+      "level": "Level 8",
+      "xp": "2,450 XP",
+      "practiceMode": "Practice mode",
+      "aiTutor": "AI Tutor",
+      "streakTitle": "14-day streak",
+      "streakSub": "Keep it up!",
+      "trophyTitle": "+250 XP",
+      "trophySub": "Quiz champion",
+      "certTitle": "Grade 12 Math",
+      "certSub": "Certificate earned",
+      "subjects": {
+        "math": {
+          "name": "Mathematics",
+          "breadcrumb": "Mathematics · Functions",
+          "lesson": "Lesson 12 · Quadratic Functions",
+          "question": "f(x) = x² − 4x + 3 — what is the <b>minimum value</b> of f(x)?",
+          "options": [
+            "f(x) = −1",
+            "f(x) = 1",
+            "f(x) = 3",
+            "f(x) = −3"
+          ],
+          "explanation": "✓ Correct! Complete the square: f(x) = (x − 2)² − 1, so the minimum is −1 at x = 2.",
+          "tutorQ": "ហេតុអ្វីតម្លៃអប្បបរមានៅ x = 2?",
+          "tutorA": "Complete the square: <m>f(x) = (x − 2)² − 1</m> — the vertex is at (2, −1), so the minimum is −1. 🎯"
+        },
+        "physics": {
+          "name": "Physics",
+          "breadcrumb": "Physics · Kinematics",
+          "lesson": "Lesson 8 · Free Fall",
+          "question": "A ball is dropped from a height of 20 m. How long does it take to <b>reach the ground</b>? (g = 10 m/s²)",
+          "options": [
+            "t = 1 s",
+            "t = 2 s",
+            "t = 3 s",
+            "t = 4 s"
+          ],
+          "explanation": "✓ Correct! h = ½gt² → t = √(2h/g) = √(2×20/10) = 2 s.",
+          "tutorQ": "ហេតុអ្វី t = 2 s?",
+          "tutorA": "Use <m>h = ½gt²</m> → t = √(2h/g) = √(2 × 20 / 10) = 2 s. 🎯"
+        },
+        "chemistry": {
+          "name": "Chemistry",
+          "breadcrumb": "Chemistry · Solutions",
+          "lesson": "Lesson 5 · Acids & Bases",
+          "question": "What is the <b>pH</b> of a 0.01 M HCl solution?",
+          "options": [
+            "pH = 1",
+            "pH = 7",
+            "pH = 2",
+            "pH = 12"
+          ],
+          "explanation": "✓ Correct! HCl dissociates completely: pH = −log(0.01) = 2.",
+          "tutorQ": "ហេតុអ្វី pH = 2?",
+          "tutorA": "HCl is a strong acid, so <m>[H⁺] = 0.01 M</m> and pH = −log(0.01) = 2. 🎯"
+        },
+        "english": {
+          "name": "English",
+          "breadcrumb": "English · Grammar",
+          "lesson": "Lesson 3 · Present Perfect",
+          "question": "Choose the sentence that uses the <b>present perfect</b> correctly:",
+          "options": [
+            "She has lived here since 2019.",
+            "She lives here since 2019.",
+            "She living here since 2019.",
+            "She is live here since 2019."
+          ],
+          "explanation": "✓ Correct! ‘Has lived’ + ‘since’ shows an action continuing from the past until now.",
+          "tutorQ": "ហេតុអ្វីប្រើ ‘has lived’?",
+          "tutorA": "‘Since 2019’ marks a period continuing to now, so the present perfect is needed. 🎯"
+        }
+      }
+    }
   },
   "stats": {
     "students": "Students",
