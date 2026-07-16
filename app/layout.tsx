@@ -46,7 +46,7 @@ export default async function RootLayout({
   children: React.ReactNode
 }>) {
   const cookieStore = await cookies()
-  const initialLang = (cookieStore.get("kodekh-lang")?.value as "en" | "km") || "en"
+  const initialLang = (cookieStore.get("apsara-elearning-lang")?.value as "en" | "km") || "en"
 
   return (
     <html

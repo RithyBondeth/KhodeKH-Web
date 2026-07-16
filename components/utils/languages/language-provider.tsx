@@ -5,7 +5,7 @@ import { LanguageProviderClient } from "./language-provider-client"
 
 export async function LanguageProvider({ children }: IWithChildren) {
   const cookieStore = await cookies()
-  const initialLang = (cookieStore.get("kodekh-lang")?.value as TLanguage) || "en"
+  const initialLang = (cookieStore.get("apsara-elearning-lang")?.value as TLanguage) || "en"
 
   return (
     <LanguageProviderClient initialLang={initialLang}>

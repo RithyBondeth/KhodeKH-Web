@@ -14,10 +14,10 @@ export const useLanguageStore = create<ILanguageState>()(
     (set) => ({
       language: "en",
       setLanguage: (language) => {
-        document.cookie = `kodekh-lang=${language};path=/;max-age=31536000;SameSite=Lax`
+        document.cookie = `apsara-elearning-lang=${language};path=/;max-age=31536000;SameSite=Lax`
         set({ language })
       },
     }),
-    { name: "kodekh-language" }
+    { name: "apsara-elearning-language" }
   )
 )
