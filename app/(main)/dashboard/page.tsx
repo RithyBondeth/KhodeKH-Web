@@ -10,6 +10,7 @@ import { useTranslations } from "next-intl"
 import { AppShell } from "@/components/utils/app-shell"
 import { AnimateIn } from "@/components/utils/animations/animate-in"
 import { CountUp } from "@/components/utils/animations/count-up"
+import { GrowBar } from "@/components/utils/animations/grow-bar"
 import { TypographyH1 } from "@/components/utils/typography/typography-h1"
 import { TypographyH3 } from "@/components/utils/typography/typography-h3"
 import { TypographyH4 } from "@/components/utils/typography/typography-h4"
@@ -157,21 +158,27 @@ export default function DashboardPage() {
 
               {/* Day strip */}
               <div className="flex items-end justify-between gap-2 mb-4 flex-1 min-h-24">
-                {weeklyActivity.map((day) => {
+                {weeklyActivity.map((day, i) => {
                   const pct    = (day.lessons / maxDay) * 100
                   const active = day.lessons > 0
                   return (
                     <div key={day.key} className="flex flex-col items-center gap-1.5 flex-1">
-                      <div className="w-full flex-1 flex items-end justify-center min-h-16">
-                        <div
-                          className={`w-full rounded-lg transition-all ${
+                      {/* Definite height: the columns size in %, which cannot
+                          resolve against a flex-grown (auto-height) track. */}
+                      <div className="w-full h-16 flex items-end justify-center">
+                        <GrowBar
+                          to={active ? Math.max(pct, 22) : 22}
+                          axis="y"
+                          delay={0.3 + i * 0.06}
+                          duration={0.9}
+                          ease="back.out(1.4)"
+                          className={`w-full rounded-lg ${
                             active
                               ? "gradient-bg-primary"
                               : day.isToday
                                 ? "border border-dashed border-violet-300 dark:border-violet-500/40"
                                 : "bg-muted"
                           }`}
-                          style={{ height: active ? `${Math.max(pct, 22)}%` : "22%" }}
                           title={t("lessonsCount", { count: day.lessons })}
                         />
                       </div>
@@ -190,9 +197,10 @@ export default function DashboardPage() {
               {/* Weekly goal bar */}
               <div>
                 <div className="h-1.5 rounded-full bg-muted overflow-hidden mb-2">
-                  <div
-                    className="h-full rounded-full gradient-bg-primary transition-all"
-                    style={{ width: `${goalPct}%` }}
+                  <GrowBar
+                    to={goalPct}
+                    delay={0.75}
+                    className="h-full rounded-full gradient-bg-primary"
                   />
                 </div>
                 <TypographyMuted className="text-xs">
@@ -246,9 +254,10 @@ export default function DashboardPage() {
                       </span>
                       {!badge.earned && badge.progress != null && (
                         <div className="w-full h-1 rounded-full bg-muted overflow-hidden">
-                          <div
+                          <GrowBar
+                            to={badge.progress}
+                            delay={0.4}
                             className="h-full rounded-full bg-violet-400 dark:bg-violet-500"
-                            style={{ width: `${badge.progress}%` }}
                           />
                         </div>
                       )}
@@ -281,7 +290,7 @@ export default function DashboardPage() {
               <AnimateIn key={course.id} animation={i % 2 === 0 ? "fade-right" : "fade-left"} delay={0.3 + i * 0.1}>
                 <div className="card-surface rounded-2xl p-5 group hover:border-violet-200 dark:hover:border-violet-500/25 transition-all">
                   <div className="flex items-start gap-4">
-                    <div className="size-11 rounded-xl bg-muted flex items-center justify-center shrink-0">
+                    <div className="size-11 rounded-xl bg-muted flex items-center justify-center shrink-0 transition-transform duration-300 motion-safe:group-hover:scale-110 motion-safe:group-hover:rotate-6">
                       {(() => {
                         const Icon = COURSE_ICONS[course.icon]
                         return Icon ? <Icon className="size-5" /> : null
@@ -294,14 +303,21 @@ export default function DashboardPage() {
                           <TypographyMuted className="text-xs">{course.titleKh}</TypographyMuted>
                         </Link>
                         <span className="text-xs text-muted-foreground shrink-0 font-medium">
-                          {course.progress}%
+                          <CountUp
+                            to={course.progress}
+                            suffix="%"
+                            delay={0.45 + i * 0.1}
+                            duration={1.1}
+                            ease="power3.out"
+                          />
                         </span>
                       </div>
                       <div className="flex items-center gap-2 mb-3 mt-2">
                         <div className="flex-1 h-2 rounded-full bg-muted overflow-hidden">
-                          <div
-                            className={`h-full rounded-full bg-gradient-to-r ${barColor} transition-all`}
-                            style={{ width: `${course.progress}%` }}
+                          <GrowBar
+                            to={course.progress}
+                            delay={0.45 + i * 0.1}
+                            className={`h-full rounded-full bg-gradient-to-r ${barColor}`}
                           />
                         </div>
                       </div>

@@ -192,7 +192,7 @@ export default function CoursesPage() {
                       : "border-dashed border-border"
                   }`}>
                     <div className="flex items-start justify-between">
-                      <div className={`size-12 rounded-2xl ${colors.bg} flex items-center justify-center`}>
+                      <div className={`size-12 rounded-2xl ${colors.bg} flex items-center justify-center transition-transform duration-300 motion-safe:group-hover:scale-110 motion-safe:group-hover:rotate-6`}>
                         <Icon className={`size-6 ${colors.icon}`} />
                       </div>
                       {available ? (
@@ -331,7 +331,7 @@ export default function CoursesPage() {
 
                     {/* Top row: icon + level badge */}
                     <div className="flex items-start justify-between">
-                      <div className={`size-14 rounded-2xl ${colors.icon} flex items-center justify-center`}>
+                      <div className={`size-14 rounded-2xl ${colors.icon} flex items-center justify-center transition-transform duration-300 motion-safe:group-hover:scale-110 motion-safe:group-hover:rotate-6`}>
                         {(() => {
                           const Icon = ICON_MAP[course.icon] ?? Code2
                           return <Icon className={`size-7 ${COLOR[course.color].icon}`} />
