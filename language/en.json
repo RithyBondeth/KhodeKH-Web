@@ -184,6 +184,63 @@
       "desc": "Master data structures and algorithms — arrays, trees, sorting, and dynamic programming."
     }
   },
+  "courseDetail": {
+    "back": "All courses",
+    "aboutTitle": "About this course",
+    "outcomesTitle": "What you'll learn",
+    "syllabusTitle": "Course syllabus",
+    "modulesCount": "{count} modules",
+    "lessonsCount": "{count} lessons",
+    "hoursCount": "{count} hours",
+    "studentsCount": "{count, number} students",
+    "totalXp": "{xp, number} XP",
+    "statLevel": "Level",
+    "statLessons": "Lessons",
+    "statDuration": "Duration",
+    "statXp": "Total XP",
+    "statStudents": "Students",
+    "enrollNow": "Enroll for free",
+    "continueLearning": "Continue learning",
+    "startLearning": "Start learning",
+    "yourProgress": "Your progress",
+    "completedOf": "{done} of {total} lessons completed",
+    "moreLessons": "+{count} more lessons — unlocked as you progress",
+    "free": "Free",
+    "freeNote": "Full access with your student account",
+    "includesTitle": "This course includes",
+    "includeAi": "24/7 AI mentor in Khmer & English",
+    "includeExercises": "Auto-graded practice & challenges",
+    "includeCertificate": "Certificate of completion",
+    "includeXp": "XP rewards & badges",
+    "typeTheory": "Theory",
+    "typePractice": "Practice",
+    "typeChallenge": "Challenge",
+    "lockedLesson": "Locked",
+    "python": {
+      "about": "Python is the most popular first programming language in the world — and this course teaches it the Cambodian way, with every lesson explained in both Khmer and English. You'll start from absolute zero and build up to writing real programs with functions, data structures, and object-oriented code.",
+      "about2": "Every module mixes short theory lessons with hands-on practice in the built-in code editor, plus graded challenges that earn you XP. Our AI mentor is beside you the whole way, ready to explain anything in the language you think in.",
+      "outcome1": "Write and run real Python programs from your browser — no setup needed",
+      "outcome2": "Master variables, strings, conditionals, loops, and functions",
+      "outcome3": "Work with lists, dictionaries, and object-oriented basics",
+      "outcome4": "Solve classic coding challenges like FizzBuzz and Palindrome"
+    },
+    "react": {
+      "about": "React powers the modern web — from Facebook to the apps Cambodian startups build every day. This course takes you from your first component to complete interactive applications with hooks, state, and real data fetching.",
+      "about2": "You'll build real projects in every module: counters, todo lists, a weather app, and more. Theory lessons are short and visual, and the AI mentor answers your questions in Khmer or English whenever you're stuck.",
+      "outcome1": "Build reusable components with JSX and props",
+      "outcome2": "Manage interactivity with useState and event handling",
+      "outcome3": "Fetch and display real data with useEffect",
+      "outcome4": "Ship complete mini-apps: todo list, weather app, movie search"
+    },
+    "algorithms": {
+      "about": "Algorithms and data structures are what separate coders from engineers — and they're the key to passing technical interviews at any company. This course builds your problem-solving toolkit step by step, from Big-O analysis to trees and dynamic programming.",
+      "about2": "Each concept comes with visual explanations, practice drills in the code editor, and interview-style challenges. Explanations are available in Khmer and English, so the hard ideas actually stick.",
+      "outcome1": "Analyse code performance with Big-O notation",
+      "outcome2": "Implement classic searching and sorting algorithms",
+      "outcome3": "Use stacks, queues, and binary trees with confidence",
+      "outcome4": "Solve interview-style challenges and earn ranking XP"
+    }
+  },
   "howItWorks": {
     "headingPart1": "How",
     "headingHighlight": "Apsara Elearning",
