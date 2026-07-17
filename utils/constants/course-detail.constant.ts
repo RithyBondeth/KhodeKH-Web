@@ -164,7 +164,8 @@ const ENGLISH_SYLLABUS: ISyllabusModule[] = [
 export const COURSE_DETAILS: Record<string, ICourseDetail> = {
   math: {
     key: "math",
-    level: "grade12",
+    track: "k12",
+    grade: 12,
     color: "violet" as TColorKey,
     icon: "Calculator",
     totalLessons: 48,
@@ -176,7 +177,8 @@ export const COURSE_DETAILS: Record<string, ICourseDetail> = {
   },
   physics: {
     key: "physics",
-    level: "grade11",
+    track: "k12",
+    grade: 11,
     color: "cyan" as TColorKey,
     icon: "Atom",
     totalLessons: 36,
@@ -188,7 +190,8 @@ export const COURSE_DETAILS: Record<string, ICourseDetail> = {
   },
   english: {
     key: "english",
-    level: "allLevels",
+    track: "k12",
+    grade: "all",
     color: "amber" as TColorKey,
     icon: "Languages",
     totalLessons: 40,
@@ -200,6 +203,7 @@ export const COURSE_DETAILS: Record<string, ICourseDetail> = {
   },
   python: {
     key: "python",
+    track: "programming",
     level: "beginner",
     color: "violet" as TColorKey,
     icon: "Terminal",
@@ -212,6 +216,7 @@ export const COURSE_DETAILS: Record<string, ICourseDetail> = {
   },
   react: {
     key: "react",
+    track: "programming",
     level: "intermediate",
     color: "cyan" as TColorKey,
     icon: "Code2",
@@ -224,6 +229,7 @@ export const COURSE_DETAILS: Record<string, ICourseDetail> = {
   },
   algorithms: {
     key: "algorithms",
+    track: "programming",
     level: "advanced",
     color: "amber" as TColorKey,
     icon: "Brain",

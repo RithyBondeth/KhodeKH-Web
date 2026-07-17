@@ -234,6 +234,20 @@
       "it": "Information Technology",
       "law": "Law",
       "education": "Education"
+    },
+    "categorySubtitle": "ជ្រើសរើសប្រភេទ ដើម្បីមើលអ្វីដែលអ្នកអាចបង្កើត",
+    "categoryAll": "ទាំងអស់",
+    "noCoursesTitle": "មិនទាន់មានវគ្គសិក្សានៅទីនេះ",
+    "noCoursesDesc": "យើងកំពុងសរសេរមាតិកាសម្រាប់ប្រភេទនេះ — សូមត្រឡប់មកវិញឆាប់ៗ។",
+    "categories": {
+      "fundamentals": "មូលដ្ឋានគ្រឹះ",
+      "webDev": "អភិវឌ្ឍន៍គេហទំព័រ",
+      "mobileDev": "កម្មវិធីទូរស័ព្ទ",
+      "dataAi": "ទិន្នន័យ & AI",
+      "computerSci": "វិទ្យាសាស្ត្រកុំព្យូទ័រ",
+      "gameDev": "អភិវឌ្ឍន៍ហ្គេម",
+      "devops": "DevOps & ក្លោដ",
+      "security": "សន្តិសុខសាយប័រ"
     }
   },
   "courseDetail": {
@@ -247,6 +261,9 @@
     "studentsCount": "សិស្ស {count, number} នាក់",
     "totalXp": "{xp, number} XP",
     "statLevel": "កម្រិត",
+    "statGrade": "ថ្នាក់",
+    "gradeLabel": "ថ្នាក់ទី{grade}",
+    "allGrades": "គ្រប់ថ្នាក់",
     "statLessons": "មេរៀន",
     "statDuration": "រយៈពេល",
     "statXp": "XP សរុប",
@@ -295,10 +312,7 @@
     "levels": {
       "beginner": "ថ្នាក់ដំបូង",
       "intermediate": "ថ្នាក់កណ្ដាល",
-      "advanced": "ថ្នាក់ខ្ពស់",
-      "grade12": "ថ្នាក់ទី១២",
-      "grade11": "ថ្នាក់ទី១១",
-      "allLevels": "គ្រប់កម្រិត"
+      "advanced": "ថ្នាក់ខ្ពស់"
     },
     "math": {
       "about": "វគ្គនេះគ្របដណ្តប់កម្មវិធីគណិតវិទ្យាថ្នាក់ទី១២ ពេញលេញ — អនុគមន៍ លីមីត ដេរីវេ អាំងតេក្រាល និងប្រូបាប — តាមកម្មវិធីប្រឡងបាក់ឌុបជាតិ។ គ្រប់គំនិតត្រូវបានបង្រៀនជាជំហានៗ ជាភាសាខ្មែរ និងអង់គ្លេស។",

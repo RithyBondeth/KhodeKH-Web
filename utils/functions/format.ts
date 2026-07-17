@@ -6,6 +6,17 @@ export function formatNumber(n: number, locale = "en-US"): string {
   return n.toLocaleString(locale)
 }
 
+const KHMER_DIGITS = ["០", "១", "២", "៣", "៤", "៥", "៦", "៧", "៨", "៩"]
+
+/**
+ * Render a number in Khmer numerals. The `km` messages spell numbers out this
+ * way, so interpolated values must be converted to match the surrounding text.
+ * @example toKhmerNumerals(12) → "១២"
+ */
+export function toKhmerNumerals(n: number): string {
+  return String(n).replace(/\d/g, (d) => KHMER_DIGITS[Number(d)])
+}
+
 /**
  * Truncate a string to the given max length, appending "…" if trimmed.
  * @example truncate("Hello World", 5) → "Hello…"

@@ -50,10 +50,11 @@ export const FEATURES = [
 
 /* ── Courses ─────────────────────────────────────────────────────────── */
 
+/** `category` mirrors `programming_categories.slug` in the API. */
 export const COURSES = [
-  { level: "Beginner",     lessons: 24, xp: 2400, color: "violet" as TColorKey, icon: "Terminal", key: "python"     },
-  { level: "Intermediate", lessons: 32, xp: 3200, color: "cyan"   as TColorKey, icon: "Code2",    key: "react"      },
-  { level: "Advanced",     lessons: 40, xp: 4000, color: "amber"  as TColorKey, icon: "Brain",    key: "algorithms" },
+  { level: "Beginner",     lessons: 24, xp: 2400, color: "violet" as TColorKey, icon: "Terminal", key: "python",     category: "programming-fundamentals" },
+  { level: "Intermediate", lessons: 32, xp: 3200, color: "cyan"   as TColorKey, icon: "Code2",    key: "react",      category: "web-development"          },
+  { level: "Advanced",     lessons: 40, xp: 4000, color: "amber"  as TColorKey, icon: "Brain",    key: "algorithms", category: "computer-science"         },
 ]
 
 /* ── Featured subjects (landing showcase) ────────────────────────────── */

@@ -234,6 +234,20 @@
       "it": "ព័ត៌មានវិទ្យា",
       "law": "នីតិសាស្ត្រ",
       "education": "អប់រំ"
+    },
+    "categorySubtitle": "Pick a category to see what you can build",
+    "categoryAll": "All",
+    "noCoursesTitle": "No courses here yet",
+    "noCoursesDesc": "We're writing content for this category — check back soon.",
+    "categories": {
+      "fundamentals": "Fundamentals",
+      "webDev": "Web Development",
+      "mobileDev": "Mobile Apps",
+      "dataAi": "Data & AI",
+      "computerSci": "Computer Science",
+      "gameDev": "Game Dev",
+      "devops": "DevOps & Cloud",
+      "security": "Cybersecurity"
     }
   },
   "courseDetail": {
@@ -247,6 +261,9 @@
     "studentsCount": "{count, number} students",
     "totalXp": "{xp, number} XP",
     "statLevel": "Level",
+    "statGrade": "Grade",
+    "gradeLabel": "Grade {grade}",
+    "allGrades": "All grades",
     "statLessons": "Lessons",
     "statDuration": "Duration",
     "statXp": "Total XP",
@@ -295,10 +312,7 @@
     "levels": {
       "beginner": "Beginner",
       "intermediate": "Intermediate",
-      "advanced": "Advanced",
-      "grade12": "Grade 12",
-      "grade11": "Grade 11",
-      "allLevels": "All Levels"
+      "advanced": "Advanced"
     },
     "math": {
       "about": "This course covers the complete Grade 12 mathematics curriculum — functions, limits, derivatives, integrals, and probability — fully aligned with the BacII national exam. Every concept is taught step by step in Khmer and English.",

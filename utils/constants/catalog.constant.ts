@@ -1,4 +1,8 @@
-import type { IK12Subject, IUniversityFaculty } from "@/utils/interfaces/catalog"
+import type {
+  IK12Subject,
+  IProgrammingCategory,
+  IUniversityFaculty,
+} from "@/utils/interfaces/catalog"
 
 /* ── Grades ──────────────────────────────────────────────────────────── */
 
@@ -17,6 +21,20 @@ export const K12_SUBJECTS: IK12Subject[] = [
   { key: "biology",       icon: "Dna",         color: "emerald", grades: [7, 12], lessons: 34 },
   { key: "history",       icon: "Landmark",    color: "violet",  grades: [7, 12], lessons: 30 },
   { key: "geography",     icon: "Globe",       color: "indigo",  grades: [7, 12], lessons: 28 },
+]
+
+/* ── Programming categories ──────────────────────────────────────────── */
+
+/** `slug` mirrors `programming_categories.slug` in the API — keep in sync. */
+export const PROGRAMMING_CATEGORIES: IProgrammingCategory[] = [
+  { key: "fundamentals", slug: "programming-fundamentals", icon: "Terminal",    color: "violet"  },
+  { key: "webDev",       slug: "web-development",          icon: "Globe",       color: "cyan"    },
+  { key: "mobileDev",    slug: "mobile-app-development",   icon: "Smartphone",  color: "emerald" },
+  { key: "dataAi",       slug: "data-science-ai",          icon: "Brain",       color: "amber"   },
+  { key: "computerSci",  slug: "computer-science",         icon: "Binary",      color: "indigo"  },
+  { key: "gameDev",      slug: "game-development",         icon: "Gamepad2",    color: "violet"  },
+  { key: "devops",       slug: "devops-cloud",             icon: "Cloud",       color: "cyan"    },
+  { key: "security",     slug: "cybersecurity",            icon: "ShieldCheck", color: "emerald" },
 ]
 
 /* ── University faculties (coming-soon teaser) ───────────────────────── */

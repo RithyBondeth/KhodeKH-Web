@@ -6,18 +6,19 @@ import { useParams, notFound } from "next/navigation"
 import {
   ArrowLeft, ArrowRight, Atom, BookOpen, Brain, Calculator, CheckCircle2,
   ChevronDown, Circle, Clock, Code2, GraduationCap, Languages, Lock,
-  PencilLine, Play, Sparkles, Terminal, Trophy, Users, Zap,
+  PencilLine, Play, School, Sparkles, Terminal, Trophy, Users, Zap,
 } from "lucide-react"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { AppShell } from "@/components/utils/app-shell"
 import { AnimateIn } from "@/components/utils/animations/animate-in"
 import { TypographyH2 } from "@/components/utils/typography/typography-h2"
 import { TypographyH3 } from "@/components/utils/typography/typography-h3"
 import { TypographyMuted } from "@/components/utils/typography/typography-muted"
+import { toKhmerNumerals } from "@/utils/functions/format"
 import { COLOR } from "@/utils/constants/landing.constant"
 import { COURSE_DETAILS } from "@/utils/constants/course-detail.constant"
 import { activeCourses } from "@/utils/constants/dashboard.constant"
-import type { ISyllabusLesson } from "@/utils/interfaces/course-detail"
+import type { ISyllabusLesson, TCourseLevel } from "@/utils/interfaces/course-detail"
 
 /* ── Icon + colour mappings ──────────────────────────────────────────── */
 
@@ -36,18 +37,19 @@ const LESSON_TYPE_ICON: Record<ISyllabusLesson["type"], React.ElementType> = {
   challenge: Trophy,
 }
 
-const LEVEL_BADGE: Record<string, string> = {
+const LEVEL_BADGE: Record<TCourseLevel, string> = {
   beginner:     "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300",
   intermediate: "bg-cyan-100 text-cyan-700 dark:bg-cyan-500/20 dark:text-cyan-300",
   advanced:     "bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-300",
-  grade12:      "bg-violet-100 text-violet-700 dark:bg-violet-500/20 dark:text-violet-300",
-  grade11:      "bg-cyan-100 text-cyan-700 dark:bg-cyan-500/20 dark:text-cyan-300",
-  allLevels:    "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300",
 }
 
+const GRADE_BADGE     = "bg-violet-100 text-violet-700 dark:bg-violet-500/20 dark:text-violet-300"
+const ALL_GRADE_BADGE = "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300"
+
 export default function CourseDetailPage() {
-  const t  = useTranslations("courseDetail")
-  const tc = useTranslations("courses")
+  const t      = useTranslations("courseDetail")
+  const tc     = useTranslations("courses")
+  const locale = useLocale()
 
   const { slug } = useParams<{ slug: string }>()
   const course   = COURSE_DETAILS[slug]
@@ -65,8 +67,27 @@ export default function CourseDetailPage() {
   const shownCount  = course.syllabus.reduce((s, m) => s + m.lessons.length, 0)
   const hiddenCount = course.totalLessons - shownCount
 
+  /* How a course is placed differs by track: K-12 by grade, the rest by difficulty. */
+  const placement = course.track === "k12"
+    ? {
+        icon:      School,
+        statLabel: t("statGrade"),
+        value:     course.grade === "all"
+          ? t("allGrades")
+          : t("gradeLabel", {
+              grade: locale === "km" ? toKhmerNumerals(course.grade) : course.grade,
+            }),
+        badge:     course.grade === "all" ? ALL_GRADE_BADGE : GRADE_BADGE,
+      }
+    : {
+        icon:      GraduationCap,
+        statLabel: t("statLevel"),
+        value:     t(`levels.${course.level}`),
+        badge:     LEVEL_BADGE[course.level],
+      }
+
   const stats = [
-    { icon: GraduationCap, label: t("statLevel"),    value: t(`levels.${course.level}`) },
+    { icon: placement.icon, label: placement.statLabel, value: placement.value },
     { icon: BookOpen,      label: t("statLessons"),  value: t("lessonsCount", { count: course.totalLessons }) },
     { icon: Clock,         label: t("statDuration"), value: t("hoursCount", { count: course.hours }) },
     { icon: Zap,           label: t("statXp"),       value: t("totalXp", { xp: course.totalXp }) },
@@ -107,8 +128,8 @@ export default function CourseDetailPage() {
                   <span className={`text-[11px] font-semibold px-2.5 py-1 rounded-full ${colors.badge}`}>
                     {tc(`${course.key}.tag`)}
                   </span>
-                  <span className={`text-[11px] font-semibold px-2.5 py-1 rounded-full ${LEVEL_BADGE[course.level]}`}>
-                    {t(`levels.${course.level}`)}
+                  <span className={`text-[11px] font-semibold px-2.5 py-1 rounded-full ${placement.badge}`}>
+                    {placement.value}
                   </span>
                 </div>
                 <TypographyH2 className="text-2xl sm:text-3xl font-bold text-foreground border-0 pb-0 mb-1">

@@ -4,13 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { useTranslations } from "next-intl"
 import gsap from "gsap"
-import {
-  EyeIcon,
-  EyeClosedIcon,
-  LockIcon,
-  MailIcon,
-  Globe,
-} from "lucide-react"
+import { EyeIcon, EyeClosedIcon, LockIcon, MailIcon, Globe } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { AuthShowcase } from "@/components/auth/auth-showcase"
@@ -31,8 +25,17 @@ export default function LoginPage() {
 
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } })
-      tl.from("[data-auth-logo]", { opacity: 0, scale: 0.7, y: -24, duration: 0.7, ease: "back.out(1.8)" })
-        .from("[data-auth-field]", { opacity: 0, y: 28, duration: 0.6, stagger: 0.1 }, "-=0.25")
+      tl.from("[data-auth-logo]", {
+        opacity: 0,
+        scale: 0.7,
+        y: -24,
+        duration: 0.7,
+        ease: "back.out(1.8)",
+      }).from(
+        "[data-auth-field]",
+        { opacity: 0, y: 28, duration: 0.6, stagger: 0.1 },
+        "-=0.25"
+      )
     }, root)
     return () => ctx.revert()
   }, [])
@@ -45,10 +48,16 @@ export default function LoginPage() {
         className="relative flex flex-1 flex-col items-center justify-center bg-background px-8 py-12"
       >
         {/* Soft ambient background behind the form */}
-        <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 overflow-hidden"
+        >
           <div className="grid-pattern absolute inset-0 opacity-50 dark:opacity-30" />
-          <div className="aurora-orb aurora-blue size-80 -top-24 -left-24" />
-          <div className="aurora-orb aurora-violet size-72 -bottom-24 -right-16" style={{ animationDelay: "-14s" }} />
+          <div className="aurora-orb aurora-blue -top-24 -left-24 size-80" />
+          <div
+            className="aurora-orb aurora-violet -right-16 -bottom-24 size-72"
+            style={{ animationDelay: "-14s" }}
+          />
         </div>
 
         <div data-auth-logo className="relative mb-10">
@@ -93,7 +102,7 @@ export default function LoginPage() {
               />
             </div>
             <div data-auth-field>
-              <Button className="btn-shine w-full transition-all hover:shadow-[0_0_28px_-6px_rgba(35,131,226,0.6)] hover:-translate-y-0.5">
+              <Button className="btn-shine w-full transition-all hover:-translate-y-0.5 hover:shadow-[0_0_28px_-6px_rgba(35,131,226,0.6)]">
                 {t("loginButton")}
               </Button>
             </div>

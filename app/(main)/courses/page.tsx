@@ -3,9 +3,10 @@
 import { useState } from "react"
 import Link from "next/link"
 import {
-  ArrowRight, Atom, BookOpen, Briefcase, Calculator, Clock, Code2, Cog,
-  Cpu, Dna, FlaskConical, Globe, GraduationCap, Landmark, Languages, Lock,
-  Microscope, Scale, School, Sparkles, Stethoscope, Users, Zap,
+  ArrowRight, Atom, Binary, BookOpen, Brain, Briefcase, Calculator, Clock,
+  Cloud, Code2, Cog, Cpu, Dna, FlaskConical, Gamepad2, Globe, GraduationCap,
+  Landmark, Languages, Lock, Microscope, Scale, School, ShieldCheck,
+  Smartphone, Sparkles, Stethoscope, Terminal, Users, Zap,
 } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { AppShell } from "@/components/utils/app-shell"
@@ -14,7 +15,9 @@ import { TypographyH2 } from "@/components/utils/typography/typography-h2"
 import { TypographyMuted } from "@/components/utils/typography/typography-muted"
 import { activeCourses } from "@/utils/constants/dashboard.constant"
 import { COLOR, COURSES } from "@/utils/constants/landing.constant"
-import { GRADES, K12_SUBJECTS, UNIVERSITY_FACULTIES } from "@/utils/constants/catalog.constant"
+import {
+  GRADES, K12_SUBJECTS, PROGRAMMING_CATEGORIES, UNIVERSITY_FACULTIES,
+} from "@/utils/constants/catalog.constant"
 import type { TCatalogTrack } from "@/utils/interfaces/catalog"
 
 /* ── Icon mapping ────────────────────────────────────────────────────── */
@@ -22,6 +25,7 @@ import type { TCatalogTrack } from "@/utils/interfaces/catalog"
 const ICON_MAP: Record<string, React.ElementType> = {
   BookOpen, Calculator, Languages, Microscope, Users, Atom, FlaskConical,
   Dna, Landmark, Globe, Cog, Stethoscope, Briefcase, Cpu, Scale, School,
+  Terminal, Smartphone, Brain, Binary, Gamepad2, Cloud, ShieldCheck,
 }
 
 /* ── Level → colour mappings (programming track) ─────────────────────── */
@@ -63,9 +67,10 @@ type TFilter = "All" | "Beginner" | "Intermediate" | "Advanced"
 export default function CoursesPage() {
   const t = useTranslations("courses")
 
-  const [track,  setTrack]  = useState<TCatalogTrack>("k12")
-  const [grade,  setGrade]  = useState(12)
-  const [filter, setFilter] = useState<TFilter>("All")
+  const [track,    setTrack]    = useState<TCatalogTrack>("k12")
+  const [grade,    setGrade]    = useState(12)
+  const [filter,   setFilter]   = useState<TFilter>("All")
+  const [category, setCategory] = useState<string>("all")
 
   /* Build a lookup: course key → enrolled progress data */
   const enrolledMap = Object.fromEntries(
@@ -86,9 +91,16 @@ export default function CoursesPage() {
     Advanced:     t("filterAdvanced"),
   }
 
-  const visible = filter === "All"
+  /* Category is the primary dimension; level narrows within it. */
+  const inCategory = category === "all"
     ? COURSES
-    : COURSES.filter((c) => c.level === filter)
+    : COURSES.filter((c) => c.category === category)
+
+  const visible = filter === "All"
+    ? inCategory
+    : inCategory.filter((c) => c.level === filter)
+
+  const countIn = (slug: string) => COURSES.filter((c) => c.category === slug).length
 
   const gradeSubjects = K12_SUBJECTS.filter(
     (s) => grade >= s.grades[0] && grade <= s.grades[1]
@@ -230,7 +242,54 @@ export default function CoursesPage() {
         {track === "programming" && (
           <div className="space-y-6">
 
-            {/* Filter tabs */}
+            {/* Category picker */}
+            <AnimateIn animation="fade-up" delay={0.15}>
+              <div>
+                <TypographyMuted className="text-xs mb-2.5">{t("categorySubtitle")}</TypographyMuted>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <button
+                    onClick={() => setCategory("all")}
+                    className={`px-3.5 py-2 rounded-xl text-sm font-medium transition-all ${
+                      category === "all"
+                        ? "gradient-bg-primary text-white shadow-md"
+                        : "card-surface text-muted-foreground hover:text-foreground border border-border hover:border-violet-300 dark:hover:border-violet-500/40"
+                    }`}
+                  >
+                    {t("categoryAll")}
+                    <span className={`ml-1.5 text-xs ${category === "all" ? "text-white/80" : "text-muted-foreground"}`}>
+                      ({COURSES.length})
+                    </span>
+                  </button>
+
+                  {PROGRAMMING_CATEGORIES.map((cat) => {
+                    const Icon     = ICON_MAP[cat.icon] ?? Code2
+                    const count    = countIn(cat.slug)
+                    const selected = category === cat.slug
+                    return (
+                      <button
+                        key={cat.slug}
+                        onClick={() => setCategory(cat.slug)}
+                        className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-sm font-medium transition-all ${
+                          selected
+                            ? "gradient-bg-primary text-white shadow-md"
+                            : count === 0
+                              ? "card-surface text-muted-foreground/50 border border-dashed border-border hover:text-muted-foreground"
+                              : "card-surface text-muted-foreground hover:text-foreground border border-border hover:border-violet-300 dark:hover:border-violet-500/40"
+                        }`}
+                      >
+                        <Icon className="size-3.5 shrink-0" />
+                        {t(`categories.${cat.key}`)}
+                        <span className={`text-xs ${selected ? "text-white/80" : "text-muted-foreground"}`}>
+                          ({count})
+                        </span>
+                      </button>
+                    )
+                  })}
+                </div>
+              </div>
+            </AnimateIn>
+
+            {/* Level filter — counts reflect the selected category */}
             <div className="flex items-center gap-2 flex-wrap">
               {filters.map((f) => (
                 <button
@@ -244,11 +303,22 @@ export default function CoursesPage() {
                 >
                   {filterKeys[f]}
                   <span className={`ml-1.5 text-xs ${filter === f ? "text-white/80" : "text-muted-foreground"}`}>
-                    ({f === "All" ? COURSES.length : COURSES.filter((c) => c.level === f).length})
+                    ({f === "All" ? inCategory.length : inCategory.filter((c) => c.level === f).length})
                   </span>
                 </button>
               ))}
             </div>
+
+            {/* Empty state — category (or category + level) with nothing in it yet */}
+            {visible.length === 0 && (
+              <div className="card-surface rounded-2xl border border-dashed border-border p-10 text-center">
+                <div className="size-12 rounded-2xl bg-muted flex items-center justify-center mx-auto mb-3">
+                  <Lock className="size-5 text-muted-foreground" />
+                </div>
+                <h3 className="font-semibold text-foreground text-base mb-1">{t("noCoursesTitle")}</h3>
+                <TypographyMuted className="text-sm">{t("noCoursesDesc")}</TypographyMuted>
+              </div>
+            )}
 
             {/* Course grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
@@ -261,8 +331,11 @@ export default function CoursesPage() {
 
                     {/* Top row: icon + level badge */}
                     <div className="flex items-start justify-between">
-                      <div className={`size-14 rounded-2xl ${colors.icon} flex items-center justify-center text-3xl leading-none`}>
-                        {course.icon}
+                      <div className={`size-14 rounded-2xl ${colors.icon} flex items-center justify-center`}>
+                        {(() => {
+                          const Icon = ICON_MAP[course.icon] ?? Code2
+                          return <Icon className={`size-7 ${COLOR[course.color].icon}`} />
+                        })()}
                       </div>
                       <span className={`text-[11px] font-semibold px-2.5 py-1 rounded-full ${colors.badge}`}>
                         {course.level}
@@ -335,22 +408,24 @@ export default function CoursesPage() {
                 )
               })}
 
-              {/* Locked placeholder card — teaser for upcoming courses */}
-              <div className="card-surface rounded-2xl p-5 flex flex-col gap-4 border border-dashed border-border opacity-60 select-none">
-                <div className="flex items-start justify-between">
-                  <div className="size-14 rounded-2xl bg-muted flex items-center justify-center">
-                    <Lock className="size-6 text-muted-foreground" />
+              {/* Locked placeholder card — only meaningful when browsing everything */}
+              {category === "all" && (
+                <div className="card-surface rounded-2xl p-5 flex flex-col gap-4 border border-dashed border-border opacity-60 select-none">
+                  <div className="flex items-start justify-between">
+                    <div className="size-14 rounded-2xl bg-muted flex items-center justify-center">
+                      <Lock className="size-6 text-muted-foreground" />
+                    </div>
+                    <Lock className="size-4 text-muted-foreground mt-1" />
                   </div>
-                  <Lock className="size-4 text-muted-foreground mt-1" />
+                  <div>
+                    <h3 className="font-semibold text-muted-foreground text-base">{t("moreSoonTitle")}</h3>
+                    <p className="text-[11px] text-muted-foreground mt-0.5">{t("moreSoonSubtitle")}</p>
+                  </div>
+                  <p className="text-sm text-muted-foreground leading-relaxed flex-1">
+                    {t("moreSoonDesc")}
+                  </p>
                 </div>
-                <div>
-                  <h3 className="font-semibold text-muted-foreground text-base">{t("moreSoonTitle")}</h3>
-                  <p className="text-[11px] text-muted-foreground mt-0.5">{t("moreSoonSubtitle")}</p>
-                </div>
-                <p className="text-sm text-muted-foreground leading-relaxed flex-1">
-                  {t("moreSoonDesc")}
-                </p>
-              </div>
+              )}
             </div>
           </div>
         )}

@@ -22,6 +22,16 @@ export interface IK12Subject {
   }
 }
 
+/* ── Programming categories ──────────────────────────────────────────── */
+
+export interface IProgrammingCategory {
+  key: string
+  /** Matches `programming_categories.slug` in the API */
+  slug: string
+  icon: string
+  color: TColorKey
+}
+
 /* ── University faculties (coming-soon teaser) ───────────────────────── */
 
 export interface IUniversityFaculty {
