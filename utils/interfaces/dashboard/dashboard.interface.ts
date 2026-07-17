@@ -1,6 +1,9 @@
+import type { TAvatarPreset } from "@/utils/constants/avatar.constant"
+
 export interface IStudent {
   name: string
   nameKh: string
+  email: string
   level: number
   xp: number
   xpToNext: number
@@ -8,7 +11,8 @@ export interface IStudent {
   streak: number
   /** Lessons the student aims to finish each week */
   weeklyGoal: number
-  avatar: string
+  /** Key of a built-in avatar — mirrors `users.avatar` in the API */
+  avatar: TAvatarPreset
 }
 
 export interface IActiveCourse {

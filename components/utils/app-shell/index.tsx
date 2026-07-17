@@ -8,9 +8,11 @@ import {
   LogOut, Home, BookOpen,
 } from "lucide-react"
 import { useTranslations } from "next-intl"
+import { Avatar } from "@/components/utils/avatar"
 import { BrandLogo } from "@/components/utils/brand-logo"
 import { ThemeToggle } from "@/components/utils/themes/theme-toggle"
 import { LanguageSwitcher } from "@/components/utils/language-switcher"
+import { useProfile } from "@/hooks/utils/use-profile"
 import { studentData, activeCourses } from "@/utils/constants/dashboard.constant"
 import type { IWithChildren } from "@/utils/interfaces"
 
@@ -28,6 +30,7 @@ export function AppShell({ children }: IWithChildren) {
   const pathname = usePathname()
   const tNav  = useTranslations("nav")
   const tDash = useTranslations("dashboard")
+  const profile = useProfile()
 
   const xpPct = (studentData.xp / studentData.xpToNext) * 100
   const totalLessonsDone = activeCourses.reduce((s, c) => s + c.completedLessons, 0)
@@ -53,15 +56,19 @@ export function AppShell({ children }: IWithChildren) {
 
         {/* Student card */}
         <div className="mx-3 mt-4 p-3.5 rounded-2xl card-surface border border-violet-200 dark:border-violet-500/20">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="size-10 rounded-xl gradient-bg-primary flex items-center justify-center font-bold text-sm text-white shrink-0">
-              {studentData.avatar}
-            </div>
+          <Link href="/profile" className="flex items-center gap-3 mb-3 group">
+            <Avatar
+              preset={profile.avatar}
+              size="md"
+              className="transition-transform duration-300 motion-safe:group-hover:scale-110"
+            />
             <div className="min-w-0">
-              <div className="font-semibold text-sm text-foreground truncate">{studentData.name}</div>
-              <div className="text-[10px] text-muted-foreground truncate">{studentData.nameKh}</div>
+              <div className="font-semibold text-sm text-foreground truncate group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors">
+                {profile.name}
+              </div>
+              <div className="text-[10px] text-muted-foreground truncate">{profile.nameKh}</div>
             </div>
-          </div>
+          </Link>
           <div className="flex items-center justify-between text-xs mb-1.5">
             <span className="text-muted-foreground">{tDash("levelLabel", { level: studentData.level })}</span>
             <span className="text-violet-600 dark:text-violet-400 font-semibold text-xs">
@@ -103,7 +110,7 @@ export function AppShell({ children }: IWithChildren) {
         {/* Bottom actions */}
         <div className="px-3 pb-4 border-t border-border pt-3 space-y-0.5">
           <Link
-            href="#"
+            href="/profile"
             className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-all"
           >
             <Settings className="size-4" />
@@ -152,9 +159,13 @@ export function AppShell({ children }: IWithChildren) {
               <Bell className="size-4.5" />
               <div className="absolute top-1.5 right-1.5 size-2 rounded-full bg-violet-500" />
             </button>
-            <div className="size-9 rounded-xl gradient-bg-primary flex items-center justify-center font-bold text-sm text-white cursor-pointer">
-              {studentData.avatar}
-            </div>
+            <Link href="/profile" title={tDash("settings")}>
+              <Avatar
+                preset={profile.avatar}
+                size="sm"
+                className="transition-transform duration-300 motion-safe:hover:scale-110"
+              />
+            </Link>
           </div>
         </header>
 

@@ -11,6 +11,7 @@ import { AppShell } from "@/components/utils/app-shell"
 import { AnimateIn } from "@/components/utils/animations/animate-in"
 import { CountUp } from "@/components/utils/animations/count-up"
 import { GrowBar } from "@/components/utils/animations/grow-bar"
+import { useProfile } from "@/hooks/utils/use-profile"
 import { TypographyH1 } from "@/components/utils/typography/typography-h1"
 import { TypographyH3 } from "@/components/utils/typography/typography-h3"
 import { TypographyH4 } from "@/components/utils/typography/typography-h4"
@@ -31,10 +32,11 @@ const BADGE_ICONS: Record<string, React.ElementType> = {
 
 export default function DashboardPage() {
   const t = useTranslations("dashboard")
+  const profile = useProfile()
 
   const totalLessonsDone = activeCourses.reduce((s, c) => s + c.completedLessons, 0)
   const resume           = activeCourses[0]
-  const goalPct          = Math.min(100, Math.round((weeklyDone / studentData.weeklyGoal) * 100))
+  const goalPct          = Math.min(100, Math.round((weeklyDone / profile.weeklyGoal) * 100))
   const maxDay           = Math.max(...weeklyActivity.map((d) => d.lessons), 1)
   const earnedBadges     = badges.filter((b) => b.earned).length
   const todayDone        = weeklyActivity.find((d) => d.isToday)?.lessons ?? 0
@@ -51,7 +53,7 @@ export default function DashboardPage() {
               <div className="min-w-0">
                 <TypographyMuted className="text-xs mb-1">{t("greeting")}</TypographyMuted>
                 <TypographyH1 className="text-2xl font-bold text-foreground mb-3">
-                  {t("welcomeBack")} <span className="gradient-text">{studentData.name}</span>
+                  {t("welcomeBack")} <span className="gradient-text">{profile.name}</span>
                 </TypographyH1>
 
                 {/* What's next — the actual lesson, not a generic nudge */}
@@ -152,7 +154,7 @@ export default function DashboardPage() {
               <div className="flex items-center justify-between mb-4">
                 <TypographyH3 className="font-semibold text-foreground text-base">{t("thisWeek")}</TypographyH3>
                 <span className="text-xs text-muted-foreground">
-                  {t("weeklyProgress", { done: weeklyDone, goal: studentData.weeklyGoal })}
+                  {t("weeklyProgress", { done: weeklyDone, goal: profile.weeklyGoal })}
                 </span>
               </div>
 

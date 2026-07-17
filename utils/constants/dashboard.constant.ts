@@ -6,12 +6,13 @@ import { courseLessons, defaultLessonId } from "./course-content.constant"
 export const studentData: IStudent = {
   name: "Sok Dara",
   nameKh: "សុខ ដារ៉ា",
+  email: "sokdara@student.apsara.edu.kh",
   level: 8,
   xp: 2450,
   xpToNext: 3000,
   streak: 6,
   weeklyGoal: 8,
-  avatar: "SD",
+  avatar: "rocket",
 }
 
 /* ── Active courses ──────────────────────────────────────────────────── */
