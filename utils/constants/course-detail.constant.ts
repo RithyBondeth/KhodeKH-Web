@@ -84,12 +84,123 @@ const ALGORITHMS_SYLLABUS: ISyllabusModule[] = [
   },
 ]
 
+/* ── Grade 12 Mathematics syllabus (first modules — BacII track) ─────── */
+
+const MATH_SYLLABUS: ISyllabusModule[] = [
+  {
+    section: "Module 1: Functions & Limits",
+    sectionKh: "ម៉ូឌុល ១: អនុគមន៍ & លីមីត",
+    lessons: [
+      { id: 1, title: "Understanding Functions",     titleKh: "ស្វែងយល់អនុគមន៍",          type: "theory",    duration: "14 min", xpReward: 50 },
+      { id: 2, title: "Limits & Continuity",         titleKh: "លីមីត & ភាពជាប់",           type: "theory",    duration: "16 min", xpReward: 50 },
+      { id: 3, title: "Limits Practice",             titleKh: "អនុវត្ត — លីមីត",            type: "practice",  duration: "20 min", xpReward: 100 },
+      { id: 4, title: "Functions Quiz",              titleKh: "ការប្រឡង — អនុគមន៍",        type: "challenge", duration: "25 min", xpReward: 200 },
+    ],
+  },
+  {
+    section: "Module 2: Derivatives",
+    sectionKh: "ម៉ូឌុល ២: ដេរីវេ",
+    lessons: [
+      { id: 5, title: "Rules of Differentiation",    titleKh: "ក្បួនដេរីវេ",               type: "theory",    duration: "18 min", xpReward: 50,  locked: true },
+      { id: 6, title: "Applications of Derivatives", titleKh: "ការអនុវត្តដេរីវេ",           type: "theory",    duration: "16 min", xpReward: 50,  locked: true },
+      { id: 7, title: "Derivatives Practice",        titleKh: "អនុវត្ត — ដេរីវេ",           type: "practice",  duration: "20 min", xpReward: 100, locked: true },
+      { id: 8, title: "BacII-style Problems",        titleKh: "លំហាត់បែបបាក់ឌុប",          type: "challenge", duration: "30 min", xpReward: 200, locked: true },
+    ],
+  },
+]
+
+/* ── Grade 11 Physics syllabus (first modules) ───────────────────────── */
+
+const PHYSICS_SYLLABUS: ISyllabusModule[] = [
+  {
+    section: "Module 1: Forces & Motion",
+    sectionKh: "ម៉ូឌុល ១: កម្លាំង & ចលនា",
+    lessons: [
+      { id: 1, title: "Newton's Laws",               titleKh: "ច្បាប់ញូតុន",               type: "theory",    duration: "15 min", xpReward: 50 },
+      { id: 2, title: "Motion in One Dimension",     titleKh: "ចលនាតាមបន្ទាត់ត្រង់",        type: "theory",    duration: "14 min", xpReward: 50 },
+      { id: 3, title: "Forces Practice",             titleKh: "អនុវត្ត — កម្លាំង",          type: "practice",  duration: "20 min", xpReward: 100 },
+      { id: 4, title: "Motion Challenge",            titleKh: "ការប្រឡង — ចលនា",           type: "challenge", duration: "25 min", xpReward: 200 },
+    ],
+  },
+  {
+    section: "Module 2: Work & Energy",
+    sectionKh: "ម៉ូឌុល ២: ការងារ & ថាមពល",
+    lessons: [
+      { id: 5, title: "Work & Power",                titleKh: "ការងារ & អានុភាព",          type: "theory",    duration: "14 min", xpReward: 50,  locked: true },
+      { id: 6, title: "Kinetic & Potential Energy",  titleKh: "ថាមពលស៊ីនេទិច & ប៉ូតង់ស្យែល", type: "theory",    duration: "16 min", xpReward: 50,  locked: true },
+      { id: 7, title: "Energy Practice",             titleKh: "អនុវត្ត — ថាមពល",           type: "practice",  duration: "20 min", xpReward: 100, locked: true },
+      { id: 8, title: "Energy Challenge",            titleKh: "ការប្រឡង — ថាមពល",          type: "challenge", duration: "28 min", xpReward: 200, locked: true },
+    ],
+  },
+]
+
+/* ── General English syllabus (first modules) ────────────────────────── */
+
+const ENGLISH_SYLLABUS: ISyllabusModule[] = [
+  {
+    section: "Module 1: Everyday Conversations",
+    sectionKh: "ម៉ូឌុល ១: ការសន្ទនាប្រចាំថ្ងៃ",
+    lessons: [
+      { id: 1, title: "Greetings & Introductions",   titleKh: "ការស្វាគមន៍ & ការណែនាំខ្លួន",  type: "theory",    duration: "12 min", xpReward: 50 },
+      { id: 2, title: "Talking About Your Day",      titleKh: "និយាយអំពីថ្ងៃរបស់អ្នក",       type: "theory",    duration: "12 min", xpReward: 50 },
+      { id: 3, title: "Conversation Practice",       titleKh: "អនុវត្ត — ការសន្ទនា",         type: "practice",  duration: "18 min", xpReward: 100 },
+      { id: 4, title: "Role-play Challenge",         titleKh: "ការប្រឡង — សម្តែងតួ",        type: "challenge", duration: "25 min", xpReward: 200 },
+    ],
+  },
+  {
+    section: "Module 2: Grammar Foundations",
+    sectionKh: "ម៉ូឌុល ២: មូលដ្ឋានវេយ្យាករណ៍",
+    lessons: [
+      { id: 5, title: "Present & Past Tenses",       titleKh: "កាលបច្ចុប្បន្ន & អតីតកាល",    type: "theory",    duration: "14 min", xpReward: 50,  locked: true },
+      { id: 6, title: "Questions & Negatives",       titleKh: "សំណួរ & បដិសេធ",            type: "theory",    duration: "12 min", xpReward: 50,  locked: true },
+      { id: 7, title: "Grammar Practice",            titleKh: "អនុវត្ត — វេយ្យាករណ៍",        type: "practice",  duration: "18 min", xpReward: 100, locked: true },
+      { id: 8, title: "Grammar Quiz",                titleKh: "ការប្រឡង — វេយ្យាករណ៍",      type: "challenge", duration: "25 min", xpReward: 200, locked: true },
+    ],
+  },
+]
+
 /* ── Course details, keyed by catalog slug ───────────────────────────── */
 
 export const COURSE_DETAILS: Record<string, ICourseDetail> = {
+  math: {
+    key: "math",
+    level: "grade12",
+    color: "violet" as TColorKey,
+    icon: "Calculator",
+    totalLessons: 48,
+    totalXp: 4800,
+    hours: 40,
+    students: 5120,
+    outcomes: 4,
+    syllabus: MATH_SYLLABUS,
+  },
+  physics: {
+    key: "physics",
+    level: "grade11",
+    color: "cyan" as TColorKey,
+    icon: "Atom",
+    totalLessons: 36,
+    totalXp: 3600,
+    hours: 30,
+    students: 3480,
+    outcomes: 4,
+    syllabus: PHYSICS_SYLLABUS,
+  },
+  english: {
+    key: "english",
+    level: "allLevels",
+    color: "amber" as TColorKey,
+    icon: "Languages",
+    totalLessons: 40,
+    totalXp: 4000,
+    hours: 32,
+    students: 6240,
+    outcomes: 4,
+    syllabus: ENGLISH_SYLLABUS,
+  },
   python: {
     key: "python",
-    level: "Beginner",
+    level: "beginner",
     color: "violet" as TColorKey,
     icon: "Terminal",
     totalLessons: 24,
@@ -101,7 +212,7 @@ export const COURSE_DETAILS: Record<string, ICourseDetail> = {
   },
   react: {
     key: "react",
-    level: "Intermediate",
+    level: "intermediate",
     color: "cyan" as TColorKey,
     icon: "Code2",
     totalLessons: 32,
@@ -113,7 +224,7 @@ export const COURSE_DETAILS: Record<string, ICourseDetail> = {
   },
   algorithms: {
     key: "algorithms",
-    level: "Advanced",
+    level: "advanced",
     color: "amber" as TColorKey,
     icon: "Brain",
     totalLessons: 40,

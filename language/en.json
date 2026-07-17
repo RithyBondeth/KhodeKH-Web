@@ -182,6 +182,58 @@
       "titleKh": "ក្បួនដោះស្រាយ & DSA",
       "tag": "Career Boost",
       "desc": "Master data structures and algorithms — arrays, trees, sorting, and dynamic programming."
+    },
+    "trackK12": "Grade 1–12",
+    "trackProgramming": "Programming & Skills",
+    "trackUniversity": "University",
+    "k12Subtitle": "Pick your grade to see your subjects",
+    "gradeLabel": "Grade {n}",
+    "bacIIBanner": "Grade 12 — BacII exam prep, fully aligned with the national curriculum.",
+    "comingSoon": "Coming soon",
+    "uniTitle": "University programs are coming",
+    "uniDesc": "Browse by faculty and major — engineering, medicine, business, IT and more. We're preparing university content together with partner lecturers.",
+    "moreSoonTitle": "More coming soon",
+    "moreSoonSubtitle": "TypeScript, Node.js, SQL & more",
+    "moreSoonDesc": "New courses are being crafted for the Khmer curriculum. Stay tuned.",
+    "subjects": {
+      "khmer": "Khmer Literature",
+      "math": "Mathematics",
+      "english": "English",
+      "science": "Science",
+      "socialStudies": "Social Studies",
+      "physics": "Physics",
+      "chemistry": "Chemistry",
+      "biology": "Biology",
+      "history": "History",
+      "geography": "Geography"
+    },
+    "subjectsKh": {
+      "khmer": "អក្សរសាស្ត្រខ្មែរ",
+      "math": "គណិតវិទ្យា",
+      "english": "ភាសាអង់គ្លេស",
+      "science": "វិទ្យាសាស្ត្រ",
+      "socialStudies": "សិក្សាសង្គម",
+      "physics": "រូបវិទ្យា",
+      "chemistry": "គីមីវិទ្យា",
+      "biology": "ជីវវិទ្យា",
+      "history": "ប្រវត្តិវិទ្យា",
+      "geography": "ភូមិវិទ្យា"
+    },
+    "faculties": {
+      "engineering": "Engineering",
+      "medicine": "Medicine",
+      "business": "Business",
+      "it": "Information Technology",
+      "law": "Law",
+      "education": "Education"
+    },
+    "facultiesKh": {
+      "engineering": "វិស្វកម្ម",
+      "medicine": "វេជ្ជសាស្ត្រ",
+      "business": "ពាណិជ្ជកម្ម",
+      "it": "ព័ត៌មានវិទ្យា",
+      "law": "នីតិសាស្ត្រ",
+      "education": "អប់រំ"
     }
   },
   "courseDetail": {
@@ -239,6 +291,38 @@
       "outcome2": "Implement classic searching and sorting algorithms",
       "outcome3": "Use stacks, queues, and binary trees with confidence",
       "outcome4": "Solve interview-style challenges and earn ranking XP"
+    },
+    "levels": {
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced",
+      "grade12": "Grade 12",
+      "grade11": "Grade 11",
+      "allLevels": "All Levels"
+    },
+    "math": {
+      "about": "This course covers the complete Grade 12 mathematics curriculum — functions, limits, derivatives, integrals, and probability — fully aligned with the BacII national exam. Every concept is taught step by step in Khmer and English.",
+      "about2": "You'll practise with exam-style exercises after every lesson, and the AI mentor can walk you through any solution — including past BacII questions — at your own pace.",
+      "outcome1": "Master functions, limits, and continuity",
+      "outcome2": "Differentiate and integrate with confidence",
+      "outcome3": "Solve probability and statistics problems",
+      "outcome4": "Practise with real BacII exam questions"
+    },
+    "physics": {
+      "about": "Grade 11 physics made visual and intuitive — forces, motion, energy, electricity, and waves, aligned with the national curriculum. Every hard idea is explained with everyday Cambodian examples.",
+      "about2": "Each lesson pairs clear explanations with interactive exercises, and the AI mentor answers your questions in Khmer or English whenever you're stuck.",
+      "outcome1": "Apply Newton's laws to real-world problems",
+      "outcome2": "Calculate work, energy, and power",
+      "outcome3": "Understand electricity and simple circuits",
+      "outcome4": "Describe waves and their everyday applications"
+    },
+    "english": {
+      "about": "Build practical English step by step — vocabulary, grammar, listening, and conversation — from complete beginner to confident speaker. Designed for Khmer speakers, with explanations in your language.",
+      "about2": "Lessons are short and interactive, with instant feedback on every exercise. The AI mentor explains grammar in Khmer so nothing gets lost in translation.",
+      "outcome1": "Hold everyday conversations with confidence",
+      "outcome2": "Master core grammar from tenses to conditionals",
+      "outcome3": "Grow a practical vocabulary for school and work",
+      "outcome4": "Prepare for school exams and job interviews"
     }
   },
   "howItWorks": {
@@ -323,7 +407,64 @@
     "continue": "Continue",
     "settings": "Settings",
     "signOut": "Sign Out",
-    "search": "Search courses, lessons…"
+    "search": "Search courses, lessons…",
+    "ofTotal": "of {total} total",
+    "inProgress": "in progress",
+    "dayStreak": "Day Streak",
+    "streakHint": "days in a row",
+    "totalXp": "Total XP",
+    "levelLabel": "Level {level}",
+    "lessonsCount": "{count, plural, one {# lesson} other {# lessons}}",
+    "explore": "Explore",
+    "exploreK12Title": "Grade 1–12",
+    "exploreK12Desc": "All subjects for your grade",
+    "exploreBacIITitle": "BacII Prep",
+    "exploreBacIIDesc": "Grade 12 exam-ready maths",
+    "exploreProgTitle": "Programming & Skills",
+    "exploreProgDesc": "Python, React, algorithms & more",
+    "nextUp": "Next up",
+    "lessonNum": "Lesson {n}",
+    "thisWeek": "This week",
+    "weeklyProgress": "{done} of {goal} lessons",
+    "keepStreak": "Do a lesson today to keep your {days}-day streak 🔥",
+    "streakSafe": "You've studied today — streak safe 🔥",
+    "achievements": "Achievements",
+    "earnedCount": "{earned} of {total} earned",
+    "days": {
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat",
+      "sun": "Sun"
+    },
+    "badges": {
+      "firstSteps": {
+        "title": "First Steps",
+        "desc": "Complete your first lesson"
+      },
+      "moduleMaster": {
+        "title": "Module Master",
+        "desc": "Finish every lesson in a module"
+      },
+      "bilingual": {
+        "title": "Bilingual",
+        "desc": "Learn in both Khmer and English"
+      },
+      "weekStreak": {
+        "title": "7-Day Streak",
+        "desc": "Study 7 days in a row"
+      },
+      "challenger": {
+        "title": "Challenger",
+        "desc": "Solve 5 coding challenges"
+      },
+      "centurion": {
+        "title": "10,000 XP",
+        "desc": "Earn 10,000 XP in total"
+      }
+    }
   },
   "learn": {
     "theory": "Theory",
@@ -341,7 +482,29 @@
     "backToDashboard": "Dashboard",
     "copy": "Copy",
     "fullscreen": "Fullscreen",
-    "lesson": "Lesson"
+    "lesson": "Lesson",
+    "backToCourse": "Course",
+    "courseProgress": "Course Progress",
+    "lessonsOf": "{done} of {total} lessons",
+    "doneCount": "{count} done",
+    "totalCount": "{count} total",
+    "thisLesson": "This lesson",
+    "task": "Task",
+    "openEditor": "Open Code Editor",
+    "nextLesson": "Next Lesson",
+    "startChallenge": "Start Challenge →",
+    "expectedOutput": "# Expected output:",
+    "noTheory": "No theory content for this lesson.",
+    "noPractice": "No coding exercise for this lesson.",
+    "noChallenge": "No challenge for this lesson.",
+    "readTheory": "Read the theory →",
+    "running": "Running…",
+    "completed": "Completed",
+    "quickQuestions": "Quick questions",
+    "inputHint": "Enter to send · Shift+Enter for new line",
+    "notReadyTitle": "This lesson isn't ready yet",
+    "notReadyDesc": "We're still writing the content for this lesson. The outline is final — check back soon.",
+    "tryPython": "Try Python instead"
   },
   "auth": {
     "loginTitle": "Login to Your Account",

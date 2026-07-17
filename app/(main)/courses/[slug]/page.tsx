@@ -4,9 +4,9 @@ import { useState } from "react"
 import Link from "next/link"
 import { useParams, notFound } from "next/navigation"
 import {
-  ArrowLeft, ArrowRight, BookOpen, Brain, CheckCircle2, ChevronDown,
-  Circle, Clock, Code2, GraduationCap, Languages, Lock, PencilLine,
-  Play, Sparkles, Terminal, Trophy, Users, Zap,
+  ArrowLeft, ArrowRight, Atom, BookOpen, Brain, Calculator, CheckCircle2,
+  ChevronDown, Circle, Clock, Code2, GraduationCap, Languages, Lock,
+  PencilLine, Play, Sparkles, Terminal, Trophy, Users, Zap,
 } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { AppShell } from "@/components/utils/app-shell"
@@ -25,6 +25,9 @@ const ICON_MAP: Record<string, React.ElementType> = {
   Terminal,
   Code2,
   Brain,
+  Calculator,
+  Atom,
+  Languages,
 }
 
 const LESSON_TYPE_ICON: Record<ISyllabusLesson["type"], React.ElementType> = {
@@ -34,9 +37,12 @@ const LESSON_TYPE_ICON: Record<ISyllabusLesson["type"], React.ElementType> = {
 }
 
 const LEVEL_BADGE: Record<string, string> = {
-  Beginner:     "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300",
-  Intermediate: "bg-cyan-100 text-cyan-700 dark:bg-cyan-500/20 dark:text-cyan-300",
-  Advanced:     "bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-300",
+  beginner:     "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300",
+  intermediate: "bg-cyan-100 text-cyan-700 dark:bg-cyan-500/20 dark:text-cyan-300",
+  advanced:     "bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-300",
+  grade12:      "bg-violet-100 text-violet-700 dark:bg-violet-500/20 dark:text-violet-300",
+  grade11:      "bg-cyan-100 text-cyan-700 dark:bg-cyan-500/20 dark:text-cyan-300",
+  allLevels:    "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300",
 }
 
 export default function CourseDetailPage() {
@@ -60,7 +66,7 @@ export default function CourseDetailPage() {
   const hiddenCount = course.totalLessons - shownCount
 
   const stats = [
-    { icon: GraduationCap, label: t("statLevel"),    value: tc(`filter${course.level}`) },
+    { icon: GraduationCap, label: t("statLevel"),    value: t(`levels.${course.level}`) },
     { icon: BookOpen,      label: t("statLessons"),  value: t("lessonsCount", { count: course.totalLessons }) },
     { icon: Clock,         label: t("statDuration"), value: t("hoursCount", { count: course.hours }) },
     { icon: Zap,           label: t("statXp"),       value: t("totalXp", { xp: course.totalXp }) },
@@ -102,7 +108,7 @@ export default function CourseDetailPage() {
                     {tc(`${course.key}.tag`)}
                   </span>
                   <span className={`text-[11px] font-semibold px-2.5 py-1 rounded-full ${LEVEL_BADGE[course.level]}`}>
-                    {tc(`filter${course.level}`)}
+                    {t(`levels.${course.level}`)}
                   </span>
                 </div>
                 <TypographyH2 className="text-2xl sm:text-3xl font-bold text-foreground border-0 pb-0 mb-1">
@@ -258,7 +264,7 @@ export default function CourseDetailPage() {
                               return locked ? (
                                 <div key={lesson.id}>{row}</div>
                               ) : (
-                                <Link key={lesson.id} href="/learn">{row}</Link>
+                                <Link key={lesson.id} href={`/learn/${slug}/${lesson.id}`}>{row}</Link>
                               )
                             })}
                           </div>
@@ -313,7 +319,7 @@ export default function CourseDetailPage() {
 
               {/* CTA */}
               {enrolled ? (
-                <Link href="/learn" className="block">
+                <Link href={`/learn/${slug}`} className="block">
                   <button className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-semibold gradient-bg-primary text-white hover:opacity-90 transition-all btn-shine">
                     {justEnrolled ? t("startLearning") : t("continueLearning")}
                     <ArrowRight className="size-4" />

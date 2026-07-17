@@ -4,10 +4,11 @@ import { useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import {
-  Sparkles, Settings, Bell, Search,
-  LogOut, Home, BookOpen, Code2, Brain,
+  Settings, Bell, Search,
+  LogOut, Home, BookOpen,
 } from "lucide-react"
 import { useTranslations } from "next-intl"
+import { BrandLogo } from "@/components/utils/brand-logo"
 import { ThemeToggle } from "@/components/utils/themes/theme-toggle"
 import { LanguageSwitcher } from "@/components/utils/language-switcher"
 import { studentData, activeCourses } from "@/utils/constants/dashboard.constant"
@@ -18,8 +19,6 @@ import type { IWithChildren } from "@/utils/interfaces"
 const NAV_ITEMS = [
   { icon: Home,     key: "dashboard", href: "/dashboard" },
   { icon: BookOpen, key: "courses",   href: "/courses"   },
-  { icon: Code2,    key: "playground",href: "/learn"     },
-  { icon: Brain,    key: "aiMentor",  href: "/learn"     },
 ] as const
 
 /* ── Component ────────────────────────────────────────────────────────── */
@@ -48,14 +47,8 @@ export function AppShell({ children }: IWithChildren) {
         ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
       `}>
         {/* Logo */}
-        <div className="flex items-center gap-2.5 px-5 h-16 border-b border-border shrink-0">
-          <div className="size-8 rounded-xl gradient-bg-primary flex items-center justify-center">
-            <Sparkles className="size-4 text-white" />
-          </div>
-          <span className="font-bold text-base tracking-tight">
-            <span className="gradient-text">Kode</span>
-            <span className="text-muted-foreground font-light">KH</span>
-          </span>
+        <div className="flex items-center px-5 h-16 border-b border-border shrink-0">
+          <BrandLogo size="sm" />
         </div>
 
         {/* Student card */}
@@ -70,9 +63,9 @@ export function AppShell({ children }: IWithChildren) {
             </div>
           </div>
           <div className="flex items-center justify-between text-xs mb-1.5">
-            <span className="text-muted-foreground">Level {studentData.level}</span>
+            <span className="text-muted-foreground">{tDash("levelLabel", { level: studentData.level })}</span>
             <span className="text-violet-600 dark:text-violet-400 font-semibold text-xs">
-              {totalLessonsDone} lessons
+              {tDash("lessonsCount", { count: totalLessonsDone })}
             </span>
           </div>
           <div className="h-2 rounded-full bg-muted overflow-hidden">

@@ -24,7 +24,8 @@ export interface ISyllabusModule {
 
 export interface ICourseDetail {
   key: string
-  level: "Beginner" | "Intermediate" | "Advanced"
+  /** Translation key under courseDetail.levels — e.g. "beginner", "grade12" */
+  level: string
   color: TColorKey
   icon: string
   totalLessons: number
