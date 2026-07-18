@@ -7,6 +7,8 @@ import {
   Footprints, Medal, Languages, Trophy, Lock,
 } from "lucide-react"
 import { useTranslations } from "next-intl"
+import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
 import { AppShell } from "@/components/utils/app-shell"
 import { AnimateIn } from "@/components/utils/animations/animate-in"
 import { CountUp } from "@/components/utils/animations/count-up"
@@ -68,12 +70,12 @@ export default function DashboardPage() {
                 <TypographyMuted className="text-xs">{resume.currentLessonKh}</TypographyMuted>
               </div>
 
-              <Link href={`/learn/${resume.id}/${resume.currentLessonId}`}>
-                <button className="shrink-0 flex items-center gap-2 px-5 py-3 rounded-xl gradient-bg-primary hover:opacity-90 transition-all text-sm font-semibold text-white shadow-lg">
+              <Button asChild size="lg" className="shrink-0">
+                <Link href={`/learn/${resume.id}/${resume.currentLessonId}`}>
                   <Play className="size-4 fill-white" />
                   {t("continueLearning")}
-                </button>
-              </Link>
+                </Link>
+              </Button>
             </div>
           </div>
         </AnimateIn>
@@ -81,7 +83,7 @@ export default function DashboardPage() {
         {/* Progress stats */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           <AnimateIn animation="fade-right" delay={0.1}>
-            <div className="card-surface rounded-2xl p-5">
+            <Card className="rounded-2xl p-5">
               <div className="flex items-center justify-between mb-3">
                 <span className="text-xs text-muted-foreground">{t("lessonsCompleted")}</span>
                 <div className="size-8 rounded-xl flex items-center justify-center bg-violet-100 dark:bg-violet-500/15">
@@ -94,11 +96,11 @@ export default function DashboardPage() {
               <TypographyMuted className="text-xs mt-1">
                 {t("ofTotal", { total: activeCourses.reduce((s, c) => s + c.totalLessons, 0) })}
               </TypographyMuted>
-            </div>
+            </Card>
           </AnimateIn>
 
           <AnimateIn animation="fade-right" delay={0.15}>
-            <div className="card-surface rounded-2xl p-5">
+            <Card className="rounded-2xl p-5">
               <div className="flex items-center justify-between mb-3">
                 <span className="text-xs text-muted-foreground">{t("coursesActive")}</span>
                 <div className="size-8 rounded-xl flex items-center justify-center bg-cyan-100 dark:bg-cyan-500/15">
@@ -109,11 +111,11 @@ export default function DashboardPage() {
                 <CountUp to={activeCourses.length} delay={0.5} duration={1.0} ease="power3.out" />
               </div>
               <TypographyMuted className="text-xs mt-1">{t("inProgress")}</TypographyMuted>
-            </div>
+            </Card>
           </AnimateIn>
 
           <AnimateIn animation="fade-left" delay={0.15}>
-            <div className="card-surface rounded-2xl p-5">
+            <Card className="rounded-2xl p-5">
               <div className="flex items-center justify-between mb-3">
                 <span className="text-xs text-muted-foreground">{t("dayStreak")}</span>
                 <div className="size-8 rounded-xl flex items-center justify-center bg-amber-100 dark:bg-amber-500/15">
@@ -124,11 +126,11 @@ export default function DashboardPage() {
                 <CountUp to={studentData.streak} delay={0.6} duration={1.0} ease="power3.out" />
               </div>
               <TypographyMuted className="text-xs mt-1">{t("streakHint")}</TypographyMuted>
-            </div>
+            </Card>
           </AnimateIn>
 
           <AnimateIn animation="fade-left" delay={0.1}>
-            <div className="card-surface rounded-2xl p-5">
+            <Card className="rounded-2xl p-5">
               <div className="flex items-center justify-between mb-3">
                 <span className="text-xs text-muted-foreground">{t("totalXp")}</span>
                 <div className="size-8 rounded-xl flex items-center justify-center bg-emerald-100 dark:bg-emerald-500/15">
@@ -141,7 +143,7 @@ export default function DashboardPage() {
               <TypographyMuted className="text-xs mt-1">
                 {t("levelLabel", { level: studentData.level })}
               </TypographyMuted>
-            </div>
+            </Card>
           </AnimateIn>
         </div>
 
@@ -150,7 +152,7 @@ export default function DashboardPage() {
 
           {/* This week */}
           <AnimateIn animation="fade-right" delay={0.2}>
-            <div className="card-surface rounded-2xl p-5 h-full flex flex-col">
+            <Card className="rounded-2xl p-5 h-full flex flex-col">
               <div className="flex items-center justify-between mb-4">
                 <TypographyH3 className="font-semibold text-foreground text-base">{t("thisWeek")}</TypographyH3>
                 <span className="text-xs text-muted-foreground">
@@ -211,12 +213,12 @@ export default function DashboardPage() {
                     : t("keepStreak", { days: studentData.streak })}
                 </TypographyMuted>
               </div>
-            </div>
+            </Card>
           </AnimateIn>
 
           {/* Achievements */}
           <AnimateIn animation="fade-left" delay={0.2}>
-            <div className="card-surface rounded-2xl p-5 h-full">
+            <Card className="rounded-2xl p-5 h-full">
               <div className="flex items-center justify-between mb-4">
                 <TypographyH3 className="font-semibold text-foreground text-base">{t("achievements")}</TypographyH3>
                 <span className="text-xs text-muted-foreground">
@@ -267,7 +269,7 @@ export default function DashboardPage() {
                   )
                 })}
               </div>
-            </div>
+            </Card>
           </AnimateIn>
         </div>
 
@@ -290,7 +292,7 @@ export default function DashboardPage() {
               : "from-cyan-500 to-cyan-400"
             return (
               <AnimateIn key={course.id} animation={i % 2 === 0 ? "fade-right" : "fade-left"} delay={0.3 + i * 0.1}>
-                <div className="card-surface rounded-2xl p-5 group hover:border-violet-200 dark:hover:border-violet-500/25 transition-all">
+                <Card className="rounded-2xl p-5 group hover:border-violet-200 dark:hover:border-violet-500/25 transition-all">
                   <div className="flex items-start gap-4">
                     <div className="size-11 rounded-xl bg-muted flex items-center justify-center shrink-0 transition-transform duration-300 motion-safe:group-hover:scale-110 motion-safe:group-hover:rotate-6">
                       {(() => {
@@ -341,7 +343,7 @@ export default function DashboardPage() {
                       </div>
                     </div>
                   </div>
-                </div>
+                </Card>
               </AnimateIn>
             )
           })}
@@ -361,7 +363,7 @@ export default function DashboardPage() {
             ].map(({ key, icon: Icon, href, color }, i) => (
               <AnimateIn key={key} animation="fade-up" delay={0.45 + i * 0.07}>
                 <Link href={href} className="block group">
-                  <div className="card-surface rounded-2xl p-4 border border-border hover:border-violet-200 dark:hover:border-violet-500/25 hover:shadow-md transition-all flex items-center gap-3.5 h-full">
+                  <Card className="rounded-2xl p-4 hover:border-violet-200 dark:hover:border-violet-500/25 hover:shadow-md transition-all flex-row items-center gap-3.5 h-full">
                     <div className={`size-11 rounded-xl flex items-center justify-center shrink-0 ${color}`}>
                       <Icon className="size-5" />
                     </div>
@@ -370,7 +372,7 @@ export default function DashboardPage() {
                       <div className="text-xs text-muted-foreground truncate">{t(`${key}Desc`)}</div>
                     </div>
                     <ArrowRight className="size-4 text-muted-foreground shrink-0 group-hover:translate-x-0.5 transition-transform" />
-                  </div>
+                  </Card>
                 </Link>
               </AnimateIn>
             ))}

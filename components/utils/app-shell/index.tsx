@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import {
   Settings, Bell, Search,
   LogOut, Home, BookOpen,
@@ -10,6 +10,7 @@ import {
 import { useTranslations } from "next-intl"
 import { Avatar } from "@/components/utils/avatar"
 import { BrandLogo } from "@/components/utils/brand-logo"
+import { ConfirmDialog } from "@/components/utils/confirm-dialog"
 import { ThemeToggle } from "@/components/utils/themes/theme-toggle"
 import { LanguageSwitcher } from "@/components/utils/language-switcher"
 import { useProfile } from "@/hooks/utils/use-profile"
@@ -28,9 +29,14 @@ const NAV_ITEMS = [
 export function AppShell({ children }: IWithChildren) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const pathname = usePathname()
-  const tNav  = useTranslations("nav")
-  const tDash = useTranslations("dashboard")
+  const tNav    = useTranslations("nav")
+  const tDash   = useTranslations("dashboard")
+  const tCommon = useTranslations("common")
   const profile = useProfile()
+  const router  = useRouter()
+
+  /* No auth session to clear yet — signing out just returns to the login page. */
+  const signOut = () => router.push("/login")
 
   const xpPct = (studentData.xp / studentData.xpToNext) * 100
   const totalLessonsDone = activeCourses.reduce((s, c) => s + c.completedLessons, 0)
@@ -116,10 +122,19 @@ export function AppShell({ children }: IWithChildren) {
             <Settings className="size-4" />
             {tDash("settings")}
           </Link>
-          <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-muted-foreground hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/5 transition-all">
-            <LogOut className="size-4" />
-            {tDash("signOut")}
-          </button>
+          <ConfirmDialog
+            title={tCommon("signOutTitle")}
+            description={tCommon("signOutDesc")}
+            confirmLabel={tCommon("signOutConfirm")}
+            variant="danger"
+            icon={<LogOut className="size-4.5" />}
+            onConfirm={signOut}
+          >
+            <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-muted-foreground hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/5 transition-all">
+              <LogOut className="size-4" />
+              {tDash("signOut")}
+            </button>
+          </ConfirmDialog>
         </div>
       </aside>
 

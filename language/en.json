@@ -1,4 +1,11 @@
 {
+  "common": {
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "signOutTitle": "Sign out of Apsara Elearning?",
+    "signOutDesc": "Your progress and streak are saved. You'll need to sign in again to keep learning.",
+    "signOutConfirm": "Sign out"
+  },
   "nav": {
     "courses": "Courses",
     "features": "Features",
@@ -140,6 +147,8 @@
     "lessons": "{count} lessons",
     "pageTitle": "All Courses",
     "pageSubtitle": "Browse our curriculum and learn at your own pace.",
+    "loadError": "Couldn't load the course catalog. Check your connection and try again.",
+    "retry": "Retry",
     "filterAll": "All",
     "filterBeginner": "Beginner",
     "filterIntermediate": "Intermediate",

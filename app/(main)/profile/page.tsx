@@ -1,15 +1,19 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import Link from "next/link"
+import { useRouter } from "next/navigation"
 import {
   Check, Flame, Globe, KeyRound, LogOut, Minus, Moon, Plus, Smile, Sun, Target,
   Trophy, User, Zap,
 } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useTranslations } from "next-intl"
+import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
 import { AppShell } from "@/components/utils/app-shell"
 import { Avatar } from "@/components/utils/avatar"
+import { ConfirmDialog } from "@/components/utils/confirm-dialog"
 import { AnimateIn } from "@/components/utils/animations/animate-in"
 import { CountUp } from "@/components/utils/animations/count-up"
 import { GrowBar } from "@/components/utils/animations/grow-bar"
@@ -29,6 +33,8 @@ const GOAL_MAX = 14
 
 export default function ProfilePage() {
   const t = useTranslations("profile")
+  const tCommon = useTranslations("common")
+  const router = useRouter()
 
   const profile = useProfile()
   const updateProfile = useProfileStore((s) => s.updateProfile)
@@ -90,15 +96,13 @@ export default function ProfilePage() {
       <label htmlFor={key} className="text-xs font-medium text-muted-foreground mb-1.5 block">
         {t(`field${key.charAt(0).toUpperCase()}${key.slice(1)}`)}
       </label>
-      <input
+      <Input
         id={key}
         type={type}
         value={draft[key]}
         maxLength={maxLength}
         onChange={(e) => setEdits({ ...draft, [key]: e.target.value })}
-        className="w-full px-3.5 py-2.5 rounded-xl bg-background border border-border text-sm text-foreground
-                   placeholder:text-muted-foreground/60 outline-none transition-all
-                   focus:border-violet-400 dark:focus:border-violet-500/60 focus:ring-2 focus:ring-violet-500/15"
+        className="h-auto rounded-xl px-3.5 py-2.5 focus-within:border-violet-400 focus-within:ring-violet-500/15 dark:focus-within:border-violet-500/60"
       />
     </div>
   )
@@ -119,19 +123,19 @@ export default function ProfilePage() {
 
         {/* Identity hero */}
         <AnimateIn animation="fade-up" delay={0.1}>
-          <div className="card-surface rounded-2xl p-6 border border-violet-200 dark:border-violet-500/20 flex items-center gap-5">
+          <Card className="rounded-2xl p-6 border-violet-200 dark:border-violet-500/20 flex-row items-center gap-5">
             <Avatar preset={profile.avatar} size="lg" />
             <div className="min-w-0">
               <div className="text-lg font-bold text-foreground truncate">{profile.name}</div>
               <TypographyMuted className="text-xs truncate">{profile.nameKh}</TypographyMuted>
               <TypographyMuted className="text-xs truncate mt-0.5">{profile.email}</TypographyMuted>
             </div>
-          </div>
+          </Card>
         </AnimateIn>
 
         {/* Avatar picker — applies on click, like a Netflix profile */}
         <AnimateIn animation="fade-up" delay={0.13}>
-          <div className="card-surface rounded-2xl p-5">
+          <Card className="rounded-2xl p-5">
             <div className="flex items-center gap-2.5 mb-1">
               <Smile className="size-4 text-muted-foreground" />
               <TypographyH3 className="font-semibold text-foreground text-base">
@@ -172,12 +176,12 @@ export default function ProfilePage() {
                 )
               })}
             </div>
-          </div>
+          </Card>
         </AnimateIn>
 
         {/* Learning stats */}
         <AnimateIn animation="fade-up" delay={0.15}>
-          <div className="card-surface rounded-2xl p-5">
+          <Card className="rounded-2xl p-5">
             <TypographyH3 className="font-semibold text-foreground text-base mb-4">
               {t("statsTitle")}
             </TypographyH3>
@@ -210,12 +214,12 @@ export default function ProfilePage() {
             <div className="h-2 rounded-full bg-muted overflow-hidden">
               <GrowBar to={xpPct} delay={0.3} className="h-full rounded-full gradient-bg-primary" />
             </div>
-          </div>
+          </Card>
         </AnimateIn>
 
         {/* Profile information */}
         <AnimateIn animation="fade-up" delay={0.2}>
-          <div className="card-surface rounded-2xl p-5">
+          <Card className="rounded-2xl p-5">
             <div className="flex items-center gap-2.5 mb-1">
               <User className="size-4 text-muted-foreground" />
               <TypographyH3 className="font-semibold text-foreground text-base">
@@ -231,22 +235,17 @@ export default function ProfilePage() {
             </div>
 
             <div className="flex items-center gap-3 mt-5">
-              <button
-                onClick={save}
-                disabled={!dirty}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white
-                           gradient-bg-primary hover:opacity-90 transition-all btn-shine
-                           disabled:opacity-40 disabled:pointer-events-none"
-              >
+              <Button onClick={save} disabled={!dirty} className="btn-shine">
                 {t("save")}
-              </button>
+              </Button>
               {dirty && (
-                <button
+                <Button
                   onClick={() => setEdits(null)}
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  variant="ghost"
+                  className="text-muted-foreground"
                 >
                   {t("cancel")}
-                </button>
+                </Button>
               )}
               {saved && (
                 <span className="flex items-center gap-1.5 text-sm font-medium text-emerald-600 dark:text-emerald-400">
@@ -255,12 +254,12 @@ export default function ProfilePage() {
                 </span>
               )}
             </div>
-          </div>
+          </Card>
         </AnimateIn>
 
         {/* Weekly goal */}
         <AnimateIn animation="fade-up" delay={0.25}>
-          <div className="card-surface rounded-2xl p-5">
+          <Card className="rounded-2xl p-5">
             <div className="flex items-center gap-2.5 mb-1">
               <Target className="size-4 text-muted-foreground" />
               <TypographyH3 className="font-semibold text-foreground text-base">
@@ -270,39 +269,39 @@ export default function ProfilePage() {
             <TypographyMuted className="text-xs mb-4">{t("goalDesc")}</TypographyMuted>
 
             <div className="flex items-center gap-4">
-              <button
+              <Button
                 onClick={() => setGoal(profile.weeklyGoal - 1)}
                 disabled={profile.weeklyGoal <= GOAL_MIN}
                 aria-label={t("goalDecrease")}
-                className="size-9 rounded-xl border border-border flex items-center justify-center shrink-0
-                           text-muted-foreground hover:text-foreground hover:bg-muted transition-all
-                           disabled:opacity-40 disabled:pointer-events-none"
+                variant="outline"
+                size="icon"
+                className="size-9 rounded-xl"
               >
                 <Minus className="size-4" />
-              </button>
+              </Button>
 
               <div className="text-center min-w-24">
                 <div className="text-3xl font-bold gradient-text leading-none">{profile.weeklyGoal}</div>
                 <TypographyMuted className="text-[11px] mt-1">{t("goalUnit")}</TypographyMuted>
               </div>
 
-              <button
+              <Button
                 onClick={() => setGoal(profile.weeklyGoal + 1)}
                 disabled={profile.weeklyGoal >= GOAL_MAX}
                 aria-label={t("goalIncrease")}
-                className="size-9 rounded-xl border border-border flex items-center justify-center shrink-0
-                           text-muted-foreground hover:text-foreground hover:bg-muted transition-all
-                           disabled:opacity-40 disabled:pointer-events-none"
+                variant="outline"
+                size="icon"
+                className="size-9 rounded-xl"
               >
                 <Plus className="size-4" />
-              </button>
+              </Button>
             </div>
-          </div>
+          </Card>
         </AnimateIn>
 
         {/* Preferences */}
         <AnimateIn animation="fade-up" delay={0.3}>
-          <div className="card-surface rounded-2xl p-5 space-y-5">
+          <Card className="rounded-2xl p-5 space-y-5">
             <div>
               <div className="flex items-center gap-2.5 mb-1">
                 <Globe className="size-4 text-muted-foreground" />
@@ -318,17 +317,19 @@ export default function ProfilePage() {
               <span className="text-sm text-foreground">{t("language")}</span>
               <div className="flex gap-1.5 p-1 rounded-xl bg-muted shrink-0">
                 {(["en", "km"] as const).map((code) => (
-                  <button
+                  <Button
                     key={code}
                     onClick={() => setLanguage(code)}
-                    className={`px-4 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                    variant="ghost"
+                    size="sm"
+                    className={`h-auto rounded-lg px-4 py-1.5 ${
                       language === code
-                        ? "bg-background text-foreground shadow-sm"
-                        : "text-muted-foreground hover:text-foreground"
+                        ? "bg-background text-foreground shadow-sm hover:bg-background"
+                        : "text-muted-foreground"
                     }`}
                   >
                     {t(`language_${code}`)}
-                  </button>
+                  </Button>
                 ))}
               </div>
             </div>
@@ -341,27 +342,29 @@ export default function ProfilePage() {
                   { key: "light", icon: Sun,  active: hydrated &&!isDark },
                   { key: "dark",  icon: Moon, active: hydrated &&isDark  },
                 ] as const).map(({ key, icon: Icon, active }) => (
-                  <button
+                  <Button
                     key={key}
                     onClick={() => setTheme(key)}
-                    className={`flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                    variant="ghost"
+                    size="sm"
+                    className={`h-auto rounded-lg px-4 py-1.5 ${
                       active
-                        ? "bg-background text-foreground shadow-sm"
-                        : "text-muted-foreground hover:text-foreground"
+                        ? "bg-background text-foreground shadow-sm hover:bg-background"
+                        : "text-muted-foreground"
                     }`}
                   >
                     <Icon className="size-3.5" />
                     {t(`theme_${key}`)}
-                  </button>
+                  </Button>
                 ))}
               </div>
             </div>
-          </div>
+          </Card>
         </AnimateIn>
 
         {/* Account */}
         <AnimateIn animation="fade-up" delay={0.35}>
-          <div className="card-surface rounded-2xl p-5">
+          <Card className="rounded-2xl p-5">
             <div className="flex items-center gap-2.5 mb-1">
               <KeyRound className="size-4 text-muted-foreground" />
               <TypographyH3 className="font-semibold text-foreground text-base">
@@ -371,25 +374,28 @@ export default function ProfilePage() {
             <TypographyMuted className="text-xs mb-4">{t("accountDesc")}</TypographyMuted>
 
             <div className="flex flex-wrap items-center gap-3">
-              <button
-                disabled
-                title={t("changePasswordNote")}
-                className="px-4 py-2.5 rounded-xl border border-border text-sm font-medium text-muted-foreground
-                           disabled:opacity-50 disabled:pointer-events-none"
-              >
+              <Button disabled title={t("changePasswordNote")} variant="outline">
                 {t("changePassword")}
-              </button>
-              <Link href="/login">
-                <button className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium
-                                   text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10
-                                   border border-red-200 dark:border-red-500/25 transition-all">
+              </Button>
+              <ConfirmDialog
+                title={tCommon("signOutTitle")}
+                description={tCommon("signOutDesc")}
+                confirmLabel={tCommon("signOutConfirm")}
+                variant="danger"
+                icon={<LogOut className="size-4.5" />}
+                onConfirm={() => router.push("/login")}
+              >
+                <Button
+                  variant="outline"
+                  className="border-red-200 text-red-600 hover:bg-red-50 dark:border-red-500/25 dark:text-red-400 dark:hover:bg-red-500/10"
+                >
                   <LogOut className="size-4" />
                   {t("signOut")}
-                </button>
-              </Link>
+                </Button>
+              </ConfirmDialog>
             </div>
             <TypographyMuted className="text-[11px] mt-3">{t("changePasswordNote")}</TypographyMuted>
-          </div>
+          </Card>
         </AnimateIn>
 
       </div>
