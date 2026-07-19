@@ -569,6 +569,7 @@
     "startChallenge": "Start Challenge →",
     "expectedOutput": "# Expected output:",
     "noTheory": "No theory content for this lesson.",
+    "quizRequiresLogin": "This lesson has a quiz — log in to take it.",
     "noPractice": "No coding exercise for this lesson.",
     "noChallenge": "No challenge for this lesson.",
     "readTheory": "Read the theory →",

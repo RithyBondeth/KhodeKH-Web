@@ -52,7 +52,7 @@ export default function LoginPage() {
           aria-hidden
           className="pointer-events-none absolute inset-0 overflow-hidden"
         >
-          <div className="grid-pattern absolute inset-0 opacity-50 dark:opacity-30" />
+          {/* Grid comes from the auth layout's <PaperGrid />, not from here. */}
           <div className="aurora-orb aurora-blue -top-24 -left-24 size-80" />
           <div
             className="aurora-orb aurora-violet -right-16 -bottom-24 size-72"

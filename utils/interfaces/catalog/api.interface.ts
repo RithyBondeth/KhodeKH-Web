@@ -69,18 +69,29 @@ export interface IApiFaculty {
   updatedAt: string
 }
 
-/** Mirrors ModuleResponseDTO — just the fields the catalog needs. */
+/** Mirrors ModuleResponseDTO. */
 export interface IApiModule {
   id: string
   courseId: string
   title: string
+  description?: string
   order: number
 }
 
-/** Mirrors LessonResponseDTO — just the fields the catalog needs. */
+/** Mirrors LessonResponseDTO. */
 export interface IApiLesson {
   id: string
   moduleId: string
   title: string
-  order: number
+  slug: string
+  type?: "article" | "video" | "interactive"
+  content?: string
+  videoUrl?: string
+  order?: number
+  estimatedMinutes?: number
+}
+
+/** A module with its lessons attached, sorted by `order`. */
+export interface IApiModuleWithLessons extends IApiModule {
+  lessons: IApiLesson[]
 }

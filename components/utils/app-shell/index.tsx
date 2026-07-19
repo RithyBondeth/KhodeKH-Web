@@ -185,7 +185,7 @@ export function AppShell({ children }: IWithChildren) {
         </header>
 
         {/* Page content */}
-        <main className="flex-1 overflow-y-auto p-6 bg-muted/20">
+        <main className="flex-1 overflow-y-auto p-6 study-surface">
           {children}
         </main>
       </div>

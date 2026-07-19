@@ -48,9 +48,8 @@ export default function DashboardPage() {
       <div className="max-w-4xl mx-auto space-y-6">
 
         {/* Resume banner */}
-        <AnimateIn animation="flip-up" delay={0.05}>
+        <AnimateIn animation="fade-up" delay={0.05}>
           <div className="relative rounded-2xl overflow-hidden p-6 card-surface border border-violet-200 dark:border-violet-500/20">
-            <div className="absolute -right-16 -top-16 size-56 rounded-full bg-violet-300/20 dark:bg-violet-600/15 blur-3xl" />
             <div className="relative flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="min-w-0">
                 <TypographyMuted className="text-xs mb-1">{t("greeting")}</TypographyMuted>
@@ -82,7 +81,7 @@ export default function DashboardPage() {
 
         {/* Progress stats */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <AnimateIn animation="fade-right" delay={0.1}>
+          <AnimateIn animation="fade-up" delay={0.1}>
             <Card className="rounded-2xl p-5">
               <div className="flex items-center justify-between mb-3">
                 <span className="text-xs text-muted-foreground">{t("lessonsCompleted")}</span>
@@ -99,7 +98,7 @@ export default function DashboardPage() {
             </Card>
           </AnimateIn>
 
-          <AnimateIn animation="fade-right" delay={0.15}>
+          <AnimateIn animation="fade-up" delay={0.15}>
             <Card className="rounded-2xl p-5">
               <div className="flex items-center justify-between mb-3">
                 <span className="text-xs text-muted-foreground">{t("coursesActive")}</span>
@@ -114,7 +113,7 @@ export default function DashboardPage() {
             </Card>
           </AnimateIn>
 
-          <AnimateIn animation="fade-left" delay={0.15}>
+          <AnimateIn animation="fade-up" delay={0.18}>
             <Card className="rounded-2xl p-5">
               <div className="flex items-center justify-between mb-3">
                 <span className="text-xs text-muted-foreground">{t("dayStreak")}</span>
@@ -129,7 +128,7 @@ export default function DashboardPage() {
             </Card>
           </AnimateIn>
 
-          <AnimateIn animation="fade-left" delay={0.1}>
+          <AnimateIn animation="fade-up" delay={0.22}>
             <Card className="rounded-2xl p-5">
               <div className="flex items-center justify-between mb-3">
                 <span className="text-xs text-muted-foreground">{t("totalXp")}</span>
@@ -151,7 +150,7 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
 
           {/* This week */}
-          <AnimateIn animation="fade-right" delay={0.2}>
+          <AnimateIn animation="fade-up" delay={0.2}>
             <Card className="rounded-2xl p-5 h-full flex flex-col">
               <div className="flex items-center justify-between mb-4">
                 <TypographyH3 className="font-semibold text-foreground text-base">{t("thisWeek")}</TypographyH3>
@@ -217,7 +216,7 @@ export default function DashboardPage() {
           </AnimateIn>
 
           {/* Achievements */}
-          <AnimateIn animation="fade-left" delay={0.2}>
+          <AnimateIn animation="fade-up" delay={0.2}>
             <Card className="rounded-2xl p-5 h-full">
               <div className="flex items-center justify-between mb-4">
                 <TypographyH3 className="font-semibold text-foreground text-base">{t("achievements")}</TypographyH3>
@@ -291,7 +290,7 @@ export default function DashboardPage() {
               ? "from-violet-500 to-violet-400"
               : "from-cyan-500 to-cyan-400"
             return (
-              <AnimateIn key={course.id} animation={i % 2 === 0 ? "fade-right" : "fade-left"} delay={0.3 + i * 0.1}>
+              <AnimateIn key={course.id} animation="fade-up" delay={0.3 + i * 0.1}>
                 <Card className="rounded-2xl p-5 group hover:border-violet-200 dark:hover:border-violet-500/25 transition-all">
                   <div className="flex items-start gap-4">
                     <div className="size-11 rounded-xl bg-muted flex items-center justify-center shrink-0 transition-transform duration-300 motion-safe:group-hover:scale-110 motion-safe:group-hover:rotate-6">

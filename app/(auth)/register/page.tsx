@@ -71,7 +71,7 @@ export default function RegisterPage() {
       >
         {/* Soft ambient background behind the form */}
         <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div className="grid-pattern absolute inset-0 opacity-50 dark:opacity-30" />
+          {/* Grid comes from the auth layout's <PaperGrid />, not from here. */}
           <div className="aurora-orb aurora-violet size-80 -top-24 -right-24" />
           <div className="aurora-orb aurora-cyan size-72 -bottom-24 -left-16" style={{ animationDelay: "-14s" }} />
         </div>

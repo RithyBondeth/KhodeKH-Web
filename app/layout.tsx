@@ -6,7 +6,6 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/utils/themes/theme-provider"
 import { LanguageProviderClient } from "@/components/utils/languages/language-provider-client"
 import { cn } from "@/lib/utils"
-import { DotPattern } from "@/components/utils/mesh-gradient"
 import { Toaster } from "@/components/ui/sonner"
 import { TooltipProvider } from "@/components/ui/tooltip"
 
@@ -66,7 +65,6 @@ export default async function RootLayout({
       <body>
         <ThemeProvider defaultTheme="dark">
           <TooltipProvider>
-            <DotPattern />
             <LanguageProviderClient initialLang={initialLang}>
               {children}
             </LanguageProviderClient>

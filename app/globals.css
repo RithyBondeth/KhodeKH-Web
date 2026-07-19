@@ -290,6 +290,37 @@ html {
         border-color: var(--ring);
     }
 
+    /* ── Study surface — the reading canvas behind lessons and the dashboard.
+       Deliberately flat and opaque: no dots, no gradients, nothing competing
+       with the content a student is trying to concentrate on. Sits one step
+       away from --card so cards read as raised in both themes. ── */
+    .study-surface {
+        background: #f7f6f3;
+    }
+    .dark .study-surface {
+        background: #191919;
+    }
+
+    /* Khmer stacks coeng (subscript consonants) and below-base vowels under the
+       baseline, so its ink runs ~1.34x the font size — a display `leading-[1.1]`
+       tuned for Latin cannot contain it. Use this on any heading that may hold
+       Khmer; it is the minimum safe leading plus headroom. Latin reads slightly
+       looser at display sizes, which is the correct trade for a bilingual UI. */
+    .leading-khmer {
+        line-height: 1.4;
+    }
+
+    /* `background-clip: text` paints the glyphs from the element's background,
+       which stops at the box edge. Any glyph hanging below that box — Khmer
+       coeng and below-base vowels, Latin descenders at tight leading — gets no
+       paint and reads as a hard horizontal cut. Extend the paint box downward
+       and pull the layout back by the same amount so nothing shifts. */
+    .gradient-text,
+    .gradient-text-animated {
+        padding-bottom: 0.18em;
+        margin-bottom: -0.18em;
+    }
+
     .gradient-text {
         background: linear-gradient(135deg, #2383e2 0%, #4a9eff 100%);
         -webkit-background-clip: text;
@@ -315,15 +346,6 @@ html {
     }
     .dark .bg-spotlight {
         background: radial-gradient(ellipse 70% 55% at 50% 35%, rgba(74, 158, 255, 0.06) 0%, transparent 60%);
-    }
-
-    .dot-pattern {
-        background-image: radial-gradient(circle, currentColor 0.8px, transparent 0.8px);
-        background-size: 20px 20px;
-        color: var(--muted-foreground);
-    }
-    .dark .dot-pattern {
-        color: rgba(255, 255, 255, 0.12);
     }
 
     .animate-scale-in {
@@ -369,18 +391,46 @@ html {
     .aurora-blue   { background: rgba(35, 131, 226, 0.16); }
     .aurora-violet { background: rgba(124, 92, 255, 0.14); }
     .aurora-cyan   { background: rgba(34, 201, 221, 0.12); }
+    /* Warm accent — an all-cool palette reads technical; the amber is what
+       keeps the marketing pages feeling like a school rather than a console. */
+    .aurora-amber  { background: rgba(245, 166, 35, 0.16); }
     .dark .aurora-blue   { background: rgba(74, 158, 255, 0.14); }
     .dark .aurora-violet { background: rgba(139, 108, 255, 0.13); }
     .dark .aurora-cyan   { background: rgba(45, 212, 231, 0.10); }
+    .dark .aurora-amber  { background: rgba(251, 191, 36, 0.10); }
 
-    /* ── Grid pattern with radial mask ── */
+    /* ── Graph-paper grid ──────────────────────────────────────────────
+       Styled as a squared exercise book, not a blueprint: small 24px cells
+       with a heavier rule every 5th line, in a warm low-contrast ink. The
+       cell size and warmth are what separate "notebook" from "dashboard" —
+       a large cool 56px grid reads as developer tooling.
+
+       Texture only, deliberately unmasked so it composes: pair it with
+       .grid-mask-radial (vignette, for full-bleed sections) or
+       .grid-mask-top (fades down the page, for long scrolling surfaces).
+       Override --grid-line to re-ink it on a colored panel. ── */
     .grid-pattern {
+        --grid-line: rgba(55, 53, 45, 0.07);
+        --grid-line-major: rgba(55, 53, 45, 0.11);
         background-image:
-            linear-gradient(to right, var(--border) 1px, transparent 1px),
-            linear-gradient(to bottom, var(--border) 1px, transparent 1px);
-        background-size: 56px 56px;
+            linear-gradient(to right, var(--grid-line-major) 1px, transparent 1px),
+            linear-gradient(to bottom, var(--grid-line-major) 1px, transparent 1px),
+            linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+            linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+        background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+    }
+    .dark .grid-pattern {
+        --grid-line: rgba(255, 255, 255, 0.05);
+        --grid-line-major: rgba(255, 255, 255, 0.08);
+    }
+
+    .grid-mask-radial {
         mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 20%, transparent 75%);
         -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 20%, transparent 75%);
+    }
+    .grid-mask-top {
+        mask-image: linear-gradient(to bottom, black 0%, black 20%, transparent 60%);
+        -webkit-mask-image: linear-gradient(to bottom, black 0%, black 20%, transparent 60%);
     }
 
     /* ── Infinite marquee ── */
