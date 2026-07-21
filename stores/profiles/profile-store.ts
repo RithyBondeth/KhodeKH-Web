@@ -4,6 +4,8 @@ import { create } from "zustand"
 import { persist } from "zustand/middleware"
 import { studentData } from "@/utils/constants/dashboard.constant"
 import type { TAvatarPreset } from "@/utils/constants/avatar.constant"
+import { STORE_PERSIST_KEYS } from "@/stores/shared/persist-keys"
+import { safePersistStorage } from "@/stores/shared/persist-storage"
 
 /** The fields a student can edit. Level, XP and streak are earned, not set. */
 export interface IProfileFields {
@@ -39,6 +41,6 @@ export const useProfileStore = create<IProfileState>()(
       updateProfile: (patch) => set(patch),
       resetProfile: () => set(DEFAULTS),
     }),
-    { name: "apsara-elearning-profile" }
+    { name: STORE_PERSIST_KEYS.profile, storage: safePersistStorage }
   )
 )
