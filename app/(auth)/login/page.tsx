@@ -1,21 +1,40 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { Suspense, useEffect, useRef, useState } from "react"
 import Link from "next/link"
+import { useRouter, useSearchParams } from "next/navigation"
 import { useTranslations } from "next-intl"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { toast } from "sonner"
 import gsap from "gsap"
-import { EyeIcon, EyeClosedIcon, LockIcon, MailIcon, Globe } from "lucide-react"
+import { EyeIcon, EyeClosedIcon, LockIcon, MailIcon, Globe, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { AuthShowcase } from "@/components/auth/auth-showcase"
 import { BrandLogo } from "@/components/utils/brand-logo"
 import { TypographyH3 } from "@/components/utils/typography/typography-h3"
 import { TypographyMuted } from "@/components/utils/typography/typography-muted"
+import { loginRequest, resendVerificationRequest } from "@/lib/auth/client"
+import { loginSchema, type TLoginInput } from "@/lib/validation/auth"
 
-export default function LoginPage() {
+function LoginInner() {
   const [passwordVisible, setPasswordVisible] = useState(false)
+  /* Set when the gateway rejects an unverified account — swaps the form error
+     for a resend prompt keyed off the email just attempted. */
+  const [unverified, setUnverified] = useState(false)
   const t = useTranslations("auth")
+  const tv = useTranslations("auth.validation")
+  const router = useRouter()
+  const searchParams = useSearchParams()
   const formRef = useRef<HTMLDivElement>(null)
+
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { errors, isSubmitting },
+  } = useForm<TLoginInput>({ resolver: zodResolver(loginSchema) })
 
   /* Entrance timeline — logo pops, then the form cascades up */
   useEffect(() => {
@@ -39,6 +58,31 @@ export default function LoginPage() {
     }, root)
     return () => ctx.revert()
   }, [])
+
+  const onSubmit = async (values: TLoginInput) => {
+    setUnverified(false)
+    const result = await loginRequest(values)
+
+    if (result.ok) {
+      /* middleware bounces authed users off /login, so a full navigation to the
+         intended destination re-runs it with the fresh cookie in place. */
+      const next = searchParams.get("next")
+      router.replace(next && next.startsWith("/") ? next : "/dashboard")
+      return
+    }
+
+    if (result.emailNotVerified) {
+      setUnverified(true)
+      return
+    }
+
+    toast.error(result.message || t("loginFailed"))
+  }
+
+  const resend = async () => {
+    await resendVerificationRequest(getValues("email"))
+    toast.success(t("resent"))
+  }
 
   return (
     <div className="flex h-screen w-screen overflow-hidden">
@@ -64,7 +108,10 @@ export default function LoginPage() {
           <BrandLogo size="lg" />
         </div>
 
-        <div className="relative w-full max-w-sm space-y-6">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="relative w-full max-w-sm space-y-6"
+        >
           <div data-auth-field className="text-center">
             <TypographyH3 className="text-2xl font-bold">
               {t("loginTitle")}
@@ -77,7 +124,10 @@ export default function LoginPage() {
                 prefix={<MailIcon />}
                 placeholder={t("emailPlaceholder")}
                 type="email"
+                autoComplete="email"
+                validationMessage={errors.email?.message ? tv(errors.email.message) : undefined}
                 className="bg-background/70 backdrop-blur-sm transition-shadow duration-300 focus-within:shadow-[0_0_24px_-8px_rgba(35,131,226,0.5)]"
+                {...register("email")}
               />
             </div>
             <div data-auth-field>
@@ -85,7 +135,10 @@ export default function LoginPage() {
                 prefix={<LockIcon />}
                 placeholder={t("passwordPlaceholder")}
                 type={passwordVisible ? "text" : "password"}
+                autoComplete="current-password"
+                validationMessage={errors.password?.message ? tv(errors.password.message) : undefined}
                 className="bg-background/70 backdrop-blur-sm transition-shadow duration-300 focus-within:shadow-[0_0_24px_-8px_rgba(35,131,226,0.5)]"
+                {...register("password")}
                 suffix={
                   passwordVisible ? (
                     <EyeClosedIcon
@@ -101,9 +154,39 @@ export default function LoginPage() {
                 }
               />
             </div>
+
+            {unverified && (
+              <div
+                data-auth-field
+                className="rounded-xl border border-amber-200 bg-amber-50 px-3 py-2.5 text-xs dark:border-amber-500/20 dark:bg-amber-500/10"
+              >
+                <p className="text-amber-700 dark:text-amber-300">
+                  {t("emailNotVerified")}
+                </p>
+                <button
+                  type="button"
+                  onClick={resend}
+                  className="mt-1 font-semibold text-amber-800 underline hover:no-underline dark:text-amber-200"
+                >
+                  {t("resendVerification")}
+                </button>
+              </div>
+            )}
+
             <div data-auth-field>
-              <Button className="btn-shine w-full transition-all hover:-translate-y-0.5 hover:shadow-[0_0_28px_-6px_rgba(35,131,226,0.6)]">
-                {t("loginButton")}
+              <Button
+                type="submit"
+                disabled={isSubmitting}
+                className="btn-shine w-full transition-all hover:-translate-y-0.5 hover:shadow-[0_0_28px_-6px_rgba(35,131,226,0.6)]"
+              >
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="animate-spin" />
+                    {t("signingIn")}
+                  </>
+                ) : (
+                  t("loginButton")
+                )}
               </Button>
             </div>
           </div>
@@ -119,7 +202,7 @@ export default function LoginPage() {
               </Link>
             </TypographyMuted>
           </div>
-        </div>
+        </form>
       </div>
 
       {/* ── Decorative panel ── */}
@@ -142,5 +225,13 @@ export default function LoginPage() {
         </div>
       </AuthShowcase>
     </div>
+  )
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginInner />
+    </Suspense>
   )
 }
