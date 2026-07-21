@@ -14,12 +14,14 @@ import { AnimateIn } from "@/components/utils/animations/animate-in"
 import { CountUp } from "@/components/utils/animations/count-up"
 import { GrowBar } from "@/components/utils/animations/grow-bar"
 import { useProfile } from "@/hooks/utils/use-profile"
+import { useProfileStats } from "@/hooks/utils/use-profile-stats"
+import { levelFromXp } from "@/utils/functions/format"
 import { TypographyH1 } from "@/components/utils/typography/typography-h1"
 import { TypographyH3 } from "@/components/utils/typography/typography-h3"
 import { TypographyH4 } from "@/components/utils/typography/typography-h4"
 import { TypographyMuted } from "@/components/utils/typography/typography-muted"
 import {
-  studentData, activeCourses, weeklyActivity, weeklyDone, badges,
+  activeCourses, weeklyActivity, weeklyDone, badges,
 } from "@/utils/constants/dashboard.constant"
 
 const COURSE_ICONS: Record<string, React.ElementType> = {
@@ -35,6 +37,8 @@ const BADGE_ICONS: Record<string, React.ElementType> = {
 export default function DashboardPage() {
   const t = useTranslations("dashboard")
   const profile = useProfile()
+  const stats = useProfileStats()
+  const level = levelFromXp(stats.xp)
 
   const totalLessonsDone = activeCourses.reduce((s, c) => s + c.completedLessons, 0)
   const resume           = activeCourses[0]
@@ -122,7 +126,7 @@ export default function DashboardPage() {
                 </div>
               </div>
               <div className="text-3xl font-bold text-foreground">
-                <CountUp to={studentData.streak} delay={0.6} duration={1.0} ease="power3.out" />
+                <CountUp to={stats.streak} delay={0.6} duration={1.0} ease="power3.out" />
               </div>
               <TypographyMuted className="text-xs mt-1">{t("streakHint")}</TypographyMuted>
             </Card>
@@ -137,10 +141,10 @@ export default function DashboardPage() {
                 </div>
               </div>
               <div className="text-3xl font-bold text-foreground">
-                <CountUp to={studentData.xp} delay={0.7} duration={1.4} ease="power3.out" locale />
+                <CountUp to={stats.xp} delay={0.7} duration={1.4} ease="power3.out" locale />
               </div>
               <TypographyMuted className="text-xs mt-1">
-                {t("levelLabel", { level: studentData.level })}
+                {t("levelLabel", { level })}
               </TypographyMuted>
             </Card>
           </AnimateIn>
@@ -209,7 +213,7 @@ export default function DashboardPage() {
                 <TypographyMuted className="text-xs">
                   {todayDone > 0
                     ? t("streakSafe")
-                    : t("keepStreak", { days: studentData.streak })}
+                    : t("keepStreak", { days: stats.streak })}
                 </TypographyMuted>
               </div>
             </Card>

@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
 import {
   Settings, Bell, Search,
   LogOut, Home, BookOpen,
@@ -14,7 +14,11 @@ import { ConfirmDialog } from "@/components/utils/confirm-dialog"
 import { ThemeToggle } from "@/components/utils/themes/theme-toggle"
 import { LanguageSwitcher } from "@/components/utils/language-switcher"
 import { useProfile } from "@/hooks/utils/use-profile"
-import { studentData, activeCourses } from "@/utils/constants/dashboard.constant"
+import { useProfileStats } from "@/hooks/utils/use-profile-stats"
+import { useHydrateUserStats } from "@/hooks/utils/use-hydrate-user-stats"
+import { useSignOut } from "@/hooks/utils/use-sign-out"
+import { activeCourses } from "@/utils/constants/dashboard.constant"
+import { levelFromXp, xpForNextLevel } from "@/utils/functions/format"
 import type { IWithChildren } from "@/utils/interfaces"
 
 /* ── Nav items ────────────────────────────────────────────────────────── */
@@ -33,12 +37,13 @@ export function AppShell({ children }: IWithChildren) {
   const tDash   = useTranslations("dashboard")
   const tCommon = useTranslations("common")
   const profile = useProfile()
-  const router  = useRouter()
+  const stats   = useProfileStats()
+  const signOut = useSignOut()
 
-  /* No auth session to clear yet — signing out just returns to the login page. */
-  const signOut = () => router.push("/login")
+  useHydrateUserStats()
 
-  const xpPct = (studentData.xp / studentData.xpToNext) * 100
+  const level = levelFromXp(stats.xp)
+  const xpPct = (stats.xp / xpForNextLevel(stats.xp)) * 100
   const totalLessonsDone = activeCourses.reduce((s, c) => s + c.completedLessons, 0)
 
   /* First matching nav key wins — prevents Playground + AI Mentor both lighting up on /learn */
@@ -76,7 +81,7 @@ export function AppShell({ children }: IWithChildren) {
             </div>
           </Link>
           <div className="flex items-center justify-between text-xs mb-1.5">
-            <span className="text-muted-foreground">{tDash("levelLabel", { level: studentData.level })}</span>
+            <span className="text-muted-foreground">{tDash("levelLabel", { level })}</span>
             <span className="text-violet-600 dark:text-violet-400 font-semibold text-xs">
               {tDash("lessonsCount", { count: totalLessonsDone })}
             </span>

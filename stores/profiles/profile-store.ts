@@ -18,12 +18,19 @@ export interface IProfileFields {
   weeklyGoal: number
 }
 
-interface IProfileState extends IProfileFields {
-  updateProfile: (patch: Partial<IProfileFields>) => void
-  resetProfile: () => void
+/** Earned stats — read from `GET /user/me`, never set through the edit form. */
+export interface IProfileStats {
+  xp: number
+  streak: number
 }
 
-/** `studentData` seeds the store — it is the account's server-side state today. */
+interface IProfileState extends IProfileFields, IProfileStats {
+  updateProfile: (patch: Partial<IProfileFields>) => void
+  resetProfile: () => void
+  setStats: (stats: IProfileStats) => void
+}
+
+/** `studentData` seeds the store until profile editing saves to the API too. */
 const DEFAULTS: IProfileFields = {
   name: studentData.name,
   nameKh: studentData.nameKh,
@@ -32,14 +39,22 @@ const DEFAULTS: IProfileFields = {
   weeklyGoal: studentData.weeklyGoal,
 }
 
+/** Placeholder shown until the first `setStats` call resolves. */
+const STATS_DEFAULTS: IProfileStats = {
+  xp: studentData.xp,
+  streak: studentData.streak,
+}
+
 export const PROFILE_DEFAULTS = DEFAULTS
 
 export const useProfileStore = create<IProfileState>()(
   persist(
     (set) => ({
       ...DEFAULTS,
+      ...STATS_DEFAULTS,
       updateProfile: (patch) => set(patch),
       resetProfile: () => set(DEFAULTS),
+      setStats: (stats) => set(stats),
     }),
     { name: STORE_PERSIST_KEYS.profile, storage: safePersistStorage }
   )

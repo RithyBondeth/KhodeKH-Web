@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
 import {
   Check, Flame, Globe, KeyRound, LogOut, Minus, Moon, Plus, Smile, Sun, Target,
   Trophy, User, Zap,
@@ -21,11 +20,13 @@ import { TypographyH2 } from "@/components/utils/typography/typography-h2"
 import { TypographyH3 } from "@/components/utils/typography/typography-h3"
 import { TypographyMuted } from "@/components/utils/typography/typography-muted"
 import { useProfile } from "@/hooks/utils/use-profile"
+import { useProfileStats } from "@/hooks/utils/use-profile-stats"
 import { useHydrated } from "@/hooks/utils/use-hydrated"
 import { useProfileStore } from "@/stores/profiles/profile-store"
 import type { IProfileFields } from "@/stores/profiles/profile-store"
 import { useLanguageStore } from "@/stores/languages/language-store"
-import { studentData } from "@/utils/constants/dashboard.constant"
+import { useSignOut } from "@/hooks/utils/use-sign-out"
+import { levelFromXp, xpForNextLevel } from "@/utils/functions/format"
 import { AVATAR_PRESETS, toAvatarPreset } from "@/utils/constants/avatar.constant"
 
 const GOAL_MIN = 1
@@ -34,9 +35,10 @@ const GOAL_MAX = 14
 export default function ProfilePage() {
   const t = useTranslations("profile")
   const tCommon = useTranslations("common")
-  const router = useRouter()
+  const signOut = useSignOut()
 
   const profile = useProfile()
+  const earnedStats = useProfileStats()
   const updateProfile = useProfileStore((s) => s.updateProfile)
 
   const { language, setLanguage } = useLanguageStore()
@@ -74,7 +76,9 @@ export default function ProfilePage() {
   const setGoal = (n: number) =>
     updateProfile({ weeklyGoal: Math.min(GOAL_MAX, Math.max(GOAL_MIN, n)) })
 
-  const xpPct = Math.round((studentData.xp / studentData.xpToNext) * 100)
+  const level = levelFromXp(earnedStats.xp)
+  const xpNext = xpForNextLevel(earnedStats.xp)
+  const xpPct = Math.round((earnedStats.xp / xpNext) * 100)
   const isDark = resolvedTheme === "dark"
 
   /* Resolve through the same fallback the tile renders with, so an account
@@ -82,9 +86,9 @@ export default function ProfilePage() {
   const currentAvatar = toAvatarPreset(profile.avatar)
 
   const stats = [
-    { icon: Trophy, label: t("statLevel"),  value: studentData.level,  color: "bg-violet-100 dark:bg-violet-500/15 text-violet-600 dark:text-violet-400" },
-    { icon: Zap,    label: t("statXp"),     value: studentData.xp,     color: "bg-emerald-100 dark:bg-emerald-500/15 text-emerald-600 dark:text-emerald-400", locale: true },
-    { icon: Flame,  label: t("statStreak"), value: studentData.streak, color: "bg-amber-100 dark:bg-amber-500/15 text-amber-600 dark:text-amber-400" },
+    { icon: Trophy, label: t("statLevel"),  value: level,             color: "bg-violet-100 dark:bg-violet-500/15 text-violet-600 dark:text-violet-400" },
+    { icon: Zap,    label: t("statXp"),     value: earnedStats.xp,     color: "bg-emerald-100 dark:bg-emerald-500/15 text-emerald-600 dark:text-emerald-400", locale: true },
+    { icon: Flame,  label: t("statStreak"), value: earnedStats.streak, color: "bg-amber-100 dark:bg-amber-500/15 text-amber-600 dark:text-amber-400" },
   ]
 
   const field = (
@@ -205,10 +209,10 @@ export default function ProfilePage() {
             {/* XP toward the next level */}
             <div className="flex items-center justify-between text-xs mb-1.5">
               <span className="text-muted-foreground">
-                {t("xpProgress", { level: studentData.level + 1 })}
+                {t("xpProgress", { level: level + 1 })}
               </span>
               <span className="font-semibold text-foreground">
-                {studentData.xp.toLocaleString()} / {studentData.xpToNext.toLocaleString()}
+                {earnedStats.xp.toLocaleString()} / {xpNext.toLocaleString()}
               </span>
             </div>
             <div className="h-2 rounded-full bg-muted overflow-hidden">
@@ -383,7 +387,7 @@ export default function ProfilePage() {
                 confirmLabel={tCommon("signOutConfirm")}
                 variant="danger"
                 icon={<LogOut className="size-4.5" />}
-                onConfirm={() => router.push("/login")}
+                onConfirm={signOut}
               >
                 <Button
                   variant="outline"
