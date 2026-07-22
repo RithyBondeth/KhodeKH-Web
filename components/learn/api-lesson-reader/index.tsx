@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useState } from "react"
 import Link from "next/link"
-import ReactMarkdown from "react-markdown"
 import {
   ArrowLeft, BookOpen, CheckCircle2, ChevronDown, ChevronLeft, ChevronRight,
   Circle, Sparkles, X,
@@ -20,6 +19,7 @@ import { getCourseBySlug, getCourseStructure } from "@/lib/api/catalog"
 import { checkEnrollment } from "@/lib/api/enrollment"
 import { getMyLessonProgress, markLessonComplete } from "@/lib/api/lesson-progress"
 import { QuizRunner } from "@/components/learn/quiz-runner"
+import { LessonContent } from "@/components/learn/lesson-content"
 import type {
   IApiCourse, IApiLesson, IApiModuleWithLessons,
 } from "@/utils/interfaces/catalog/api.interface"
@@ -290,26 +290,7 @@ export function ApiLessonReader({ slug, initialLessonSlug }: ApiLessonReaderProp
             </AnimateIn>
 
             {currentLesson.content ? (
-              <div className="lesson-prose space-y-4 text-[15px] leading-7 text-foreground">
-                <ReactMarkdown
-                  components={{
-                    h1: ({ children }) => <h2 className="mt-8 mb-2 text-xl font-bold text-foreground leading-khmer">{children}</h2>,
-                    h2: ({ children }) => <h3 className="mt-7 mb-2 text-lg font-bold text-foreground leading-khmer">{children}</h3>,
-                    h3: ({ children }) => <h4 className="mt-5 mb-1.5 text-base font-semibold text-foreground leading-khmer">{children}</h4>,
-                    p:  ({ children }) => <p className="text-[15px] leading-7 text-muted-foreground">{children}</p>,
-                    ul: ({ children }) => <ul className="list-disc space-y-2 pl-5 text-[15px] leading-7 text-muted-foreground marker:text-violet-400">{children}</ul>,
-                    ol: ({ children }) => <ol className="list-decimal space-y-2 pl-5 text-[15px] leading-7 text-muted-foreground marker:text-violet-400">{children}</ol>,
-                    strong: ({ children }) => <strong className="font-semibold text-foreground">{children}</strong>,
-                    blockquote: ({ children }) => (
-                      <blockquote className="border-l-2 border-violet-300 pl-4 text-[15px] leading-7 text-muted-foreground dark:border-violet-500/40">
-                        {children}
-                      </blockquote>
-                    ),
-                  }}
-                >
-                  {currentLesson.content}
-                </ReactMarkdown>
-              </div>
+              <LessonContent content={currentLesson.content} />
             ) : (
               <div className="flex h-48 items-center justify-center text-sm text-muted-foreground">
                 {t("noTheory")}
