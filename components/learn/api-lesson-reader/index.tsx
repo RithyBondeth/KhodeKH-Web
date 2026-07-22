@@ -5,7 +5,7 @@ import Link from "next/link"
 import ReactMarkdown from "react-markdown"
 import {
   ArrowLeft, BookOpen, CheckCircle2, ChevronDown, ChevronLeft, ChevronRight,
-  Circle, Lock, Sparkles, X,
+  Circle, Sparkles, X,
 } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -19,6 +19,7 @@ import { useProfileStore } from "@/stores/profiles/profile-store"
 import { getCourseBySlug, getCourseStructure } from "@/lib/api/catalog"
 import { checkEnrollment } from "@/lib/api/enrollment"
 import { getMyLessonProgress, markLessonComplete } from "@/lib/api/lesson-progress"
+import { QuizRunner } from "@/components/learn/quiz-runner"
 import type {
   IApiCourse, IApiLesson, IApiModuleWithLessons,
 } from "@/utils/interfaces/catalog/api.interface"
@@ -315,13 +316,9 @@ export function ApiLessonReader({ slug, initialLessonSlug }: ApiLessonReaderProp
               </div>
             )}
 
-            {/* Quiz — deferred until login/auth is wired up; the read API
-                requires a JWT (GET /quiz/lesson/:lessonId), so we can't
-                fetch even a read-only preview anonymously yet. */}
-            <div className="mt-8 flex items-center gap-3 rounded-2xl border border-dashed border-border px-5 py-4 text-muted-foreground select-none">
-              <Lock className="size-4 shrink-0" />
-              <span className="text-sm">{t("quizRequiresLogin")}</span>
-            </div>
+            {/* Practice quiz — /learn is auth-gated, so the student is signed
+                in; the runner shows nothing when a lesson has no quiz. */}
+            <QuizRunner lessonId={currentLesson.id} />
 
             {/* Completion — enrolled students track progress; others get a nudge */}
             <div className="mt-6">

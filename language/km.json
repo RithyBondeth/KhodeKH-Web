@@ -607,6 +607,25 @@
     "notReadyDesc": "យើងកំពុងសរសេរមាតិកាសម្រាប់មេរៀននេះ។ គ្រោងមេរៀនរួចរាល់ហើយ — សូមត្រឡប់មកវិញឆាប់ៗ។",
     "tryPython": "សាកល្បង Python ជំនួស"
   },
+  "quiz": {
+    "practiceQuiz": "លំហាត់សាកល្បង",
+    "earnXp": "ទទួលបាន {xp} XP ពេលជាប់លើកដំបូង",
+    "start": "ចាប់ផ្តើមធ្វើលំហាត់",
+    "true": "ពិត",
+    "false": "មិនពិត",
+    "numericPlaceholder": "បញ្ចូលលេខ",
+    "textPlaceholder": "វាយចម្លើយរបស់អ្នក",
+    "answeredOf": "បានឆ្លើយ {done} ក្នុងចំណោម {total}",
+    "submit": "ដាក់ស្នើចម្លើយ",
+    "error": "មានបញ្ហាកើតឡើង សូមព្យាយាមម្តងទៀត។",
+    "passTitle": "ល្អណាស់!",
+    "failTitle": "បន្តអនុវត្តទៀត",
+    "correctCount": "ត្រឹមត្រូវ {correct} ក្នុងចំណោម {total}",
+    "xpEarned": "+{xp} XP",
+    "yourAnswer": "ចម្លើយរបស់អ្នក",
+    "correctAnswer": "ចម្លើយត្រឹមត្រូវ",
+    "tryAgain": "ព្យាយាមម្តងទៀត"
+  },
   "auth": {
     "loginTitle": "ចូលគណនីរបស់អ្នក",
     "emailPlaceholder": "បញ្ចូលអ៊ីម៉ែលរបស់អ្នក...",

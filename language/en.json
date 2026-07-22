@@ -607,6 +607,25 @@
     "notReadyDesc": "We're still writing the content for this lesson. The outline is final — check back soon.",
     "tryPython": "Try Python instead"
   },
+  "quiz": {
+    "practiceQuiz": "Practice quiz",
+    "earnXp": "Earn {xp} XP on your first pass",
+    "start": "Start practice",
+    "true": "True",
+    "false": "False",
+    "numericPlaceholder": "Enter a number",
+    "textPlaceholder": "Type your answer",
+    "answeredOf": "{done} of {total} answered",
+    "submit": "Submit answers",
+    "error": "Something went wrong. Please try again.",
+    "passTitle": "Great work!",
+    "failTitle": "Keep practicing",
+    "correctCount": "{correct} of {total} correct",
+    "xpEarned": "+{xp} XP",
+    "yourAnswer": "Your answer",
+    "correctAnswer": "Correct answer",
+    "tryAgain": "Try again"
+  },
   "auth": {
     "loginTitle": "Login to Your Account",
     "emailPlaceholder": "Enter your email...",
