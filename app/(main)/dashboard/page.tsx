@@ -3,8 +3,8 @@
 import Link from "next/link"
 import {
   ChevronRight, BookOpen, Play, Clock, ArrowRight, CheckCircle2,
-  Code2, Flame, School, Sparkles, Zap,
-  Footprints, Medal, Languages, Trophy, Lock,
+  Code2, Crown, Flame, School, Sparkles, Star, Zap,
+  Medal, Trophy, Lock,
 } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { Button } from "@/components/ui/button"
@@ -17,17 +17,19 @@ import { GrowBar } from "@/components/utils/animations/grow-bar"
 import { useProfile } from "@/hooks/utils/use-profile"
 import { useProfileStats } from "@/hooks/utils/use-profile-stats"
 import { useMyCourses } from "@/hooks/utils/use-my-courses"
+import { useBadges } from "@/hooks/utils/use-badges"
 import { levelFromXp } from "@/utils/functions/format"
 import { TypographyH1 } from "@/components/utils/typography/typography-h1"
 import { TypographyH3 } from "@/components/utils/typography/typography-h3"
 import { TypographyH4 } from "@/components/utils/typography/typography-h4"
 import { TypographyMuted } from "@/components/utils/typography/typography-muted"
 import {
-  weeklyActivity, weeklyDone, badges,
+  weeklyActivity, weeklyDone,
 } from "@/utils/constants/dashboard.constant"
 
+/** Keys match the lucide slugs seeded on the badges' `icon` column. */
 const BADGE_ICONS: Record<string, React.ElementType> = {
-  Footprints, Medal, Languages, Flame, Trophy, Zap,
+  trophy: Trophy, zap: Zap, star: Star, flame: Flame, medal: Medal, crown: Crown,
 }
 
 export default function DashboardPage() {
@@ -40,6 +42,10 @@ export default function DashboardPage() {
   const myCourses = useMyCourses()
   const courses   = myCourses ?? []
   const resume    = courses[0]
+
+  /* Real badge catalog + earned state; null while loading. */
+  const badgeItems = useBadges()
+  const badges     = badgeItems ?? []
 
   const totalLessonsDone = courses.reduce((s, c) => s + c.completedLessons, 0)
   const totalLessonsAll  = courses.reduce((s, c) => s + c.totalLessons, 0)
@@ -256,49 +262,61 @@ export default function DashboardPage() {
                 </span>
               </div>
 
-              <div className="grid grid-cols-3 gap-3">
-                {badges.map((badge) => {
-                  const Icon = BADGE_ICONS[badge.icon] ?? Medal
-                  return (
-                    <div
-                      key={badge.key}
-                      className={`rounded-xl p-3 flex flex-col items-center text-center gap-1.5 border transition-all ${
-                        badge.earned
-                          ? "border-violet-200 bg-violet-50/60 dark:border-violet-500/25 dark:bg-violet-500/10"
-                          : "border-border bg-muted/40"
-                      }`}
-                      title={t(`badges.${badge.key}.desc`)}
-                    >
-                      <div className={`size-9 rounded-xl flex items-center justify-center relative ${
-                        badge.earned
-                          ? "gradient-bg-primary"
-                          : "bg-muted"
-                      }`}>
-                        <Icon className={`size-4 ${badge.earned ? "text-white" : "text-muted-foreground/50"}`} />
-                        {!badge.earned && (
-                          <div className="absolute -right-1 -bottom-1 size-4 rounded-full bg-background border border-border flex items-center justify-center">
-                            <Lock className="size-2 text-muted-foreground" />
+              {badgeItems === null ? (
+                <div className="grid grid-cols-3 gap-3">
+                  {Array.from({ length: 6 }, (_, i) => (
+                    <Skeleton key={i} className="h-20 rounded-xl" />
+                  ))}
+                </div>
+              ) : (
+                <div className="grid grid-cols-3 gap-3">
+                  {badges.map(({ badge, earned }) => {
+                    const Icon = BADGE_ICONS[badge.icon ?? ""] ?? Medal
+                    const progress =
+                      !earned && badge.xpRequired
+                        ? Math.min(100, Math.round((stats.xp / badge.xpRequired) * 100))
+                        : null
+                    return (
+                      <div
+                        key={badge.id}
+                        className={`rounded-xl p-3 flex flex-col items-center text-center gap-1.5 border transition-all ${
+                          earned
+                            ? "border-violet-200 bg-violet-50/60 dark:border-violet-500/25 dark:bg-violet-500/10"
+                            : "border-border bg-muted/40"
+                        }`}
+                        title={badge.description ?? badge.name}
+                      >
+                        <div className={`size-9 rounded-xl flex items-center justify-center relative ${
+                          earned
+                            ? "gradient-bg-primary"
+                            : "bg-muted"
+                        }`}>
+                          <Icon className={`size-4 ${earned ? "text-white" : "text-muted-foreground/50"}`} />
+                          {!earned && (
+                            <div className="absolute -right-1 -bottom-1 size-4 rounded-full bg-background border border-border flex items-center justify-center">
+                              <Lock className="size-2 text-muted-foreground" />
+                            </div>
+                          )}
+                        </div>
+                        <span className={`text-[10px] font-medium leading-tight ${
+                          earned ? "text-foreground" : "text-muted-foreground"
+                        }`}>
+                          {badge.name}
+                        </span>
+                        {progress !== null && (
+                          <div className="w-full h-1 rounded-full bg-muted overflow-hidden">
+                            <GrowBar
+                              to={progress}
+                              delay={0.4}
+                              className="h-full rounded-full bg-violet-400 dark:bg-violet-500"
+                            />
                           </div>
                         )}
                       </div>
-                      <span className={`text-[10px] font-medium leading-tight ${
-                        badge.earned ? "text-foreground" : "text-muted-foreground"
-                      }`}>
-                        {t(`badges.${badge.key}.title`)}
-                      </span>
-                      {!badge.earned && badge.progress != null && (
-                        <div className="w-full h-1 rounded-full bg-muted overflow-hidden">
-                          <GrowBar
-                            to={badge.progress}
-                            delay={0.4}
-                            className="h-full rounded-full bg-violet-400 dark:bg-violet-500"
-                          />
-                        </div>
-                      )}
-                    </div>
-                  )
-                })}
-              </div>
+                    )
+                  })}
+                </div>
+              )}
             </Card>
           </AnimateIn>
         </div>
