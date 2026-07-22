@@ -18,6 +18,7 @@ export const getFaculties = () => apiGet<IApiFaculty[]>("/faculty")
 export const getCourses = () => apiGet<IApiCourse[]>("/course/published")
 export const getCourseBySlug = (slug: string) =>
   apiGet<IApiCourse>(`/course/slug/${slug}`)
+export const getCourseById = (id: string) => apiGet<IApiCourse>(`/course/${id}`)
 
 export const getCourseModules = (courseId: string) =>
   apiGet<IApiModule[]>(`/module?courseId=${courseId}`)

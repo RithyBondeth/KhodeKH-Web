@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react"
 import Link from "next/link"
 import {
-  ArrowRight, Atom, Binary, BookOpen, Brain, Calculator, Clock,
+  ArrowRight, Atom, Binary, BookOpen, Brain, Calculator, CheckCircle2,
   Cloud, Code2, Cpu, FlaskConical, Gamepad2, Globe, GraduationCap,
   Landmark, Languages, Leaf, Lock, RotateCcw, School, ShieldCheck,
   Smartphone, Sparkles, Terminal, TriangleAlert,
@@ -17,7 +17,6 @@ import { AppShell } from "@/components/utils/app-shell"
 import { AnimateIn } from "@/components/utils/animations/animate-in"
 import { TypographyH2 } from "@/components/utils/typography/typography-h2"
 import { TypographyMuted } from "@/components/utils/typography/typography-muted"
-import { activeCourses } from "@/utils/constants/dashboard.constant"
 import { COLOR } from "@/utils/constants/landing.constant"
 import type { TColorKey } from "@/utils/constants/landing.constant"
 import { useLanguageStore } from "@/stores/languages/language-store"
@@ -25,6 +24,8 @@ import {
   getSubjects, getGradeLevels, getProgrammingCategories, getCourses,
   getFaculties, getCourseLessonCount,
 } from "@/lib/api/catalog"
+import { getMyEnrollments } from "@/lib/api/enrollment"
+import type { IApiEnrollment } from "@/utils/interfaces/enrollment/api.interface"
 import type {
   IApiSubject, IApiGradeLevel, IApiProgrammingCategory, IApiCourse, IApiFaculty,
 } from "@/utils/interfaces/catalog/api.interface"
@@ -90,6 +91,7 @@ interface ICatalog {
   courses: IApiCourse[]
   faculties: IApiFaculty[]
   lessonCounts: Record<string, number>
+  enrollments: IApiEnrollment[]
 }
 
 export default function CoursesPage() {
@@ -109,8 +111,10 @@ export default function CoursesPage() {
     setLoading(true)
     setError(null)
     try {
-      const [subjects, gradeLevels, categories, courses, faculties] = await Promise.all([
+      const [subjects, gradeLevels, categories, courses, faculties, enrollments] = await Promise.all([
         getSubjects(), getGradeLevels(), getProgrammingCategories(), getCourses(), getFaculties(),
+        /* Guests can browse the catalog — a 401 here just means "not enrolled in anything". */
+        getMyEnrollments().catch(() => [] as IApiEnrollment[]),
       ])
 
       const counts = await Promise.all(
@@ -118,7 +122,7 @@ export default function CoursesPage() {
       )
 
       setCatalog({
-        subjects, gradeLevels, categories, courses, faculties,
+        subjects, gradeLevels, categories, courses, faculties, enrollments,
         lessonCounts: Object.fromEntries(counts),
       })
     } catch {
@@ -132,8 +136,10 @@ export default function CoursesPage() {
     load()
   }, [load])
 
-  /* Build a lookup: course slug → enrolled progress data */
-  const enrolledMap = Object.fromEntries(activeCourses.map((c) => [c.id, c]))
+  /* Build a lookup: course id → the student's enrollment (empty for guests) */
+  const enrolledMap: Record<string, IApiEnrollment> = Object.fromEntries(
+    (catalog?.enrollments ?? []).map((e) => [e.courseId, e])
+  )
 
   const trackLabels: Record<TCatalogTrack, string> = {
     k12:         t("trackK12"),
@@ -252,6 +258,7 @@ export default function CoursesPage() {
                     )
                     const available = Boolean(course)
                     const lessonCount = course ? (catalog.lessonCounts[course.id] ?? 0) : 0
+                    const enrolled = course ? enrolledMap[course.id] : undefined
 
                     const card = (
                       <Card className={`rounded-2xl p-5 flex flex-col gap-4 h-full transition-all ${
@@ -277,6 +284,23 @@ export default function CoursesPage() {
                             <p className="text-[11px] text-muted-foreground mt-0.5">{subject.nameKm}</p>
                           )}
                         </div>
+                        {enrolled && (
+                          <div>
+                            <div className="flex items-center justify-between text-xs text-muted-foreground mb-1.5">
+                              <span className="flex items-center gap-1">
+                                <CheckCircle2 className="size-3" />
+                                {t("enrolled")}
+                              </span>
+                              <span className="font-medium text-foreground">{enrolled.progressPercent}%</span>
+                            </div>
+                            <div className="h-1.5 rounded-full bg-muted overflow-hidden">
+                              <div
+                                className="h-full rounded-full gradient-bg-primary transition-all"
+                                style={{ width: `${enrolled.progressPercent}%` }}
+                              />
+                            </div>
+                          </div>
+                        )}
                         <div className="flex items-center justify-between mt-auto text-xs text-muted-foreground">
                           {available && (
                             <span className="flex items-center gap-1.5">
@@ -286,7 +310,7 @@ export default function CoursesPage() {
                           )}
                           {available && (
                             <span className="ml-auto flex items-center gap-1 font-semibold text-violet-600 dark:text-violet-400">
-                              {t("enroll")}
+                              {enrolled ? t("continueCourse") : t("enroll")}
                               <ArrowRight className="size-3.5 group-hover:translate-x-0.5 transition-transform" />
                             </span>
                           )}
@@ -403,7 +427,7 @@ export default function CoursesPage() {
                   {/* Course grid */}
                   <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
                     {visible.map((course, i) => {
-                      const enrolled = enrolledMap[course.slug]
+                      const enrolled = enrolledMap[course.id]
                       const colors   = LEVEL_COLORS[course.difficulty ?? "beginner"]
                       const cat      = catalog.categories.find((c) => c.id === course.categoryId)
                       const Icon     = ICON_MAP[cat?.icon ?? ""] ?? Code2
@@ -450,15 +474,15 @@ export default function CoursesPage() {
                             <div>
                               <div className="flex items-center justify-between text-xs text-muted-foreground mb-1.5">
                                 <span className="flex items-center gap-1">
-                                  <Clock className="size-3" />
-                                  {enrolled.currentLesson}
+                                  <CheckCircle2 className="size-3" />
+                                  {t("enrolled")}
                                 </span>
-                                <span className="font-medium text-foreground">{enrolled.progress}%</span>
+                                <span className="font-medium text-foreground">{enrolled.progressPercent}%</span>
                               </div>
                               <div className="h-1.5 rounded-full bg-muted overflow-hidden">
                                 <div
                                   className={`h-full rounded-full bg-gradient-to-r ${colors.bar} transition-all`}
-                                  style={{ width: `${enrolled.progress}%` }}
+                                  style={{ width: `${enrolled.progressPercent}%` }}
                                 />
                               </div>
                             </div>

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import { useParams, notFound } from "next/navigation"
+import { useParams, useRouter, notFound } from "next/navigation"
 import {
   ArrowLeft, ArrowRight, Atom, BookOpen, Brain, Calculator, CheckCircle2,
   ChevronDown, Circle, Clock, Code2, GraduationCap, Languages, Lock,
@@ -21,10 +21,14 @@ import { COURSE_DETAILS } from "@/utils/constants/course-detail.constant"
 import { activeCourses } from "@/utils/constants/dashboard.constant"
 import { useLanguageStore } from "@/stores/languages/language-store"
 import { getCourseBySlug, getCourseStructure, getGradeLevels } from "@/lib/api/catalog"
+import { checkEnrollment, enrollInCourse, unenrollFromCourse } from "@/lib/api/enrollment"
+import { ApiError } from "@/lib/api/client"
+import { ConfirmDialog } from "@/components/utils/confirm-dialog"
 import type { ISyllabusLesson, TCourseLevel } from "@/utils/interfaces/course-detail"
 import type {
   IApiCourse, IApiGradeLevel, IApiModuleWithLessons,
 } from "@/utils/interfaces/catalog/api.interface"
+import type { IApiEnrollment } from "@/utils/interfaces/enrollment/api.interface"
 
 /* ── Icon + colour mappings ──────────────────────────────────────────── */
 
@@ -117,12 +121,57 @@ function ApiCourseDetail({
   gradeLevels: IApiGradeLevel[]
 }) {
   const t = useTranslations("courseDetail")
+  const router = useRouter()
   const { language } = useLanguageStore()
   const nameOf = (en: string, km?: string) => (language === "km" && km ? km : en)
 
-  const enrolledCourse = activeCourses.find((c) => c.id === course.slug)
+  const [enrollment, setEnrollment] = useState<IApiEnrollment | null>(null)
+  const [enrollPending, setEnrollPending] = useState(false)
+  const [enrollError, setEnrollError] = useState<string | null>(null)
   const [justEnrolled, setJustEnrolled] = useState(false)
-  const enrolled = Boolean(enrolledCourse) || justEnrolled
+
+  /* A guest (or expired session) simply sees the enroll CTA — the click
+     redirects to login, so the check failing is not an error state. */
+  useEffect(() => {
+    let cancelled = false
+    checkEnrollment(course.id)
+      .then((res) => {
+        if (!cancelled) setEnrollment(res.enrollment)
+      })
+      .catch(() => {})
+    return () => {
+      cancelled = true
+    }
+  }, [course.id])
+
+  const enroll = async () => {
+    setEnrollPending(true)
+    setEnrollError(null)
+    try {
+      const created = await enrollInCourse(course.id)
+      setEnrollment(created)
+      setJustEnrolled(true)
+    } catch (err) {
+      if (err instanceof ApiError && err.status === 401) {
+        router.push(`/login?next=/courses/${course.slug}`)
+        return
+      }
+      setEnrollError(t("enrollError"))
+    } finally {
+      setEnrollPending(false)
+    }
+  }
+
+  const unenroll = async () => {
+    setEnrollError(null)
+    try {
+      await unenrollFromCourse(course.id)
+      setEnrollment(null)
+      setJustEnrolled(false)
+    } catch {
+      setEnrollError(t("enrollError"))
+    }
+  }
 
   const [openModule, setOpenModule] = useState(0)
 
@@ -279,21 +328,54 @@ function ApiCourseDetail({
                 <span className="text-xs text-muted-foreground">{t("freeNote")}</span>
               </div>
 
-              {enrolled ? (
-                <Link href={`/learn/${course.slug}`} className="block">
-                  <button className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-semibold gradient-bg-primary text-white hover:opacity-90 transition-all btn-shine">
-                    {justEnrolled ? t("startLearning") : t("continueLearning")}
-                    <ArrowRight className="size-4" />
-                  </button>
-                </Link>
+              {/* Progress (enrolled only) */}
+              {enrollment && !justEnrolled && (
+                <div>
+                  <div className="flex items-center justify-between text-xs mb-1.5">
+                    <span className="text-muted-foreground">{t("yourProgress")}</span>
+                    <span className="font-semibold text-foreground">{enrollment.progressPercent}%</span>
+                  </div>
+                  <div className="h-2 rounded-full bg-muted overflow-hidden">
+                    <div
+                      className="h-full rounded-full gradient-bg-primary transition-all"
+                      style={{ width: `${enrollment.progressPercent}%` }}
+                    />
+                  </div>
+                </div>
+              )}
+
+              {enrollment ? (
+                <>
+                  <Link href={`/learn/${course.slug}`} className="block">
+                    <button className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-semibold gradient-bg-primary text-white hover:opacity-90 transition-all btn-shine">
+                      {justEnrolled ? t("startLearning") : t("continueLearning")}
+                      <ArrowRight className="size-4" />
+                    </button>
+                  </Link>
+                  <ConfirmDialog
+                    title={t("unenrollTitle")}
+                    description={t("unenrollDesc")}
+                    variant="danger"
+                    onConfirm={unenroll}
+                  >
+                    <button className="w-full text-center text-xs text-muted-foreground hover:text-destructive transition-colors">
+                      {t("unenroll")}
+                    </button>
+                  </ConfirmDialog>
+                </>
               ) : (
                 <button
-                  onClick={() => setJustEnrolled(true)}
-                  className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-semibold gradient-bg-primary text-white hover:opacity-90 transition-all btn-shine"
+                  onClick={enroll}
+                  disabled={enrollPending}
+                  className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-semibold gradient-bg-primary text-white hover:opacity-90 transition-all btn-shine disabled:opacity-60 disabled:cursor-not-allowed"
                 >
                   <Sparkles className="size-4" />
-                  {t("enrollNow")}
+                  {enrollPending ? t("enrolling") : t("enrollNow")}
                 </button>
+              )}
+
+              {enrollError && (
+                <p className="text-xs text-destructive text-center">{enrollError}</p>
               )}
             </div>
           </AnimateIn>
