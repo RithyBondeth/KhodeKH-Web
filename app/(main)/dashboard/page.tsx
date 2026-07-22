@@ -3,32 +3,28 @@
 import Link from "next/link"
 import {
   ChevronRight, BookOpen, Play, Clock, ArrowRight, CheckCircle2,
-  Terminal, Code2, Brain, Flame, School, Sparkles, Zap,
+  Code2, Flame, School, Sparkles, Zap,
   Footprints, Medal, Languages, Trophy, Lock,
 } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
+import { Skeleton } from "@/components/ui/skeleton"
 import { AppShell } from "@/components/utils/app-shell"
 import { AnimateIn } from "@/components/utils/animations/animate-in"
 import { CountUp } from "@/components/utils/animations/count-up"
 import { GrowBar } from "@/components/utils/animations/grow-bar"
 import { useProfile } from "@/hooks/utils/use-profile"
 import { useProfileStats } from "@/hooks/utils/use-profile-stats"
+import { useMyCourses } from "@/hooks/utils/use-my-courses"
 import { levelFromXp } from "@/utils/functions/format"
 import { TypographyH1 } from "@/components/utils/typography/typography-h1"
 import { TypographyH3 } from "@/components/utils/typography/typography-h3"
 import { TypographyH4 } from "@/components/utils/typography/typography-h4"
 import { TypographyMuted } from "@/components/utils/typography/typography-muted"
 import {
-  activeCourses, weeklyActivity, weeklyDone, badges,
+  weeklyActivity, weeklyDone, badges,
 } from "@/utils/constants/dashboard.constant"
-
-const COURSE_ICONS: Record<string, React.ElementType> = {
-  Terminal,
-  Code2,
-  Brain,
-}
 
 const BADGE_ICONS: Record<string, React.ElementType> = {
   Footprints, Medal, Languages, Flame, Trophy, Zap,
@@ -40,8 +36,13 @@ export default function DashboardPage() {
   const stats = useProfileStats()
   const level = levelFromXp(stats.xp)
 
-  const totalLessonsDone = activeCourses.reduce((s, c) => s + c.completedLessons, 0)
-  const resume           = activeCourses[0]
+  /* Real enrollments + lesson progress; null while loading. */
+  const myCourses = useMyCourses()
+  const courses   = myCourses ?? []
+  const resume    = courses[0]
+
+  const totalLessonsDone = courses.reduce((s, c) => s + c.completedLessons, 0)
+  const totalLessonsAll  = courses.reduce((s, c) => s + c.totalLessons, 0)
   const goalPct          = Math.min(100, Math.round((weeklyDone / profile.weeklyGoal) * 100))
   const maxDay           = Math.max(...weeklyActivity.map((d) => d.lessons), 1)
   const earnedBadges     = badges.filter((b) => b.earned).length
@@ -62,22 +63,48 @@ export default function DashboardPage() {
                 </TypographyH1>
 
                 {/* What's next — the actual lesson, not a generic nudge */}
-                <div className="flex items-center gap-2 text-xs text-muted-foreground mb-1">
-                  <span className="uppercase tracking-wide text-[10px] font-semibold">{t("nextUp")}</span>
-                  <span className="size-1 rounded-full bg-muted-foreground/40" />
-                  <span className="truncate">{resume.title}</span>
-                </div>
-                <div className="text-sm font-semibold text-foreground truncate">
-                  {t("lessonNum", { n: resume.currentLessonId })} · {resume.currentLesson}
-                </div>
-                <TypographyMuted className="text-xs">{resume.currentLessonKh}</TypographyMuted>
+                {myCourses === null ? (
+                  <div className="space-y-2">
+                    <Skeleton className="h-3 w-40" />
+                    <Skeleton className="h-4 w-56" />
+                  </div>
+                ) : resume ? (
+                  <>
+                    <div className="flex items-center gap-2 text-xs text-muted-foreground mb-1">
+                      <span className="uppercase tracking-wide text-[10px] font-semibold">{t("nextUp")}</span>
+                      <span className="size-1 rounded-full bg-muted-foreground/40" />
+                      <span className="truncate">{resume.course.title}</span>
+                    </div>
+                    <div className="text-sm font-semibold text-foreground truncate">
+                      {resume.nextLesson?.title}
+                    </div>
+                    {resume.course.titleKm && (
+                      <TypographyMuted className="text-xs">{resume.course.titleKm}</TypographyMuted>
+                    )}
+                  </>
+                ) : (
+                  <TypographyMuted className="text-sm">{t("noCoursesDesc")}</TypographyMuted>
+                )}
               </div>
 
               <Button asChild size="lg" className="shrink-0">
-                <Link href={`/learn/${resume.id}/${resume.currentLessonId}`}>
-                  <Play className="size-4 fill-white" />
-                  {t("continueLearning")}
-                </Link>
+                {resume ? (
+                  <Link
+                    href={
+                      resume.nextLesson
+                        ? `/learn/${resume.course.slug}/${resume.nextLesson.slug}`
+                        : `/learn/${resume.course.slug}`
+                    }
+                  >
+                    <Play className="size-4 fill-white" />
+                    {t("continueLearning")}
+                  </Link>
+                ) : (
+                  <Link href="/courses">
+                    <Sparkles className="size-4" />
+                    {t("browseCourses")}
+                  </Link>
+                )}
               </Button>
             </div>
           </div>
@@ -97,7 +124,7 @@ export default function DashboardPage() {
                 <CountUp to={totalLessonsDone} delay={0.4} duration={1.4} ease="power3.out" />
               </div>
               <TypographyMuted className="text-xs mt-1">
-                {t("ofTotal", { total: activeCourses.reduce((s, c) => s + c.totalLessons, 0) })}
+                {t("ofTotal", { total: totalLessonsAll })}
               </TypographyMuted>
             </Card>
           </AnimateIn>
@@ -111,7 +138,7 @@ export default function DashboardPage() {
                 </div>
               </div>
               <div className="text-3xl font-bold text-foreground">
-                <CountUp to={activeCourses.length} delay={0.5} duration={1.0} ease="power3.out" />
+                <CountUp to={courses.length} delay={0.5} duration={1.0} ease="power3.out" />
               </div>
               <TypographyMuted className="text-xs mt-1">{t("inProgress")}</TypographyMuted>
             </Card>
@@ -289,29 +316,51 @@ export default function DashboardPage() {
             </div>
           </AnimateIn>
 
-          {activeCourses.map((course, i) => {
-            const barColor = course.color === "violet"
+          {myCourses === null && (
+            <>
+              <Skeleton className="h-28 rounded-2xl" />
+              <Skeleton className="h-28 rounded-2xl" />
+            </>
+          )}
+
+          {myCourses !== null && courses.length === 0 && (
+            <Card className="rounded-2xl border-dashed p-10 text-center">
+              <div className="size-12 rounded-2xl bg-violet-100 dark:bg-violet-500/15 flex items-center justify-center mx-auto mb-3">
+                <Sparkles className="size-5 text-violet-600 dark:text-violet-400" />
+              </div>
+              <h3 className="font-semibold text-foreground text-base mb-1">{t("noCoursesTitle")}</h3>
+              <TypographyMuted className="text-sm">{t("noCoursesDesc")}</TypographyMuted>
+              <Button asChild variant="outline" size="sm" className="mt-4">
+                <Link href="/courses">
+                  {t("browseCourses")}
+                  <ArrowRight className="size-3.5" />
+                </Link>
+              </Button>
+            </Card>
+          )}
+
+          {courses.map((mc, i) => {
+            const barColor = i % 2 === 0
               ? "from-violet-500 to-violet-400"
               : "from-cyan-500 to-cyan-400"
             return (
-              <AnimateIn key={course.id} animation="fade-up" delay={0.3 + i * 0.1}>
+              <AnimateIn key={mc.course.id} animation="fade-up" delay={0.3 + i * 0.1}>
                 <Card className="rounded-2xl p-5 group hover:border-violet-200 dark:hover:border-violet-500/25 transition-all">
                   <div className="flex items-start gap-4">
                     <div className="size-11 rounded-xl bg-muted flex items-center justify-center shrink-0 transition-transform duration-300 motion-safe:group-hover:scale-110 motion-safe:group-hover:rotate-6">
-                      {(() => {
-                        const Icon = COURSE_ICONS[course.icon]
-                        return Icon ? <Icon className="size-5" /> : null
-                      })()}
+                      <BookOpen className="size-5" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between gap-2 mb-1">
-                        <Link href={`/courses/${course.id}`} className="hover:opacity-80 transition-opacity">
-                          <TypographyH4 className="text-foreground text-sm">{course.title}</TypographyH4>
-                          <TypographyMuted className="text-xs">{course.titleKh}</TypographyMuted>
+                        <Link href={`/courses/${mc.course.slug}`} className="hover:opacity-80 transition-opacity">
+                          <TypographyH4 className="text-foreground text-sm">{mc.course.title}</TypographyH4>
+                          {mc.course.titleKm && (
+                            <TypographyMuted className="text-xs">{mc.course.titleKm}</TypographyMuted>
+                          )}
                         </Link>
                         <span className="text-xs text-muted-foreground shrink-0 font-medium">
                           <CountUp
-                            to={course.progress}
+                            to={mc.enrollment.progressPercent}
                             suffix="%"
                             delay={0.45 + i * 0.1}
                             duration={1.1}
@@ -322,7 +371,7 @@ export default function DashboardPage() {
                       <div className="flex items-center gap-2 mb-3 mt-2">
                         <div className="flex-1 h-2 rounded-full bg-muted overflow-hidden">
                           <GrowBar
-                            to={course.progress}
+                            to={mc.enrollment.progressPercent}
                             delay={0.45 + i * 0.1}
                             className={`h-full rounded-full bg-gradient-to-r ${barColor}`}
                           />
@@ -330,15 +379,23 @@ export default function DashboardPage() {
                       </div>
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3 min-w-0">
-                          <div className="flex items-center gap-1.5 text-xs text-muted-foreground min-w-0">
-                            <Clock className="size-3 shrink-0" />
-                            <span className="truncate">{course.currentLesson}</span>
-                          </div>
+                          {mc.nextLesson && (
+                            <div className="flex items-center gap-1.5 text-xs text-muted-foreground min-w-0">
+                              <Clock className="size-3 shrink-0" />
+                              <span className="truncate">{mc.nextLesson.title}</span>
+                            </div>
+                          )}
                           <span className="text-xs text-muted-foreground shrink-0">
-                            {t("lessonProgress", { done: course.completedLessons, total: course.totalLessons })}
+                            {t("lessonProgress", { done: mc.completedLessons, total: mc.totalLessons })}
                           </span>
                         </div>
-                        <Link href={`/learn/${course.id}/${course.currentLessonId}`}>
+                        <Link
+                          href={
+                            mc.nextLesson
+                              ? `/learn/${mc.course.slug}/${mc.nextLesson.slug}`
+                              : `/learn/${mc.course.slug}`
+                          }
+                        >
                           <button className="text-xs font-semibold text-violet-600 dark:text-violet-400 hover:text-violet-700 dark:hover:text-violet-300 flex items-center gap-1 group-hover:gap-1.5 transition-all shrink-0">
                             {t("continue")} <ArrowRight className="size-3" />
                           </button>

@@ -22,6 +22,7 @@ import { activeCourses } from "@/utils/constants/dashboard.constant"
 import { useLanguageStore } from "@/stores/languages/language-store"
 import { getCourseBySlug, getCourseStructure, getGradeLevels } from "@/lib/api/catalog"
 import { checkEnrollment, enrollInCourse, unenrollFromCourse } from "@/lib/api/enrollment"
+import { getMyLessonProgress } from "@/lib/api/lesson-progress"
 import { ApiError } from "@/lib/api/client"
 import { ConfirmDialog } from "@/components/utils/confirm-dialog"
 import type { ISyllabusLesson, TCourseLevel } from "@/utils/interfaces/course-detail"
@@ -129,16 +130,22 @@ function ApiCourseDetail({
   const [enrollPending, setEnrollPending] = useState(false)
   const [enrollError, setEnrollError] = useState<string | null>(null)
   const [justEnrolled, setJustEnrolled] = useState(false)
+  const [completedIds, setCompletedIds] = useState<Set<string>>(new Set())
 
   /* A guest (or expired session) simply sees the enroll CTA — the click
      redirects to login, so the check failing is not an error state. */
   useEffect(() => {
     let cancelled = false
-    checkEnrollment(course.id)
-      .then((res) => {
-        if (!cancelled) setEnrollment(res.enrollment)
-      })
-      .catch(() => {})
+    Promise.all([
+      checkEnrollment(course.id).catch(() => ({ enrollment: null })),
+      getMyLessonProgress().catch(() => []),
+    ]).then(([res, progress]) => {
+      if (cancelled) return
+      setEnrollment(res.enrollment)
+      setCompletedIds(
+        new Set(progress.filter((p) => p.completed).map((p) => p.lessonId))
+      )
+    })
     return () => {
       cancelled = true
     }
@@ -285,7 +292,9 @@ function ApiCourseDetail({
                             )}
                           </div>
                           <span className="text-xs text-muted-foreground shrink-0">
-                            {mod.lessons.length}
+                            {enrollment
+                              ? `${mod.lessons.filter((l) => completedIds.has(l.id)).length}/${mod.lessons.length}`
+                              : mod.lessons.length}
                           </span>
                           <ChevronDown
                             className={`size-4 text-muted-foreground shrink-0 transition-transform ${open ? "rotate-180" : ""}`}
@@ -307,7 +316,11 @@ function ApiCourseDetail({
                                       {lesson.estimatedMinutes} min
                                     </span>
                                   )}
-                                  <Circle className="size-4 text-muted-foreground/50 shrink-0" />
+                                  {completedIds.has(lesson.id) ? (
+                                    <CheckCircle2 className="size-4 text-emerald-500 shrink-0" />
+                                  ) : (
+                                    <Circle className="size-4 text-muted-foreground/50 shrink-0" />
+                                  )}
                                 </div>
                               </Link>
                             ))}
@@ -341,6 +354,12 @@ function ApiCourseDetail({
                       style={{ width: `${enrollment.progressPercent}%` }}
                     />
                   </div>
+                  <p className="text-[11px] text-muted-foreground mt-1.5">
+                    {t("completedOf", {
+                      done: structure.flatMap((m) => m.lessons).filter((l) => completedIds.has(l.id)).length,
+                      total: totalLessons,
+                    })}
+                  </p>
                 </div>
               )}
 

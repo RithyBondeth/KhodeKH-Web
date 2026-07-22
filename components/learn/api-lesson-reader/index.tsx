@@ -4,8 +4,8 @@ import { useEffect, useMemo, useState } from "react"
 import Link from "next/link"
 import ReactMarkdown from "react-markdown"
 import {
-  ArrowLeft, BookOpen, ChevronDown, ChevronLeft, ChevronRight,
-  Circle, Lock, X,
+  ArrowLeft, BookOpen, CheckCircle2, ChevronDown, ChevronLeft, ChevronRight,
+  Circle, Lock, Sparkles, X,
 } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -15,7 +15,10 @@ import { LanguageSwitcher } from "@/components/utils/language-switcher"
 import { TypographyH2 } from "@/components/utils/typography/typography-h2"
 import { TypographyH4 } from "@/components/utils/typography/typography-h4"
 import { useLanguageStore } from "@/stores/languages/language-store"
+import { useProfileStore } from "@/stores/profiles/profile-store"
 import { getCourseBySlug, getCourseStructure } from "@/lib/api/catalog"
+import { checkEnrollment } from "@/lib/api/enrollment"
+import { getMyLessonProgress, markLessonComplete } from "@/lib/api/lesson-progress"
 import type {
   IApiCourse, IApiLesson, IApiModuleWithLessons,
 } from "@/utils/interfaces/catalog/api.interface"
@@ -39,15 +42,29 @@ export function ApiLessonReader({ slug, initialLessonSlug }: ApiLessonReaderProp
   const [openSections, setOpenSections] = useState<number[]>([])
   const [currentLessonId, setCurrentLessonId] = useState<string | null>(null)
 
+  /* Guests and the un-enrolled read lessons fine — they just can't track. */
+  const [enrolled, setEnrolled] = useState(false)
+  const [completedIds, setCompletedIds] = useState<Set<string>>(new Set())
+  const [marking, setMarking] = useState(false)
+  const [xpFlash, setXpFlash] = useState(0)
+
   useEffect(() => {
     let cancelled = false
     setLoading(true)
     getCourseBySlug(slug)
       .then(async (c) => {
-        const structure = await getCourseStructure(c.id)
+        const [structure, enrollmentCheck, progress] = await Promise.all([
+          getCourseStructure(c.id),
+          checkEnrollment(c.id).catch(() => ({ enrolled: false })),
+          getMyLessonProgress().catch(() => []),
+        ])
         if (cancelled) return
         setCourse(c)
         setModules(structure)
+        setEnrolled(enrollmentCheck.enrolled)
+        setCompletedIds(
+          new Set(progress.filter((p) => p.completed).map((p) => p.lessonId))
+        )
         setOpenSections(structure.map((_, i) => i))
         const lessons = structure.flatMap((m) => m.lessons)
         const initial = initialLessonSlug
@@ -63,12 +80,31 @@ export function ApiLessonReader({ slug, initialLessonSlug }: ApiLessonReaderProp
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slug])
 
+  const completeLesson = async (lesson: IApiLesson) => {
+    if (marking || completedIds.has(lesson.id)) return
+    setMarking(true)
+    try {
+      const result = await markLessonComplete(lesson.id)
+      setCompletedIds((prev) => new Set(prev).add(lesson.id))
+      if (result.xpAwarded > 0) {
+        setXpFlash(result.xpAwarded)
+        const { xp, streak, setStats } = useProfileStore.getState()
+        setStats({ xp: xp + result.xpAwarded, streak })
+      }
+    } catch {
+      /* Session expired mid-read — the next navigation will bounce to login. */
+    } finally {
+      setMarking(false)
+    }
+  }
+
   const lessons = useMemo(() => modules.flatMap((m) => m.lessons), [modules])
   const currentLesson = lessons.find((l) => l.id === currentLessonId) ?? null
 
   const switchLesson = (lesson: IApiLesson) => {
     setCurrentLessonId(lesson.id)
     setSidebarOpen(false)
+    setXpFlash(0)
     window.history.replaceState(null, "", `/learn/${slug}/${lesson.slug}`)
   }
 
@@ -125,6 +161,28 @@ export function ApiLessonReader({ slug, initialLessonSlug }: ApiLessonReaderProp
           </button>
         </div>
 
+        {/* Course progress — only meaningful once the student is enrolled */}
+        {enrolled && lessons.length > 0 && (() => {
+          const done = lessons.filter((l) => completedIds.has(l.id)).length
+          const pct  = Math.round((done / lessons.length) * 100)
+          return (
+            <div className="shrink-0 border-b border-border px-4 py-3">
+              <div className="mb-1.5 flex items-center justify-between text-[11px]">
+                <span className="text-muted-foreground">{t("courseProgress")}</span>
+                <span className="font-semibold text-foreground">
+                  {t("lessonsOf", { done, total: lessons.length })}
+                </span>
+              </div>
+              <div className="h-1.5 overflow-hidden rounded-full bg-muted">
+                <div
+                  className="h-full rounded-full gradient-bg-primary transition-all"
+                  style={{ width: `${pct}%` }}
+                />
+              </div>
+            </div>
+          )
+        })()}
+
         <div className="flex-1 overflow-y-auto py-2">
           {modules.map((mod, mi) => (
             <div key={mod.id} className="mb-1">
@@ -153,7 +211,9 @@ export function ApiLessonReader({ slug, initialLessonSlug }: ApiLessonReaderProp
                         }`}
                       >
                         <div className="shrink-0">
-                          {isActive ? (
+                          {completedIds.has(lesson.id) ? (
+                            <CheckCircle2 className="size-4 text-emerald-500" />
+                          ) : isActive ? (
                             <div className="flex size-4 items-center justify-center rounded-full border-2 border-violet-500 dark:border-violet-400">
                               <div className="size-1.5 rounded-full bg-violet-500 dark:bg-violet-400" />
                             </div>
@@ -262,6 +322,41 @@ export function ApiLessonReader({ slug, initialLessonSlug }: ApiLessonReaderProp
             <div className="mt-8 flex items-center gap-3 rounded-2xl border border-dashed border-border px-5 py-4 text-muted-foreground select-none">
               <Lock className="size-4 shrink-0" />
               <span className="text-sm">{t("quizRequiresLogin")}</span>
+            </div>
+
+            {/* Completion — enrolled students track progress; others get a nudge */}
+            <div className="mt-6">
+              {enrolled ? (
+                completedIds.has(currentLesson.id) ? (
+                  <div className="flex items-center justify-center gap-2 rounded-2xl border border-emerald-200 bg-emerald-50/60 px-5 py-3.5 text-sm font-semibold text-emerald-700 dark:border-emerald-500/25 dark:bg-emerald-500/10 dark:text-emerald-300">
+                    <CheckCircle2 className="size-4" />
+                    {t("completed")}
+                    {xpFlash > 0 && (
+                      <span className="flex items-center gap-1 text-xs font-bold text-amber-600 dark:text-amber-400">
+                        <Sparkles className="size-3.5" />
+                        {t("xpEarned", { xp: xpFlash })}
+                      </span>
+                    )}
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => completeLesson(currentLesson)}
+                    disabled={marking}
+                    className="w-full flex items-center justify-center gap-2 rounded-2xl py-3.5 text-sm font-semibold gradient-bg-primary text-white hover:opacity-90 transition-all btn-shine disabled:opacity-60 disabled:cursor-not-allowed"
+                  >
+                    <CheckCircle2 className="size-4" />
+                    {t("markComplete")}
+                  </button>
+                )
+              ) : (
+                <Link
+                  href={`/courses/${slug}`}
+                  className="flex items-center justify-center gap-2 rounded-2xl border border-dashed border-violet-300 px-5 py-3.5 text-sm text-violet-600 hover:bg-violet-50/60 dark:border-violet-500/40 dark:text-violet-400 dark:hover:bg-violet-500/10 transition-colors"
+                >
+                  <Sparkles className="size-4" />
+                  {t("enrollToTrack")}
+                </Link>
+              )}
             </div>
 
             {nextLesson && (
