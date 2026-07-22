@@ -3,6 +3,8 @@
 import { useEffect } from "react"
 import { getMe } from "@/lib/api/user"
 import { useProfileStore } from "@/stores/profiles/profile-store"
+import { toAvatarPreset } from "@/utils/constants/avatar.constant"
+import { displayNameOf } from "@/utils/functions/user"
 
 /**
  * Module-level (not React state) so remounting AppShell on client-side
@@ -17,23 +19,36 @@ export function resetUserStatsFetchFlag() {
 }
 
 /**
- * Pulls the student's real XP/streak from `GET /user/me` once per load and
- * pushes them into the profile store. Call from a component mounted on every
- * authenticated page (AppShell).
+ * Pulls the student's real identity + XP/streak from `GET /user/me` once per
+ * load and pushes them into the profile store. Call from a component mounted
+ * on every authenticated page (AppShell).
+ *
+ * `weeklyGoal` is deliberately left alone — it has no API column, so the
+ * store's persisted value is the source of truth for it.
  */
 export function useHydrateUserStats() {
   const setStats = useProfileStore((s) => s.setStats)
+  const updateProfile = useProfileStore((s) => s.updateProfile)
 
   useEffect(() => {
     if (hasFetched) return
     hasFetched = true
 
     getMe()
-      .then((user) => setStats({ xp: user.xp, streak: user.streak }))
+      .then((user) => {
+        setStats({ xp: user.xp, streak: user.streak })
+        updateProfile({
+          name: displayNameOf(user),
+          /* No Khmer-name column on the API yet — clear any stale local value. */
+          nameKh: "",
+          email: user.email,
+          avatar: toAvatarPreset(user.avatar),
+        })
+      })
       .catch(() => {
         /* Session likely expired mid-flight — the proxy already redirected
            via middleware on next navigation; stale stats just stay put. */
         hasFetched = false
       })
-  }, [setStats])
+  }, [setStats, updateProfile])
 }

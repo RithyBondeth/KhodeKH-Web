@@ -10,6 +10,10 @@ import { useTranslations } from "next-intl"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
+import {
+  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
+} from "@/components/ui/select"
+import { Skeleton } from "@/components/ui/skeleton"
 import { AppShell } from "@/components/utils/app-shell"
 import { Avatar } from "@/components/utils/avatar"
 import { ConfirmDialog } from "@/components/utils/confirm-dialog"
@@ -23,14 +27,43 @@ import { useProfile } from "@/hooks/utils/use-profile"
 import { useProfileStats } from "@/hooks/utils/use-profile-stats"
 import { useHydrated } from "@/hooks/utils/use-hydrated"
 import { useProfileStore } from "@/stores/profiles/profile-store"
-import type { IProfileFields } from "@/stores/profiles/profile-store"
 import { useLanguageStore } from "@/stores/languages/language-store"
 import { useSignOut } from "@/hooks/utils/use-sign-out"
 import { levelFromXp, xpForNextLevel } from "@/utils/functions/format"
+import { displayNameOf } from "@/utils/functions/user"
 import { AVATAR_PRESETS, toAvatarPreset } from "@/utils/constants/avatar.constant"
+import type { TAvatarPreset } from "@/utils/constants/avatar.constant"
+import { getMe, updateMe, updateMyAvatar } from "@/lib/api/user"
+import type { IUpdateMePayload } from "@/lib/api/user"
+import type { IApiUser } from "@/utils/interfaces/user/api.interface"
 
 const GOAL_MIN = 1
 const GOAL_MAX = 14
+
+/** The editable slice of GET /user/me, shaped for the form (no nulls). */
+interface IProfileForm {
+  firstName: string
+  lastName: string
+  gender: string
+  dateOfBirth: string
+  phone: string
+}
+
+const toForm = (user: IApiUser): IProfileForm => ({
+  firstName: user.firstName ?? "",
+  lastName: user.lastName ?? "",
+  gender: user.gender ?? "",
+  dateOfBirth: user.dateOfBirth ?? "",
+  phone: user.phone ?? "",
+})
+
+/** Only send fields the student actually filled — "" fails DTO validation. */
+const toPayload = (form: IProfileForm): IUpdateMePayload =>
+  Object.fromEntries(
+    Object.entries(form)
+      .map(([k, v]) => [k, v.trim()])
+      .filter(([, v]) => v !== "")
+  )
 
 export default function ProfilePage() {
   const t = useTranslations("profile")
@@ -45,26 +78,68 @@ export default function ProfilePage() {
   const { resolvedTheme, setTheme } = useTheme()
   const hydrated = useHydrated()
 
-  /* Null until the student types: the form mirrors the live profile (which
-     fills in when the store rehydrates), then the draft takes over. */
-  const [edits, setEdits] = useState<IProfileFields | null>(null)
+  /* The form edits the real account — seeded from GET /user/me, saved back
+     with PATCH /user/me. `baseline` is the last server state for dirty checks. */
+  const [baseline, setBaseline] = useState<IProfileForm | null>(null)
+  const [form, setForm] = useState<IProfileForm | null>(null)
+  const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
-  const draft = edits ?? profile
+  const [saveError, setSaveError] = useState(false)
+  const [avatarPending, setAvatarPending] = useState<TAvatarPreset | null>(null)
 
-  const dirty = edits !== null && (
-    draft.name !== profile.name ||
-    draft.nameKh !== profile.nameKh ||
-    draft.email !== profile.email
-  )
+  useEffect(() => {
+    let cancelled = false
+    getMe()
+      .then((user) => {
+        if (cancelled) return
+        setBaseline(toForm(user))
+        setForm(toForm(user))
+      })
+      .catch(() => {
+        /* Session expired — middleware bounces to login on next navigation. */
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [])
 
-  const save = () => {
-    updateProfile({
-      name: draft.name.trim() || profile.name,
-      nameKh: draft.nameKh.trim() || profile.nameKh,
-      email: draft.email.trim() || profile.email,
-    })
-    setEdits(null)
-    setSaved(true)
+  const dirty =
+    form !== null &&
+    baseline !== null &&
+    (Object.keys(form) as (keyof IProfileForm)[]).some(
+      (k) => form[k] !== baseline[k]
+    )
+
+  const save = async () => {
+    if (!form || saving) return
+    setSaving(true)
+    setSaveError(false)
+    try {
+      const user = await updateMe(toPayload(form))
+      setBaseline(toForm(user))
+      setForm(toForm(user))
+      /* Keep the store (AppShell, dashboard greeting) in step. */
+      updateProfile({ name: displayNameOf(user), email: user.email })
+      setSaved(true)
+    } catch {
+      setSaveError(true)
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const pickAvatar = async (preset: TAvatarPreset) => {
+    if (avatarPending) return
+    setAvatarPending(preset)
+    setSaveError(false)
+    try {
+      const user = await updateMyAvatar(preset)
+      updateProfile({ avatar: toAvatarPreset(user.avatar) })
+    } catch {
+      setSaveError(true)
+    } finally {
+      setAvatarPending(null)
+    }
   }
 
   useEffect(() => {
@@ -92,20 +167,20 @@ export default function ProfilePage() {
   ]
 
   const field = (
-    key: "name" | "nameKh" | "email",
-    type = "text",
-    maxLength?: number
+    key: Exclude<keyof IProfileForm, "gender">,
+    label: string,
+    type = "text"
   ) => (
     <div>
       <label htmlFor={key} className="text-xs font-medium text-muted-foreground mb-1.5 block">
-        {t(`field${key.charAt(0).toUpperCase()}${key.slice(1)}`)}
+        {label}
       </label>
       <Input
         id={key}
         type={type}
-        value={draft[key]}
-        maxLength={maxLength}
-        onChange={(e) => setEdits({ ...draft, [key]: e.target.value })}
+        value={form?.[key] ?? ""}
+        disabled={form === null}
+        onChange={(e) => form && setForm({ ...form, [key]: e.target.value })}
         className="h-auto rounded-xl px-3.5 py-2.5 focus-within:border-violet-400 focus-within:ring-violet-500/15 dark:focus-within:border-violet-500/60"
       />
     </div>
@@ -131,7 +206,9 @@ export default function ProfilePage() {
             <Avatar preset={profile.avatar} size="lg" />
             <div className="min-w-0">
               <div className="text-lg font-bold text-foreground truncate">{profile.name}</div>
-              <TypographyMuted className="text-xs truncate">{profile.nameKh}</TypographyMuted>
+              {profile.nameKh && (
+                <TypographyMuted className="text-xs truncate">{profile.nameKh}</TypographyMuted>
+              )}
               <TypographyMuted className="text-xs truncate mt-0.5">{profile.email}</TypographyMuted>
             </div>
           </Card>
@@ -154,7 +231,8 @@ export default function ProfilePage() {
                 return (
                   <button
                     key={preset}
-                    onClick={() => updateProfile({ avatar: preset })}
+                    onClick={() => pickAvatar(preset)}
+                    disabled={avatarPending !== null}
                     aria-pressed={active}
                     aria-label={t(`avatars.${preset}`)}
                     title={t(`avatars.${preset}`)}
@@ -163,7 +241,7 @@ export default function ProfilePage() {
                       active
                         ? "ring-2 ring-primary"
                         : "ring-1 ring-transparent hover:ring-border"
-                    }`}
+                    } ${avatarPending === preset ? "opacity-60" : ""}`}
                   >
                     <Avatar
                       preset={preset}
@@ -232,19 +310,47 @@ export default function ProfilePage() {
             </div>
             <TypographyMuted className="text-xs mb-4">{t("infoDesc")}</TypographyMuted>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {field("name")}
-              {field("nameKh")}
-              {field("email", "email")}
-            </div>
+            {form === null ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <Skeleton className="h-16 rounded-xl" />
+                <Skeleton className="h-16 rounded-xl" />
+                <Skeleton className="h-16 rounded-xl" />
+                <Skeleton className="h-16 rounded-xl" />
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {field("firstName", t("fieldFirstName"))}
+                {field("lastName", t("fieldLastName"))}
+                <div>
+                  <label className="text-xs font-medium text-muted-foreground mb-1.5 block">
+                    {t("fieldGender")}
+                  </label>
+                  <Select
+                    value={form.gender || undefined}
+                    onValueChange={(v) => setForm({ ...form, gender: v })}
+                  >
+                    <SelectTrigger className="h-auto w-full rounded-xl px-3.5 py-2.5">
+                      <SelectValue placeholder={t("genderPlaceholder")} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Male">{t("gender_male")}</SelectItem>
+                      <SelectItem value="Female">{t("gender_female")}</SelectItem>
+                      <SelectItem value="Other">{t("gender_other")}</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                {field("dateOfBirth", t("fieldDateOfBirth"), "date")}
+                {field("phone", t("fieldPhone"), "tel")}
+              </div>
+            )}
 
             <div className="flex items-center gap-3 mt-5">
-              <Button onClick={save} disabled={!dirty} className="btn-shine">
-                {t("save")}
+              <Button onClick={save} disabled={!dirty || saving} className="btn-shine">
+                {saving ? t("saving") : t("save")}
               </Button>
-              {dirty && (
+              {dirty && !saving && (
                 <Button
-                  onClick={() => setEdits(null)}
+                  onClick={() => setForm(baseline)}
                   variant="ghost"
                   className="text-muted-foreground"
                 >
@@ -256,6 +362,9 @@ export default function ProfilePage() {
                   <Check className="size-4" />
                   {t("saved")}
                 </span>
+              )}
+              {saveError && (
+                <span className="text-sm text-destructive">{t("saveError")}</span>
               )}
             </div>
           </Card>

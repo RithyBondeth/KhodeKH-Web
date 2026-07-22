@@ -2,7 +2,7 @@
 
 import { create } from "zustand"
 import { persist } from "zustand/middleware"
-import { studentData } from "@/utils/constants/dashboard.constant"
+import { DEFAULT_AVATAR } from "@/utils/constants/avatar.constant"
 import type { TAvatarPreset } from "@/utils/constants/avatar.constant"
 import { STORE_PERSIST_KEYS } from "@/stores/shared/persist-keys"
 import { safePersistStorage } from "@/stores/shared/persist-storage"
@@ -30,19 +30,23 @@ interface IProfileState extends IProfileFields, IProfileStats {
   setStats: (stats: IProfileStats) => void
 }
 
-/** `studentData` seeds the store until profile editing saves to the API too. */
+/**
+ * Empty until `GET /user/me` hydrates the real identity (see
+ * `use-hydrate-user-stats`). `weeklyGoal` is client-only — the API has no
+ * column for it — so its edits live purely in this persisted store.
+ */
 const DEFAULTS: IProfileFields = {
-  name: studentData.name,
-  nameKh: studentData.nameKh,
-  email: studentData.email,
-  avatar: studentData.avatar,
-  weeklyGoal: studentData.weeklyGoal,
+  name: "",
+  nameKh: "",
+  email: "",
+  avatar: DEFAULT_AVATAR,
+  weeklyGoal: 8,
 }
 
 /** Placeholder shown until the first `setStats` call resolves. */
 const STATS_DEFAULTS: IProfileStats = {
-  xp: studentData.xp,
-  streak: studentData.streak,
+  xp: 0,
+  streak: 0,
 }
 
 export const PROFILE_DEFAULTS = DEFAULTS
