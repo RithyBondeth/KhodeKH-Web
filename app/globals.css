@@ -301,6 +301,40 @@ html {
         background: #191919;
     }
 
+    /* ── Lesson prose — the rendered markdown of a lesson's theory ──────────
+       Tuned for study: math-heavy Khmer content where the *formulas* matter
+       most. Authors write display formulas as indented blocks (→ <pre><code>),
+       so those are styled as prominent "formula cards" rather than the cramped
+       inline code-pills they'd otherwise fall back to. Keeps whitespace so
+       aligned math stays aligned, and scrolls sideways rather than reflowing a
+       formula. Inline `code` (rare here, common in the coding courses) keeps a
+       subtle pill so the two never look alike. */
+    .lesson-prose pre {
+        margin-block: 0.25rem;
+        overflow-x: auto;
+        border-radius: 0.75rem;
+        border: 1px solid var(--border);
+        background: var(--card);
+        padding: 0.9rem 1.15rem;
+    }
+    .lesson-prose pre code {
+        display: block;
+        background: none;
+        padding: 0;
+        color: var(--foreground);
+        font-size: 1.02rem;
+        /* Khmer stacks below the baseline; give formula rows room to breathe. */
+        line-height: 1.9;
+        white-space: pre;
+    }
+    .lesson-prose :not(pre) > code {
+        border-radius: 0.3rem;
+        padding: 0.05rem 0.35rem;
+        font-size: 0.85em;
+        background: color-mix(in oklab, var(--primary) 12%, transparent);
+        color: var(--primary);
+    }
+
     /* Khmer stacks coeng (subscript consonants) and below-base vowels under the
        baseline, so its ink runs ~1.34x the font size — a display `leading-[1.1]`
        tuned for Latin cannot contain it. Use this on any heading that may hold
