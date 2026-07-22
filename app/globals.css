@@ -334,6 +334,32 @@ html {
         background: color-mix(in oklab, var(--primary) 12%, transparent);
         color: var(--primary);
     }
+    /* GFM tables — reference grids like the derivative rules. Scrolls sideways
+       on narrow screens rather than squashing the columns. */
+    .lesson-prose table {
+        display: block;
+        width: max-content;
+        max-width: 100%;
+        overflow-x: auto;
+        border-collapse: collapse;
+        font-size: 0.95rem;
+    }
+    .lesson-prose th,
+    .lesson-prose td {
+        border: 1px solid var(--border);
+        padding: 0.5rem 0.85rem;
+        text-align: left;
+        vertical-align: top;
+        line-height: 1.7;
+    }
+    .lesson-prose th {
+        background: var(--muted);
+        font-weight: 600;
+        color: var(--foreground);
+    }
+    .lesson-prose td {
+        color: var(--muted-foreground);
+    }
 
     /* Khmer stacks coeng (subscript consonants) and below-base vowels under the
        baseline, so its ink runs ~1.34x the font size — a display `leading-[1.1]`

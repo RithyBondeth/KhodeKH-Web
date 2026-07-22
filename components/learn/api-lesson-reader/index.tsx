@@ -140,6 +140,12 @@ export function ApiLessonReader({ slug, initialLessonSlug }: ApiLessonReaderProp
   const prevLesson  = currentIdx > 0 ? lessons[currentIdx - 1] : null
   const nextLesson  = currentIdx < lessons.length - 1 ? lessons[currentIdx + 1] : null
 
+  /* Which chapter this lesson sits in, for the "Chapter X · Lesson Y of N" eyebrow. */
+  const currentModuleIdx = modules.findIndex((m) =>
+    m.lessons.some((l) => l.id === currentLesson.id)
+  )
+  const currentModule = modules[currentModuleIdx] ?? null
+
   return (
     <div className="flex h-screen overflow-hidden bg-background text-foreground">
 
@@ -284,7 +290,19 @@ export function ApiLessonReader({ slug, initialLessonSlug }: ApiLessonReaderProp
         <div className="flex-1 overflow-y-auto bg-muted/10 p-6">
           <div className="mx-auto max-w-2xl">
             <AnimateIn animation="blur-up" delay={0.05}>
-              <TypographyH2 className="mb-8 border-0 pb-0 text-2xl font-bold text-foreground">
+              {/* Orientation: which chapter, and where in the whole course. */}
+              <div className="mb-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-medium">
+                {currentModule && (
+                  <>
+                    <span className="text-violet-600 dark:text-violet-400">{currentModule.title}</span>
+                    <span className="size-1 rounded-full bg-muted-foreground/40" />
+                  </>
+                )}
+                <span className="text-muted-foreground">
+                  {t("lessonPosition", { n: currentIdx + 1, total: lessons.length })}
+                </span>
+              </div>
+              <TypographyH2 className="mb-8 border-0 pb-0 text-2xl font-bold text-foreground leading-khmer">
                 {currentLesson.title}
               </TypographyH2>
             </AnimateIn>

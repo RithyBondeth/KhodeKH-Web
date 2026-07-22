@@ -2,7 +2,8 @@
 
 import { useMemo } from "react"
 import ReactMarkdown, { type Components } from "react-markdown"
-import { BookMarked, Lightbulb, ListChecks } from "lucide-react"
+import remarkGfm from "remark-gfm"
+import { BookMarked, FunctionSquare, Lightbulb, ListChecks } from "lucide-react"
 
 /**
  * Renders a lesson's markdown with the pedagogically-important sections lifted
@@ -17,7 +18,7 @@ import { BookMarked, Lightbulb, ListChecks } from "lucide-react"
  * sub-headings, so this degrades gracefully for any lesson or course.
  */
 
-type TCallout = "definition" | "example" | "remember"
+type TCallout = "definition" | "formula" | "example" | "remember"
 
 const CALLOUTS: Record<TCallout, {
   icon: typeof BookMarked
@@ -30,6 +31,12 @@ const CALLOUTS: Record<TCallout, {
     box: "border-violet-200 bg-violet-50/50 dark:border-violet-500/25 dark:bg-violet-500/10",
     chip: "bg-violet-100 dark:bg-violet-500/20",
     iconColor: "text-violet-600 dark:text-violet-400",
+  },
+  formula: {
+    icon: FunctionSquare,
+    box: "border-cyan-200 bg-cyan-50/50 dark:border-cyan-500/25 dark:bg-cyan-500/10",
+    chip: "bg-cyan-100 dark:bg-cyan-500/20",
+    iconColor: "text-cyan-600 dark:text-cyan-400",
   },
   example: {
     icon: Lightbulb,
@@ -45,11 +52,21 @@ const CALLOUTS: Record<TCallout, {
   },
 }
 
-/** Maps a heading to a callout type by its leading Khmer keyword, else null. */
+/**
+ * Maps a heading to a callout type by its leading Khmer keyword, else null.
+ * Order matters: an "ឧទាហរណ៍… ក្បួន…" heading is an example, not a formula.
+ */
 function calloutFor(heading: string): TCallout | null {
   if (heading.startsWith("និយមន័យ")) return "definition"
   if (heading.startsWith("ឧទាហរណ៍")) return "example"
   if (heading.startsWith("ចំណុចសំខាន់")) return "remember"
+  if (
+    heading.startsWith("រូបមន្ត") ||
+    heading.startsWith("ក្បួន") ||
+    heading.startsWith("លក្ខណៈ")
+  ) {
+    return "formula"
+  }
   return null
 }
 
@@ -112,7 +129,11 @@ const MARKDOWN_COMPONENTS: Components = {
 }
 
 function Markdown({ children }: { children: string }) {
-  return <ReactMarkdown components={MARKDOWN_COMPONENTS}>{children}</ReactMarkdown>
+  return (
+    <ReactMarkdown remarkPlugins={[remarkGfm]} components={MARKDOWN_COMPONENTS}>
+      {children}
+    </ReactMarkdown>
+  )
 }
 
 function CalloutBox({ type, title, body }: { type: TCallout; title: string; body: string }) {

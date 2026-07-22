@@ -589,6 +589,7 @@
     "task": "Task",
     "openEditor": "Open Code Editor",
     "nextLesson": "Next Lesson",
+    "lessonPosition": "Lesson {n} of {total}",
     "startChallenge": "Start Challenge →",
     "expectedOutput": "# Expected output:",
     "noTheory": "No theory content for this lesson.",
