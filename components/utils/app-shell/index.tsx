@@ -16,8 +16,8 @@ import { LanguageSwitcher } from "@/components/utils/language-switcher"
 import { useProfile } from "@/hooks/utils/use-profile"
 import { useProfileStats } from "@/hooks/utils/use-profile-stats"
 import { useHydrateUserStats } from "@/hooks/utils/use-hydrate-user-stats"
+import { useLessonsDone } from "@/hooks/utils/use-lessons-done"
 import { useSignOut } from "@/hooks/utils/use-sign-out"
-import { activeCourses } from "@/utils/constants/dashboard.constant"
 import { levelFromXp, xpForNextLevel } from "@/utils/functions/format"
 import type { IWithChildren } from "@/utils/interfaces"
 
@@ -44,7 +44,7 @@ export function AppShell({ children }: IWithChildren) {
 
   const level = levelFromXp(stats.xp)
   const xpPct = (stats.xp / xpForNextLevel(stats.xp)) * 100
-  const totalLessonsDone = activeCourses.reduce((s, c) => s + c.completedLessons, 0)
+  const totalLessonsDone = useLessonsDone() ?? 0
 
   /* First matching nav key wins — prevents Playground + AI Mentor both lighting up on /learn */
   const activeKey = NAV_ITEMS.find((item) => item.href === pathname)?.key

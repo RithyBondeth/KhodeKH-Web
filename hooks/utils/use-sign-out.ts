@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation"
 import { logoutRequest } from "@/lib/auth/client"
 import { useProfileStore } from "@/stores/profiles/profile-store"
 import { resetUserStatsFetchFlag } from "@/hooks/utils/use-hydrate-user-stats"
+import { resetLessonsDoneCache } from "@/hooks/utils/use-lessons-done"
 
 /**
  * Clears the session cookies (via the BFF), the persisted profile store, and
@@ -18,6 +19,7 @@ export function useSignOut() {
   return async () => {
     await logoutRequest()
     resetUserStatsFetchFlag()
+    resetLessonsDoneCache()
     resetProfile()
     router.push("/login")
   }

@@ -18,14 +18,12 @@ import { useProfile } from "@/hooks/utils/use-profile"
 import { useProfileStats } from "@/hooks/utils/use-profile-stats"
 import { useMyCourses } from "@/hooks/utils/use-my-courses"
 import { useBadges } from "@/hooks/utils/use-badges"
+import { useWeeklyActivity } from "@/hooks/utils/use-weekly-activity"
 import { levelFromXp } from "@/utils/functions/format"
 import { TypographyH1 } from "@/components/utils/typography/typography-h1"
 import { TypographyH3 } from "@/components/utils/typography/typography-h3"
 import { TypographyH4 } from "@/components/utils/typography/typography-h4"
 import { TypographyMuted } from "@/components/utils/typography/typography-muted"
-import {
-  weeklyActivity, weeklyDone,
-} from "@/utils/constants/dashboard.constant"
 
 /** Keys match the lucide slugs seeded on the badges' `icon` column. */
 const BADGE_ICONS: Record<string, React.ElementType> = {
@@ -46,6 +44,11 @@ export default function DashboardPage() {
   /* Real badge catalog + earned state; null while loading. */
   const badgeItems = useBadges()
   const badges     = badgeItems ?? []
+
+  /* Real weekly lesson-completion strip from lesson-progress; null while loading. */
+  const weekly         = useWeeklyActivity()
+  const weeklyActivity = weekly?.days ?? []
+  const weeklyDone     = weekly?.done ?? 0
 
   const totalLessonsDone = courses.reduce((s, c) => s + c.completedLessons, 0)
   const totalLessonsAll  = courses.reduce((s, c) => s + c.totalLessons, 0)
@@ -191,11 +194,20 @@ export default function DashboardPage() {
             <Card className="rounded-2xl p-5 h-full flex flex-col">
               <div className="flex items-center justify-between mb-4">
                 <TypographyH3 className="font-semibold text-foreground text-base">{t("thisWeek")}</TypographyH3>
-                <span className="text-xs text-muted-foreground">
-                  {t("weeklyProgress", { done: weeklyDone, goal: profile.weeklyGoal })}
-                </span>
+                {weekly !== null && (
+                  <span className="text-xs text-muted-foreground">
+                    {t("weeklyProgress", { done: weeklyDone, goal: profile.weeklyGoal })}
+                  </span>
+                )}
               </div>
 
+              {weekly === null ? (
+                <div className="flex-1 space-y-4">
+                  <Skeleton className="h-24 rounded-xl" />
+                  <Skeleton className="h-1.5 rounded-full" />
+                </div>
+              ) : (
+              <>
               {/* Day strip */}
               <div className="flex items-end justify-between gap-2 mb-4 flex-1 min-h-24">
                 {weeklyActivity.map((day, i) => {
@@ -249,6 +261,8 @@ export default function DashboardPage() {
                     : t("keepStreak", { days: stats.streak })}
                 </TypographyMuted>
               </div>
+              </>
+              )}
             </Card>
           </AnimateIn>
 
