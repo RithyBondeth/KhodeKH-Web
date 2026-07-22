@@ -3,7 +3,7 @@
 import { useMemo } from "react"
 import ReactMarkdown, { type Components } from "react-markdown"
 import remarkGfm from "remark-gfm"
-import { BookMarked, FunctionSquare, Lightbulb, ListChecks } from "lucide-react"
+import { AlertTriangle, BookMarked, FunctionSquare, Lightbulb, ListChecks } from "lucide-react"
 
 /**
  * Renders a lesson's markdown with the pedagogically-important sections lifted
@@ -18,7 +18,7 @@ import { BookMarked, FunctionSquare, Lightbulb, ListChecks } from "lucide-react"
  * sub-headings, so this degrades gracefully for any lesson or course.
  */
 
-type TCallout = "definition" | "formula" | "example" | "remember"
+type TCallout = "definition" | "formula" | "example" | "pitfall" | "remember"
 
 const CALLOUTS: Record<TCallout, {
   icon: typeof BookMarked
@@ -44,6 +44,12 @@ const CALLOUTS: Record<TCallout, {
     chip: "bg-amber-100 dark:bg-amber-500/20",
     iconColor: "text-amber-600 dark:text-amber-400",
   },
+  pitfall: {
+    icon: AlertTriangle,
+    box: "border-rose-200 bg-rose-50/50 dark:border-rose-500/25 dark:bg-rose-500/10",
+    chip: "bg-rose-100 dark:bg-rose-500/20",
+    iconColor: "text-rose-600 dark:text-rose-400",
+  },
   remember: {
     icon: ListChecks,
     box: "border-emerald-200 bg-emerald-50/60 dark:border-emerald-500/25 dark:bg-emerald-500/10",
@@ -59,6 +65,7 @@ const CALLOUTS: Record<TCallout, {
 function calloutFor(heading: string): TCallout | null {
   if (heading.startsWith("និយមន័យ")) return "definition"
   if (heading.startsWith("ឧទាហរណ៍")) return "example"
+  if (heading.startsWith("កំហុស")) return "pitfall"
   if (heading.startsWith("ចំណុចសំខាន់")) return "remember"
   if (
     heading.startsWith("រូបមន្ត") ||
