@@ -44,8 +44,36 @@ export const registerSchema = z
     path: ["confirmPassword"],
   })
 
+export const forgotPasswordSchema = z.object({ email })
+
+/* MinLength(8) on the API side (ResetPasswordRequestDTO) — matched here. */
+export const resetPasswordSchema = z
+  .object({
+    newPassword: password,
+    confirmPassword: z.string().min(1, "required"),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: "passwordMismatch",
+    path: ["confirmPassword"],
+  })
+
+/* MinLength(8) on the API side (ChangePasswordRequestDTO) — matched here. */
+export const changePasswordSchema = z
+  .object({
+    currentPassword: z.string().min(1, "required"),
+    newPassword: password,
+    confirmPassword: z.string().min(1, "required"),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: "passwordMismatch",
+    path: ["confirmPassword"],
+  })
+
 export type TLoginInput = z.infer<typeof loginSchema>
 export type TRegisterInput = z.infer<typeof registerSchema>
+export type TForgotPasswordInput = z.infer<typeof forgotPasswordSchema>
+export type TResetPasswordInput = z.infer<typeof resetPasswordSchema>
+export type TChangePasswordInput = z.infer<typeof changePasswordSchema>
 
 /** What the gateway actually accepts — `confirmPassword` is client-side only. */
 export type TRegisterPayload = Omit<TRegisterInput, "confirmPassword">

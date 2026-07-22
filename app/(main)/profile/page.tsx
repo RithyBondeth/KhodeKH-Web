@@ -17,6 +17,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { AppShell } from "@/components/utils/app-shell"
 import { Avatar } from "@/components/utils/avatar"
 import { ConfirmDialog } from "@/components/utils/confirm-dialog"
+import { ChangePasswordDialog } from "@/components/utils/change-password-dialog"
 import { AnimateIn } from "@/components/utils/animations/animate-in"
 import { CountUp } from "@/components/utils/animations/count-up"
 import { GrowBar } from "@/components/utils/animations/grow-bar"
@@ -487,9 +488,12 @@ export default function ProfilePage() {
             <TypographyMuted className="text-xs mb-4">{t("accountDesc")}</TypographyMuted>
 
             <div className="flex flex-wrap items-center gap-3">
-              <Button disabled title={t("changePasswordNote")} variant="outline">
-                {t("changePassword")}
-              </Button>
+              <ChangePasswordDialog>
+                <Button variant="outline">
+                  <KeyRound className="size-4" />
+                  {t("changePassword")}
+                </Button>
+              </ChangePasswordDialog>
               <ConfirmDialog
                 title={tCommon("signOutTitle")}
                 description={tCommon("signOutDesc")}
@@ -507,7 +511,6 @@ export default function ProfilePage() {
                 </Button>
               </ConfirmDialog>
             </div>
-            <TypographyMuted className="text-[11px] mt-3">{t("changePasswordNote")}</TypographyMuted>
           </Card>
         </AnimateIn>
 

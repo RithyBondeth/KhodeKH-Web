@@ -52,3 +52,9 @@ export const verifyEmailRequest = (token: string) =>
 
 export const resendVerificationRequest = (email: string) =>
   post("/api/auth/resend-verification", { email })
+
+export const forgotPasswordRequest = (email: string) =>
+  post("/api/auth/forgot-password", { email })
+
+export const resetPasswordRequest = (token: string, newPassword: string) =>
+  post("/api/auth/reset-password", { token, newPassword })

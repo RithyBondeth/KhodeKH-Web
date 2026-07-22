@@ -155,6 +155,15 @@ function LoginInner() {
               />
             </div>
 
+            <div data-auth-field className="-mt-2 text-right">
+              <Link
+                href="/forgot-password"
+                className="text-xs font-medium text-violet-600 hover:underline dark:text-violet-400"
+              >
+                {t("forgotPassword")}
+              </Link>
+            </div>
+
             {unverified && (
               <div
                 data-auth-field

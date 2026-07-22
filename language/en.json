@@ -557,7 +557,10 @@
     "accountTitle": "Account",
     "accountDesc": "Sign in details and session",
     "changePassword": "Change password",
-    "changePasswordNote": "Password changes need the account backend, which isn't connected yet.",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "confirmNewPassword": "Confirm new password",
+    "passwordChanged": "Password changed successfully.",
     "signOut": "Sign out"
   },
   "learn": {
@@ -626,7 +629,8 @@
       "genderRequired": "Please select your gender",
       "dateInvalid": "Enter a valid date",
       "dateInFuture": "Date of birth must be in the past",
-      "phoneInvalid": "Enter a valid phone number"
+      "phoneInvalid": "Enter a valid phone number",
+      "currentPasswordWrong": "Current password is incorrect"
     },
     "firstNamePlaceholder": "First name",
     "lastNamePlaceholder": "Last name",
@@ -650,6 +654,24 @@
     "verifyFailed": "This verification link is invalid or has expired.",
     "verifySentTitle": "Check your email",
     "verifySentBody": "We sent a verification link to {email}. Click it to activate your account.",
-    "goToLogin": "Go to login"
+    "goToLogin": "Go to login",
+    "forgotPassword": "Forgot password?",
+    "forgotTitle": "Reset your password",
+    "forgotSubtitle": "Enter your email and we'll send you a reset token.",
+    "forgotButton": "Send reset token",
+    "forgotSentTitle": "Check your email",
+    "forgotSentBody": "If an account exists for {email}, we've sent a password reset token to it.",
+    "forgotHaveToken": "I have a token",
+    "backToLogin": "Back to login",
+    "resetTitle": "Set a new password",
+    "resetSubtitle": "Paste the token from your email and choose a new password.",
+    "resetTokenLabel": "Reset token",
+    "resetTokenPlaceholder": "Paste your reset token…",
+    "resetTokenRequired": "Please paste your reset token.",
+    "resetNewPasswordPlaceholder": "New password",
+    "resetButton": "Reset password",
+    "resetFailed": "This reset token is invalid or has expired.",
+    "resetSuccessTitle": "Password reset!",
+    "resetSuccessBody": "Your password has been changed. You can sign in with it now."
   }
 }
