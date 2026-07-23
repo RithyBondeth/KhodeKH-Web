@@ -334,6 +334,24 @@ html {
         background: color-mix(in oklab, var(--primary) 12%, transparent);
         color: var(--primary);
     }
+    /* KaTeX display equations ($$…$$) render as prominent "formula cards" —
+       the same treatment the old indented formula blocks had — while inline
+       math ($…$) flows with the Khmer prose. Cards scroll sideways rather than
+       overflowing on narrow screens, and KaTeX inherits `currentColor` so it
+       tracks the foreground in both light and dark themes. */
+    .lesson-prose .katex-display {
+        margin-block: 0.35rem;
+        overflow-x: auto;
+        overflow-y: hidden;
+        border-radius: 0.75rem;
+        border: 1px solid var(--border);
+        background: var(--card);
+        padding: 0.9rem 1.15rem;
+        color: var(--foreground);
+    }
+    .lesson-prose .katex {
+        font-size: 1.05em;
+    }
     /* GFM tables — reference grids like the derivative rules. Scrolls sideways
        on narrow screens rather than squashing the columns. */
     .lesson-prose table {

@@ -1,7 +1,6 @@
 import { JetBrains_Mono, Roboto_Slab, Kantumruy_Pro } from "next/font/google"
 import type { Metadata } from "next"
 import { cookies } from "next/headers"
-
 import "./globals.css"
 import { ThemeProvider } from "@/components/utils/themes/theme-provider"
 import { LanguageProviderClient } from "@/components/utils/languages/language-provider-client"

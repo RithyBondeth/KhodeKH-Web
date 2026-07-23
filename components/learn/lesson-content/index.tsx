@@ -3,7 +3,10 @@
 import { useMemo } from "react"
 import ReactMarkdown, { type Components } from "react-markdown"
 import remarkGfm from "remark-gfm"
+import remarkMath from "remark-math"
+import rehypeKatex from "rehype-katex"
 import { AlertTriangle, BookMarked, FunctionSquare, Lightbulb, ListChecks } from "lucide-react"
+import "katex/dist/katex.min.css"
 
 /**
  * Renders a lesson's markdown with the pedagogically-important sections lifted
@@ -137,7 +140,11 @@ const MARKDOWN_COMPONENTS: Components = {
 
 function Markdown({ children }: { children: string }) {
   return (
-    <ReactMarkdown remarkPlugins={[remarkGfm]} components={MARKDOWN_COMPONENTS}>
+    <ReactMarkdown
+      remarkPlugins={[remarkGfm, remarkMath]}
+      rehypePlugins={[rehypeKatex]}
+      components={MARKDOWN_COMPONENTS}
+    >
       {children}
     </ReactMarkdown>
   )

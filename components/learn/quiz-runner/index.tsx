@@ -7,6 +7,7 @@ import {
 import { useTranslations } from "next-intl"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { MathText } from "@/components/learn/math-text"
 import { useProfileStore } from "@/stores/profiles/profile-store"
 import { getLessonQuizzes, startQuiz, submitAttempt } from "@/lib/api/quiz"
 import type {
@@ -226,7 +227,7 @@ function QuestionCard({
         <span className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-lg bg-muted text-xs font-bold text-muted-foreground">
           {index + 1}
         </span>
-        <p className="text-[15px] font-medium leading-7 text-foreground">{question.question}</p>
+        <p className="text-[15px] font-medium leading-7 text-foreground"><MathText>{question.question}</MathText></p>
       </div>
 
       <div className="pl-8">
@@ -250,7 +251,7 @@ function QuestionCard({
                   }`}>
                     {selected && <span className="size-1.5 rounded-full bg-violet-500 dark:bg-violet-400" />}
                   </span>
-                  <span className="text-foreground">{opt.answer}</span>
+                  <span className="text-foreground"><MathText>{opt.answer}</MathText></span>
                 </button>
               )
             })}
@@ -374,7 +375,7 @@ function ReviewCard({
         </span>
         <p className="text-[15px] font-medium leading-7 text-foreground">
           <span className="text-muted-foreground">{index + 1}. </span>
-          {item.question}
+          <MathText>{item.question}</MathText>
         </p>
       </div>
 
@@ -399,7 +400,7 @@ function ReviewCard({
                   : picked
                     ? <X className="size-3.5 shrink-0" />
                     : <span className="size-3.5 shrink-0" />}
-                <span>{opt.answer}</span>
+                <span><MathText>{opt.answer}</MathText></span>
               </div>
             )
           })}
@@ -408,12 +409,12 @@ function ReviewCard({
         <div className="space-y-1 pl-7 text-sm">
           <div className={item.isCorrect ? "text-emerald-700 dark:text-emerald-400" : "text-red-700 dark:text-red-400"}>
             <span className="text-muted-foreground">{t("yourAnswer")}: </span>
-            {yourText}
+            <MathText>{yourText}</MathText>
           </div>
           {!item.isCorrect && (
             <div className="text-emerald-700 dark:text-emerald-400">
               <span className="text-muted-foreground">{t("correctAnswer")}: </span>
-              {correctText}
+              <MathText>{correctText}</MathText>
             </div>
           )}
         </div>
@@ -421,7 +422,7 @@ function ReviewCard({
 
       {item.explanation && (
         <div className="mt-3 ml-7 rounded-xl border-l-2 border-violet-300 bg-muted/40 px-3.5 py-2.5 text-sm leading-7 text-muted-foreground dark:border-violet-500/40">
-          {item.explanation}
+          <MathText>{item.explanation}</MathText>
         </div>
       )}
     </div>
